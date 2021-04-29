@@ -1,0 +1,5 @@
+label {
+  align-items: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
