@@ -2,7 +2,7 @@
  Bacharelado em Sistemas de Informação<br/>
  Instituto Federal do Norte de Minas Gerais - Campus Arinos
 
-### Sistema para gerenciamento dos eventos administrados pelo IFNMG - Campus Arinos
+### Lemon: Sistema para gerenciamento dos eventos administrados pelo IFNMG - Campus Arinos
 
 ## Como será esse projeto:<br/>
 * Para o Backend Javascript com Typescript<br/>
@@ -26,19 +26,5 @@
 * Já está listando os eventos do banco e fazendo a contagem
 * Criei a autenticação com JWT e criptografando as senhas
 * Hoje eu linkei a API de autenticação que criei com o front, restringindo acesso às rotas autorizadas
-
-
-# Sugestão de Nomes
-### Em uma das minhas paradas pra descanso encontrei uns nomes massa pro sistema
-### Quero saber o que acham :)
-### Já pedi sugestão para alguns amigos e eles votaram
-* Eady => 1 voto
-* Hivon => 1 voto
-* Holda
-* Suri => 1 voto
-* Zaki => 1 voto
-* Xisto
-* Hagnes => 2 votos
-* Caliandra (Aquela flor vermelha do cerrado)
-* Lemon 
-
+* Já está gerando certificado, só falta buscar os dados automático
+* 
