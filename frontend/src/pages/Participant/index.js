@@ -4,7 +4,7 @@ import './styles.css';
 
 const Participant = () => {
   const [participante, setParticipante] = useState('');
-  const [eventos, setEventos] = useState('');
+  const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
 
   async function search() {
@@ -48,7 +48,7 @@ const Participant = () => {
             </label>
 
             <div className="listEvents">
-              {/* <table>
+              { <table>
                 {eventos.map(evento => (
                   <tr key={evento.id}>
                     <h2>
@@ -57,7 +57,7 @@ const Participant = () => {
                     </h2>
                   </tr>
                 ))}
-              </table> */}
+              </table>}
             </div>
           </div>
         </div>
