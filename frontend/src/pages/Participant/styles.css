@@ -62,3 +62,15 @@ input:checked + .checkEventos .titulo::after {
 .listEvents table {
   width: 450px;
 }
+
+.tabela{
+  margin-top: 30px;
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: relative;
+}

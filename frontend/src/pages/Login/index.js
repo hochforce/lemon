@@ -24,7 +24,7 @@ export default function Login({ history }) {
         abortEarly: false,
       })
       const saveLogin = await api.post('/auth', { cpf, password });
-      console.log("ID ORG > ",saveLogin.data.user.id);
+      console.log("ID ORG > ", saveLogin.data.user.id);
       localStorage.setItem('TOKEN', saveLogin.data.token);
       localStorage.setItem('USER-ID', saveLogin.data.user.id);
 
@@ -32,9 +32,9 @@ export default function Login({ history }) {
       reset();
       if (saveLogin.data.user.tipo === "organizador") {
         history.push('/manager');
-      } else if(saveLogin.data.user.tipo === "participante"){
+      } else if (saveLogin.data.user.tipo === "participante") {
         history.push('/participant');
-      } 
+      }
       else {
         history.push('/');
       }
@@ -47,7 +47,7 @@ export default function Login({ history }) {
         formRef.current.setErrors(errorMessages);
       }
     }
-    
+
   }
 
   return (
@@ -62,7 +62,7 @@ export default function Login({ history }) {
       </div> */}
       <div className="container">
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <label>Login on Lemon</label>
+          <label>Entrar em Lemon</label>
           <Input
             name="cpf"
             placeholder="CPF"
@@ -77,7 +77,9 @@ export default function Login({ history }) {
             onChange={event => setPassword(event.target.value)}
           />
           <button className="btn" type="submit">Entrar</button>
-          <Link to="/new-participant">Cadastrar-me</Link>
+          <p>
+            <Link to="/new-participant">Cadastrar-me</Link>
+          </p>
         </Form>
       </div>
     </>
