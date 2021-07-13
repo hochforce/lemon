@@ -68,9 +68,29 @@ input:checked + .checkEventos .titulo::after {
 }
 
 .header-menu {
+  background-color: rgb(212, 255, 188);
+}
+
+.menu {
+  background-color: rgb(212, 255, 188);
+  color: rgb(0, 39, 5);
+}
+
+#components-layout-demo-fixed .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.2);
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+/* .header-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
   position: relative;
-}
+} */

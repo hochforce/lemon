@@ -2,15 +2,18 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
+// import { Form } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import { Input } from '../../components/Form/input';
 import { api } from '../../services/api';
 import './styles.css';
 
-export default function Login({ history }) {
+const Login = ({ history }) => {
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const formRef = useRef(null);
+  const [form] = useForm();
 
   async function handleSubmit(data, { reset }, event) {
     event.preventDefault();
@@ -51,37 +54,42 @@ export default function Login({ history }) {
   }
 
   return (
-    <>
-      {/* <div className="menu-temp">
-        <a href="http://localhost:3000/new-participant">Participante</a>
-        <a href="http://localhost:3000/new-manager">Organizador</a>
-        <a href="http://localhost:3000/new-event">Evento</a>
-        <a href="http://localhost:3000/">Login</a>
-        <a href="http://localhost:3000/new-certificate">Gerar Certificado</a>
-        <a href="http://localhost:3000/manager">Dash Organizador</a>
-      </div> */}
-      <div className="container">
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <label>Entrar em Lemon</label>
-          <Input
-            name="cpf"
-            placeholder="CPF"
-            value={cpf}
-            onChange={event => setCpf(event.target.value)}
-          />
-          <Input
-            name="password"
-            placeholder="Senha"
-            type="password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
-          <button className="btn" type="submit">Entrar</button>
-          <p>
-            <Link to="/new-participant">Cadastrar-me</Link>
-          </p>
-        </Form>
-      </div>
-    </>
+    <div id="login-page">
+      <aside>
+        <img src='' alt="" />
+        <strong>Crie salas de Q&amp;A ao-vivo</strong>
+        <p>Tire as dúvidas da sua audiência em tempo-real</p>
+      </aside>
+      <main>
+        <div className="main-content">
+          <Form form={form} ref={formRef} onSubmit={handleSubmit}>
+            <label>Entrar em Lemon</label>
+
+            {/* <Form.item name="usu"> */}
+            {/* </Form.item> */}
+            <Input
+              name="cpf"
+              placeholder="CPF"
+              value={cpf}
+              onChange={event => setCpf(event.target.value)}
+            />
+
+            <Input
+              name="password"
+              placeholder="Senha"
+              type="password"
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
+            <button className="btn" type="submit">Entrar</button>
+            <p>
+              <Link to="/new-participant">Cadastrar-me</Link>
+            </p>
+          </Form>
+        </div>
+      </main>
+    </div>
   )
 }
+
+export default Login;

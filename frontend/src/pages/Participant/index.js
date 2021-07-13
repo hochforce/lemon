@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { api } from '../../services/api';
-import { Table, Dropdown, Button, Menu, Image, Layout } from 'antd';
-import { InfoCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Table, Dropdown, Button, Menu, Image, Layout, Breadcrumb, Card, Avatar } from 'antd';
+import { InfoCircleOutlined, EllipsisOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons';
 import './styles.css';
 import logo from '../../assets/images/imgLogo.png';
 
@@ -9,12 +10,16 @@ const Participant = () => {
   const [participante, setParticipante] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
-  const imgLogo = logo;
-  const { Header } = Layout;
+  const token = localStorage.getItem("TOKEN");
+   const imgLogo = logo;
+  const { Header, Content, Footer } = Layout;
+  const { Meta } = Card;
+  const [redirect, setRedirect] = useState('');
 
   async function search() {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     const cpf = buscaCPF.data.cpf;
+    
 
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
@@ -61,17 +66,31 @@ const Participant = () => {
 
   const handleClick = (e) => {
     console.log('click ', e);
+
   };
+
+  useEffect(() => {
+    if(!token){
+      return;
+    }
+    setRedirect('/participant');
+  }, [token])
+
+  function handleLogOut() {
+    localStorage.removeItem('TOKEN');
+    localStorage.removeItem('USER-ID');
+    setRedirect('/');
+  }
 
   return (
     <>
       <Layout >
-        <Header className="header-menu" style={{ backgroundColor: 'white' }}>
-          <Image 
-          preview={false} 
-          alt="Kothe" 
-          src={imgLogo} 
-          style={{width: 100}}
+        {/* <Header className="header-menu" style={{ backgroundColor: 'white'  }}>
+          <Image
+            preview={false}
+            alt="Kothe"
+            src={imgLogo}
+            style={{ width: 100 }}
           />
 
           <Menu
@@ -87,17 +106,71 @@ const Participant = () => {
             <Menu.Item key="2">Option 2</Menu.Item>
 
           </Menu>
+        </Header> */}
+
+        <Header className="header-menu" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+          <div className="logo" />
+          <Menu className="menu" mode="horizontal" defaultSelectedKeys={['2']}>
+            <Menu.Item key="1">Eventos disponíveis</Menu.Item>
+            <Menu.Item key="2">Eventos "ativos e encerrados"</Menu.Item>
+            <Menu.Item key="3">Eventos que participei</Menu.Item>
+          </Menu>
         </Header>
+
+        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Início</Breadcrumb.Item>
+            <Breadcrumb.Item>Eventos</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
+
+
+
+
+            <Card
+              style={{ width: 300 }}
+              cover={
+                <img
+                  alt="example"
+                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                />
+              }
+              actions={[
+                <SettingOutlined key="setting" />,
+                <EditOutlined key="edit" />,
+                <EllipsisOutlined key="ellipsis" />,
+              ]}
+            >
+              <Meta
+                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title="Formatura"
+                description="Formatura do Ensino Médio"
+              />
+            </Card>
+
+            <button
+              onClick={handleLogOut}
+            >Sair</button>
+
+
+
+
+
+            <div className='tabela'>
+              <Table
+                style={{ fontSize: 30, display: 'inline', paddingTop: 3000 }}
+                size='large'
+                columns={columns}
+                dataSource={eventos}
+              />
+            </div>
+          </div>
+        </Content>
+
+        <Footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</Footer>
+        {redirect && <Redirect to ={{pathname: redirect}} /> }
       </Layout>
 
-      <div className='tabela'>
-        <Table
-          style={{ fontSize: 30, display: 'inline', paddingTop: 3000 }}
-          size='large'
-          columns={columns}
-          dataSource={eventos}
-        />
-      </div>
 
       {/* <div className="menu-temp">
         <a href="http://localhost:3000/new-participant">Participante</a>
