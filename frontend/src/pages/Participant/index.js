@@ -11,7 +11,7 @@ const Participant = () => {
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
-   const imgLogo = logo;
+  const imgLogo = logo;
   const { Header, Content, Footer } = Layout;
   const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
@@ -19,14 +19,14 @@ const Participant = () => {
   async function search() {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     const cpf = buscaCPF.data.cpf;
-    
+
 
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
 
     const buscaEventos = await api.get('/listEventos');
-    console.log(buscaEventos.data);
+    
     setEventos(buscaEventos.data);
   };
   useEffect(() => {
@@ -65,12 +65,12 @@ const Participant = () => {
   ]
 
   const handleClick = (e) => {
-    console.log('click ', e);
+    
 
   };
 
   useEffect(() => {
-    if(!token){
+    if (!token) {
       return;
     }
     setRedirect('/participant');
@@ -124,51 +124,33 @@ const Participant = () => {
           </Breadcrumb>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
 
+            
+            <p>{participante.nome}</p>
+            <button onClick={handleLogOut}>Sair</button>
 
+            <div>
+              {Array.isArray(eventos) && eventos.map((evento) =>
+                <Card
+                  style={{ width: 300 }}
 
-
-            <Card
-              style={{ width: 300 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-              ]}
-            >
-              <Meta
-                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title="Formatura"
-                description="Formatura do Ensino Médio"
-              />
-            </Card>
-
-            <button
-              onClick={handleLogOut}
-            >Sair</button>
-
-
-
-
-
-            <div className='tabela'>
-              <Table
-                style={{ fontSize: 30, display: 'inline', paddingTop: 3000 }}
-                size='large'
-                columns={columns}
-                dataSource={eventos}
-              />
+                  actions={[
+                    <SettingOutlined key="setting" />,
+                    <EditOutlined key="edit" />,
+                    <EllipsisOutlined key="ellipsis" />,
+                  ]}
+                >
+                  <Meta
+                    title={evento.titulo}
+                    description={evento.descricao}
+                  />
+                </Card>
+              )}
             </div>
           </div>
         </Content>
 
         <Footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</Footer>
-        {redirect && <Redirect to ={{pathname: redirect}} /> }
+        {redirect && <Redirect to={{ pathname: redirect }} />}
       </Layout>
 
 
