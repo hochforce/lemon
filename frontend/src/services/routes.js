@@ -11,6 +11,7 @@ import NewCertificate from '../pages/NewCertificate';
 import Manager from '../pages/Manager';
 import Participant from '../pages/Participant';
 import EventoInfo from '../pages/EventInfo';
+import EventoInscricao from '../pages/EventoInscricao';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props =>(
@@ -35,6 +36,7 @@ export default function Routes(){
         <PrivateRoute path="/manager" component={Manager} />
         <PrivateRoute path="/participant" component={Participant} />
         <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
+        <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />*asYup
       </Switch>
     </BrowserRouter>
   )

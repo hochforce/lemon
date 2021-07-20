@@ -1,96 +1,60 @@
-.listaItem {
-  background: white;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  width: 500px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(50, 50, 90, .1);
-}
-.listaItem a{
-  text-decoration: none;
-  padding: 10px;
-  font-size: 1em;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  color: black;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+
+.layout .header-menu {
+  background-color: #196618;
 }
 
-.checkEventos .titulo {
-  cursor: pointer;
-  padding: 10px;
-  font-size: 1em;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  color: black;
+.layout .header-menu .logo {
+  
+
+}
+.layout .header-menu .menu {
+  background-color: #196618;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
 }
 
-.checkEventos .titulo::before {
-  content: '';
-  display: inline-block;
-  height: 12px;
-  width: 24px;
-  margin-right: 20px;
-  background: black;
+.layout .header-menu .menu .menu-item .item{
+  color: #a3e021;
+  font: 400 16px 'Roboto', sans-serif;
+  margin-top: 20px;
+  margin-right: 40px;
 }
 
-.checkEventos .titulo::after {
-  content: '+';
-  float: right;
-  margin-left: 20px;
-  transition: transform .3s ease;
+
+.layout .header-menu .menu .participante-info p {
+  color: #fff;
+  font: 400 16px 'Roboto', sans-serif;
 }
 
-.checkEventos .listEvents{
-  padding: 10px;
-  color: #6b7c93;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  font-size: .875em;
-  display: none;
-}
+.layout .header-menu .menu .participante-info .button-logout {
+  background-color: #172c04;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s;
+  font: 400 16px 'Roboto', sans-serif;
+} 
+.layout .header-menu .menu .participante-info .button-logout:hover {
+  background-color: #062500;
+} 
 
-.checkSimbol {
-  display: none;
-}
 
-input:checked + .checkEventos .listEvents {
-  display: block;
-}
 
-input:checked + .checkEventos .titulo::after {
-  transform: rotate(45deg) scale(1.08);
-}
-
-.listEvents table {
-  width: 450px;
-}
-
-.tabela{
-  margin-top: 30px;
-}
-
-.header-menu {
-  background-color: rgb(212, 255, 188);
-}
-
-.menu {
-  background-color: rgb(212, 255, 188);
-  color: rgb(0, 39, 5);
-}
-
-#components-layout-demo-fixed .logo {
+/* #components-layout-demo-fixed .logo {
   float: left;
   width: 120px;
   height: 31px;
   margin: 16px 24px 16px 0;
   background: rgba(255, 255, 255, 0.2);
-}
+} */
 .site-layout .site-layout-background {
   background: #fff;
 }
 
-/* .header-menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  position: relative;
-} */
+.site-layout .site-layout-background .cards .card{
+  background: #196618;
+  color: #fff;
+}
