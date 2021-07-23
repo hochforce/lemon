@@ -10,6 +10,8 @@ import NewManager from '../pages/NewManager';
 import NewCertificate from '../pages/NewCertificate';
 import Manager from '../pages/Manager';
 import Participant from '../pages/Participant';
+import Ativos from '../pages/EventosAtivos';
+import Finalizados from '../pages/EventosFinalizados';
 import EventoInfo from '../pages/EventInfo';
 import EventoInscricao from '../pages/EventoInscricao';
 
@@ -27,7 +29,7 @@ export default function Routes(){
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Login} />
+        <Route exact path="/" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/new-event" component={NewEvent} />
         <Route path="/new-participant" component={NewParticipant} />
@@ -35,6 +37,8 @@ export default function Routes(){
         <PrivateRoute path="/new-certificate" component={NewCertificate} />
         <PrivateRoute path="/manager" component={Manager} />
         <PrivateRoute path="/participant" component={Participant} />
+        <PrivateRoute path="/eventos-ativos" component={Ativos} />
+        <PrivateRoute path="/eventos-finalizados" component={Finalizados} />
         <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
         <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />*asYup
       </Switch>

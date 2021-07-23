@@ -43,6 +43,7 @@ const Login = ({ history }) => {
       formRef.current.setErrors({});
       reset();
       if (value.data.user.tipo === "organizador") {
+        localStorage.setItem('organizador', value.data.user.id);
         history.push('/manager');
       } else if (value.data.user.tipo === "participante") {
         history.push('/participant');

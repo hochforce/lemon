@@ -14,11 +14,13 @@ export class CreateParcerias1615333140574 implements MigrationInterface {
                     },
                     {
                         name: "parceiro",
-                        type: "varchar"
+                        type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "tipo_parceria",
-                        type: "varchar"
+                        type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "valor",

@@ -28,7 +28,8 @@ export default function NewManager({ history }) {
       const [instalacoes, setInstalacoes] = useState('');
       const [financiamento, setFinanciamento] = useState('');
       const [tipo_bolsa, setTipoBolsa] = useState('');
-
+      const [status, setStatus] = useState('');
+      
 
       const formRef = useRef(null);
 
@@ -110,19 +111,20 @@ export default function NewManager({ history }) {
                         hora_fim
                   });
                   const id_periodo_duracao = savePeriodo.data.id;
-                  console.log(savePeriodo.data);
+                  
                   var id_organizador = localStorage.getItem("organizador");
-                  console.log("ID ORGANIZADOR",id_organizador);
-                  console.log("ID PERÍODO",id_periodo_duracao);
+                  
                   //Salvando na tabela eventos
+                  
                   const saveEvento = await api.post('/eventos', {
+                        titulo,
+                        descricao,
+                        tipo,
                         id_organizador,
                         id_periodo_duracao,
                         id_parceria,
                         id_endereco,
-                        titulo,
-                        descricao,
-                        tipo
+                        status
                   });
                   console.log(saveEvento.data);
                   formRef.current.setErrors({});
@@ -169,7 +171,11 @@ export default function NewManager({ history }) {
                               <Input name="tipo"
                                     placeholder="Qual tipo do Evento?"
                                     value={tipo}
-                                    onChange={event => setTipo(event.target.value)}
+                                    onChange={event => 
+                                          {
+                                                setTipo(event.target.value)
+                                                setStatus("ativo");
+                                          }}
                               />
                               <label>Período e Duração</label>
                               <Input name="data_inicio"

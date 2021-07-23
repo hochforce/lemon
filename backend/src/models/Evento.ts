@@ -11,6 +11,15 @@ class Evento{
   readonly id: string;
 
   @Column()
+  titulo: string;
+
+  @Column()
+  descricao: string;
+
+  @Column()
+  tipo: string;
+
+  @Column()
   id_organizador: string;
 
   @Column()
@@ -22,17 +31,11 @@ class Evento{
   @Column()
   id_endereco: string;
 
-  @Column()
-  titulo: string;
-
-  @Column()
-  descricao: string;
-
-  @Column()
-  tipo: string;
-
   @CreateDateColumn()
   created_at: Date;
+
+  @Column()
+  status: string;
 
   @ManyToOne(()=>Organizador)
   @JoinColumn({name: "id_organizador"})

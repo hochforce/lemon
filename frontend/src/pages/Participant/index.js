@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { api } from '../../services/api';
-import { Dropdown, Button, Menu, Layout, Breadcrumb, Card, Row, Col, Space, Image } from 'antd';
-import { EllipsisOutlined, EditOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { Button, Menu, Layout, Breadcrumb, Card, Row, Col, Space } from 'antd';
+import { EditOutlined, PoweroffOutlined } from '@ant-design/icons';
 import './styles.css';
 import logo from '../../assets/images/imgLogo.png';
+import Ativos from '../EventosAtivos';
+import Finalizados from '../EventosFinalizados';
 
 const Participant = () => {
   const [participante, setParticipante] = useState('');
@@ -15,12 +17,11 @@ const Participant = () => {
   const { Header, Content, Footer } = Layout;
   const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
+  const [menuItem, setMenuItem] = useState('');
 
   async function search() {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     const cpf = buscaCPF.data.cpf;
-
-
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
@@ -35,44 +36,11 @@ const Participant = () => {
     })()
   }, [])
 
-  const columns = [
-    {
-      title: 'Título',
-      dataIndex: 'titulo',
-      key: 'titulo',
-    },
-    {
-      title: 'Descrição',
-      dataIndex: 'descricao',
-      key: 'descricao',
-    },
-    {
-      title: 'Inscrição',
-      dataIndex: 'inscricao',
-      key: 'inscricao',
-      width: '7%',
-      fixed: 'right',
-      render: () => {
-        return (
-          <Dropdown overlay={''}>
-            <Button type="text" className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-              <EllipsisOutlined style={{ fontSize: '30px', transform: 'rotate(90deg)' }} />
-            </Button>
-          </Dropdown>
-        );
-      },
-    }
-  ]
-
-  const handleClick = (e) => {
-
-
-  };
-
   useEffect(() => {
     if (!token) {
       return;
     }
+    setMenuItem(1);
     setRedirect('/participant');
   }, [token])
 
@@ -81,40 +49,35 @@ const Participant = () => {
     localStorage.removeItem('USER-ID');
     setRedirect('/');
   }
-
+  
   return (
 
     <Layout className="layout">
-      <Header className="header-menu" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Header className="header-menu" style={{ position: 'fixed', zIndex: 1, width: "100%", height: 0 }}>
 
-        <Menu className="menu" mode="horizontal" defaultSelectedKeys={['1']}>
+        <Menu className="menu" mode="horizontal" style={{ borderRadius: "0px 0px 5px 5px" }}>
 
-          <div className="menu-item">
+          <div className="menu-item" >
             <Row gutter={24}>
-              <Col md={2} sm={24} xs={24}>
-                <Image src={imgLogo} alt="Logo do Site" style={{ width: 20, marginTop: 11 }} preview={false} />
+              <Col md={10} sm={24} xs={24}>
+                {/* <Image src={imgLogo} alt="Logo do Site" style={{ width: 20 }} preview={false} /> */}
+                <a href="/participant">LEMON</a>
+              </Col>
+              <Col md={9} sm={24} xs={24}>
+                <Menu.Item onClick={()=>{setMenuItem(1)}} key="1" className="item" title="1" >Eventos Ativos</Menu.Item>
+              </Col>
+              <Col md={5} sm={24} xs={24}>
+                <Menu.Item onClick={()=>{setMenuItem(2)}} key="2" className="item">Eventos Encerrados</Menu.Item>
               </Col>
 
-              <Col md={7} sm={24} xs={24}>
-                <Menu.Item key="1" onClick={() => { console.log("Funcionou!Menu")}} className="item" >Eventos Disponíveis</Menu.Item>
-              </Col>
-              <Col md={7} sm={24} xs={24}>
-                <Menu.Item key="2" className="item">Eventos "abertos encerrados"</Menu.Item>
-              </Col>
-              <Col md={7} sm={24} xs={24}>
-                <Menu.Item key="3" className="item">Eventos que participei</Menu.Item>
-              </Col>
             </Row>
           </div>
-
-
-
-          <div className="participante-info">
+          <div className="participante-info" style={{ paddingRight: 0 }}>
             <Row gutter={24}>
-              <Col md={12} sm={24} xs={24}>
-                <p style={{marginTop: 20}}>{participante.nome}</p>
+              <Col md={12} sm={24} xs={24} style={{ paddingRight: 0, textAlign: "right" }}>
+                <p style={{ margin: "20px 0px 0px" }}>{participante.nome}</p>
               </Col>
-              <Col md={12} sm={24} xs={24}>
+              <Col md={12} sm={24} xs={24} >
                 <Button
                   className="button-logout"
                   type="primary"
@@ -124,31 +87,22 @@ const Participant = () => {
               </Col>
             </Row>
           </div>
-
-
         </Menu>
+        
       </Header>
-      <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Início</Breadcrumb.Item>
-          <Breadcrumb.Item>Eventos</Breadcrumb.Item>
-        </Breadcrumb>
-        <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-
-
-
+      {/* <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}> */}
+        
+        { menuItem === 1 ? <Ativos/> : <Finalizados/>}
+        {/* <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
           <div className="cards">
-
             {Array.isArray(eventos) && eventos.map((evento) =>
               <Space direction="horizontal">
                 <Card
                   style={{ width: 350, borderRadius: 8, margin: 40, }}
-
                   className="card"
                   actions={[
-                    <EditOutlined onClick={() => { console.log("Funcionou!") }} key="edit" />,
+                    <EditOutlined onClick={() => {setRedirect(`/inscricao/${evento.id}`)}} key="edit" />,
                   ]}
-
                 >
                   <Meta
                     title={<p style={{color: "snow"}}>{evento.titulo}</p>}
@@ -157,16 +111,13 @@ const Participant = () => {
                 </Card>
               </Space>
             )}
-
           </div>
-        </div>
-      </Content>
+        </div> */}
 
+      {/* </Content> */}
       <Footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</Footer>
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </Layout>
-
   )
 }
-
 export default Participant;

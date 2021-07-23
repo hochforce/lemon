@@ -14,11 +14,13 @@ export class CreateBolsas1615421280477 implements MigrationInterface {
                     },
                     {
                         name: "financiamento",
-                        type: "varchar"
+                        type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "tipo_bolsa",
-                        type: "varchar"
+                        type: "varchar",
+                        isNullable: true
                     }
                 ]
             })

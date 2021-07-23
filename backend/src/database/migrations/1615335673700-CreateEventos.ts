@@ -13,6 +13,18 @@ export class CreateEventos1615335673700 implements MigrationInterface {
                         isPrimary: true
                     },
                     {
+                        name: "titulo",
+                        type: "varchar"
+                    },
+                    {
+                        name: "descricao",
+                        type: "varchar"
+                    },
+                    {
+                        name: "tipo",
+                        type: "varchar"
+                    },
+                    {
                         name: "id_organizador",
                         type: "uuid"
                     },
@@ -29,22 +41,15 @@ export class CreateEventos1615335673700 implements MigrationInterface {
                         name: "id_endereco",
                         type: "uuid"
                     },
-                    {
-                        name: "titulo",
-                        type: "varchar"
-                    },
-                    {
-                        name: "descricao",
-                        type: "varchar"
-                    },
-                    {
-                        name: "tipo",
-                        type: "varchar"
-                    },
+                    
                     {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()"
+                    },
+                    {
+                        name: "status",
+                        type: "varchar"
                     }
                 ]
             })
