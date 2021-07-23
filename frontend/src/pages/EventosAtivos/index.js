@@ -1,7 +1,7 @@
 
 import { Breadcrumb, Layout, Space, Card } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
-import { Redirect, Link } from 'react-router-dom';
+import { EditFilled } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 
@@ -44,12 +44,12 @@ export default function Ativos() {
                 style={{ width: 350, borderRadius: 8, margin: 40, }}
                 className="card"
                 actions={[
-                  <EditOutlined onClick={() => { setRedirect(`/inscricao/${evento.id}`) }} key="edit" />,
+                  <EditFilled onClick={() => { setRedirect(`/inscricao/${evento.id}`) }} key="edit" />,
                 ]}
               >
                 <Meta
                   title={<p style={{ color: "snow" }}>{evento.titulo}</p>}
-                  description={<p style={{ color: "grey" }}>{evento.descricao}</p>}
+                  description={<p style={{ color: "white" }}>{evento.descricao}</p>}
                 />
               </Card>
             </Space>

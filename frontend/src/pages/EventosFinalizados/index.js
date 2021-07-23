@@ -1,6 +1,6 @@
 
 import { Breadcrumb, Layout, Space, Card } from 'antd';
-import { VerticalAlignBottomOutlined  } from '@ant-design/icons';
+import { FilePdfFilled  } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
@@ -44,13 +44,13 @@ export default function Finalizados (){
                   style={{ width: 350, borderRadius: 8, margin: 40, }}
                   className="card"
                   actions={[
-                    <VerticalAlignBottomOutlined onClick={() => {setRedirect(`/new-certificate`)}} key="edit" />,
+                    <FilePdfFilled onClick={() => {setRedirect(`/new-certificate`)}} key="edit" />,
                     
                   ]}
                 >
                   <Meta
                     title={<p style={{color: "snow"}}>{evento.titulo}</p>}
-                    description={<p style={{color: "grey"}}>{evento.descricao}</p>}
+                    description={<p style={{color: "white"}}>{evento.descricao}</p>}
                   />
                 </Card>
               </Space>

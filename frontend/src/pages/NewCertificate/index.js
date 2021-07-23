@@ -27,6 +27,7 @@ export default function NewCertificate() {
   return (
     <>
       <div className="menu-temp">
+        <a href="http://localhost:3000/participant">Voltar</a>
         <a href="http://localhost:3000/new-participant">Participante</a>
         <a href="http://localhost:3000/new-manager">Organizador</a>
         <a href="http://localhost:3000/new-event">Evento</a>

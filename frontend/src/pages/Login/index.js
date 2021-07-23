@@ -66,18 +66,14 @@ const Login = ({ history }) => {
   return (
     <div id="login-page">
       <aside>
-        <img src='' alt="" />
-        <strong>Aqui vou ter um texto</strong>
-        <p>E aqui outro texto kk</p>
+        
       </aside>
       <main>
         <div className="main-content">
-          <Form form={form} ref={formRef} onSubmit={handleSubmit}>
-            <label>Entrar em Lemon</label>
-
-            {/* <Form.item name="usu"> */}
-            {/* </Form.item> */}
+          <Form name="normal_login" className="login-form" form={form} ref={formRef} onSubmit={handleSubmit}>
+            <label><strong>LEMON</strong></label>            
             <Input
+              className="input"
               name="cpf"
               placeholder="CPF"
               value={cpf}
@@ -85,6 +81,7 @@ const Login = ({ history }) => {
             />
 
             <Input
+              className="input"
               name="password"
               placeholder="Senha"
               type="password"
@@ -94,12 +91,11 @@ const Login = ({ history }) => {
             {validaLogin &&
               <Alert message="CPF ou Senha inválida." type="error" showIcon />
             }
-
-
             <button className="btn" type="submit">Entrar</button>
             <p>
               <Link to="/new-participant">Cadastrar-me</Link>
             </p>
+            
           </Form>
         </div>
       </main>

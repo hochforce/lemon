@@ -6,6 +6,7 @@ p {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 body {
@@ -13,19 +14,33 @@ body {
   color: #29292e;
 }
 
-body, input, button, textarea {
-  font: 400 16px 'Roboto', sans-serif;
+.main-content {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  max-width: 300px;
+  margin-left: 40%;
+  margin-top: 100px;
+  padding: 10px;
+  text-align: center;
 }
 
-#components-form-demo-normal-login .login-form {
-  max-width: 300px;
+body, input, button, textarea {
+  font: 400 16px 'Roboto', sans-serif;
+  
 }
-#components-form-demo-normal-login .login-form-forgot {
-  float: right;
+.login-form {
+  margin-left: 60px;
 }
-#components-form-demo-normal-login .ant-col-rtl .login-form-forgot {
-  float: left;
+
+.login-form .input {
+  margin-top: 10px;
 }
-#components-form-demo-normal-login .login-form-button {
-  width: 100%;
+.login-form .btn {
+  margin-top: 10px;
 }
+
+.login-form p {
+  margin-top: 10px;
+}
+
