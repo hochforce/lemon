@@ -1,6 +1,6 @@
 
-import { Breadcrumb, Layout, Space, Card } from 'antd';
-import { FilePdfFilled  } from '@ant-design/icons';
+import { Breadcrumb, Layout, Space, Card, Button } from 'antd';
+import { DownloadOutlined  } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
@@ -44,14 +44,14 @@ export default function Finalizados (){
                   style={{ width: 350, borderRadius: 8, margin: 40, }}
                   className="card"
                   actions={[
-                    <FilePdfFilled onClick={() => {setRedirect(`/new-certificate`)}} key="edit" />,
-                    
+                    <Button style={{backgroundColor:"lawngreen", border: "none", color: "darkgreen"}} type="primary" icon={<DownloadOutlined />} onClick={() => {setRedirect(`/new-certificate`)}}>Certificado</Button>
                   ]}
                 >
                   <Meta
                     title={<p style={{color: "snow"}}>{evento.titulo}</p>}
                     description={<p style={{color: "white"}}>{evento.descricao}</p>}
                   />
+                  
                 </Card>
               </Space>
             )}

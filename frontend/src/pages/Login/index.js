@@ -1,106 +1,88 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Form } from '@unform/web';
-import { Alert } from 'antd';
-import { useForm } from 'antd/lib/form/Form';
-import { Input } from '../../components/Form/input';
+import { Form, Input, Button, Alert } from 'antd';
 import { api } from '../../services/api';
-import './styles.css';
+import { useState } from 'react';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const Login = ({ history }) => {
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
-  const [auth, setAuth] = useState();
-  const formRef = useRef(null);
-  const [form] = useForm();
-  const [validaLogin, setValidaLogin] = useState();
+  const [validaLogin, setValidaLogin] = useState('');
+  let resp;
 
-
-  async function handleSubmit(data, { reset }, event) {
-    event.preventDefault();
-
+  async function handleSubmit() {
     try {
-      const schema = Yup.object().shape({
-        cpf: Yup.string().required('CPF é Obrigatório'),
-        password: Yup.string().required('Senha é Obrigatório')
-      })
-      await schema.validate(data, {
-        abortEarly: false,
-      })
-      let value;
-      try {
-        const response = await api.post('/auth', { cpf, password });
-        value = response;
-      } catch (error) {
-        setValidaLogin(error);
-      }
-      localStorage.setItem('USER-ID', value.data.user.id);
-      localStorage.setItem('TOKEN', value.data.token);
+      resp = await api.post('/auth', { cpf, password })
+      localStorage.setItem('USER-ID', resp.data.user.id);
+      localStorage.setItem('TOKEN', resp.data.token);
 
-
-      formRef.current.setErrors({});
-      reset();
-      if (value.data.user.tipo === "organizador") {
-        localStorage.setItem('organizador', value.data.user.id);
+      if (resp.data.user.tipo === "organizador") {
+        localStorage.setItem('organizador', resp.data.user.id);
         history.push('/manager');
-      } else if (value.data.user.tipo === "participante") {
+      } else if (resp.data.user.tipo === "participante") {
         history.push('/participant');
       }
       else {
         history.push('/');
       }
-
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const errorMessages = {};
-        error.inner.forEach(error => {
-          errorMessages[error.path] = error.message;
-        })
-        formRef.current.setErrors(errorMessages);
-      }
+    } catch (err) {
+      setValidaLogin(err);
     }
   }
 
   return (
-    <div id="login-page">
-      <aside>
-        
-      </aside>
-      <main>
-        <div className="main-content">
-          <Form name="normal_login" className="login-form" form={form} ref={formRef} onSubmit={handleSubmit}>
-            <label><strong>LEMON</strong></label>            
-            <Input
-              className="input"
-              name="cpf"
-              placeholder="CPF"
-              value={cpf}
-              onChange={event => setCpf(event.target.value)}
-            />
 
-            <Input
-              className="input"
-              name="password"
-              placeholder="Senha"
-              type="password"
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-            />
-            {validaLogin &&
-              <Alert message="CPF ou Senha inválida." type="error" showIcon />
-            }
-            <button className="btn" type="submit">Entrar</button>
-            <p>
-              <Link to="/new-participant">Cadastrar-me</Link>
-            </p>
-            
-          </Form>
-        </div>
-      </main>
-    </div>
+    <Form
+      name='basic'
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 5 }}
+      onFinish={handleSubmit}
+    >
+      <Form.Item
+        label="CPF"
+        name="username"
+        value={cpf}
+        onChange={event => setCpf(event.target.value)}
+        rules={[{ required: true, message: 'Seu CPF é necessário!' }]}
+      >
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Digite seu CPF"/>
+      </Form.Item>
+
+      <Form.Item
+        label="Senha"
+        name="password"
+        value={password}
+        onChange={event => setPassword(event.target.value)}
+        rules={[{ required: true, message: 'Sua senha é necessária!' }]}
+      >
+        <Input.Password prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Digite sua senha"/>
+      </Form.Item>
+
+      <Form.Item
+        wrapperCol={{ offset: 8, span: 5 }}
+      >
+        {validaLogin &&
+          <Alert
+
+            message="CPF ou Senha inválida."
+            type="error"
+            showIcon
+          />
+        }
+      </Form.Item>
+
+      <Form.Item
+        wrapperCol={{ offset: 8, span: 16 }}
+      >
+        <Button type="primary" htmlType="submit">
+          Entrar
+        </Button>
+      </Form.Item>
+    </Form>
+
   )
 }
 
-export default Login;
+export default Login

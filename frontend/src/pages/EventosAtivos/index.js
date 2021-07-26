@@ -1,6 +1,6 @@
 
-import { Breadcrumb, Layout, Space, Card } from 'antd';
-import { EditFilled } from '@ant-design/icons';
+import { Breadcrumb, Layout, Space, Card, Button } from 'antd';
+import { EditFilled, EditOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
@@ -41,15 +41,43 @@ export default function Ativos() {
           {Array.isArray(eventos) && eventos.map((evento) =>
             <Space direction="horizontal">
               <Card
-                style={{ width: 350, borderRadius: 8, margin: 40, }}
+                style={{
+                  width: 350,
+                  borderRadius: 8,
+                  margin: 40,
+                }}
                 className="card"
                 actions={[
-                  <EditFilled onClick={() => { setRedirect(`/inscricao/${evento.id}`) }} key="edit" />,
+                  <Button
+                    style={{
+                      backgroundColor: "lawngreen",
+                      border: "none",
+                      color: "darkgreen"
+                    }}
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setRedirect(`/inscricao/${evento.id}`)
+                    }}>
+                    Inscrever
+                  </Button>
                 ]}
               >
                 <Meta
-                  title={<p style={{ color: "snow" }}>{evento.titulo}</p>}
-                  description={<p style={{ color: "white" }}>{evento.descricao}</p>}
+                  title={
+                    <p style={{
+                      color: "snow"
+                    }}>
+                      {evento.titulo}
+                    </p>
+                  }
+                  description={
+                    <p style={{
+                      color: "white"
+                    }}>
+                      {evento.descricao}
+                    </p>
+                  }
                 />
               </Card>
             </Space>

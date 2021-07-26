@@ -64,10 +64,10 @@ const Participant = () => {
                 <a href="/participant">LEMON</a>
               </Col>
               <Col md={9} sm={24} xs={24}>
-                <Menu.Item onClick={()=>{setMenuItem(1)}} key="1" className="item" title="1" >Eventos Ativos</Menu.Item>
+                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="1" >Eventos Ativos</Menu.Item>
               </Col>
               <Col md={5} sm={24} xs={24}>
-                <Menu.Item onClick={()=>{setMenuItem(2)}} key="2" className="item">Eventos Encerrados</Menu.Item>
+                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(2)}} key="2" className="item">Eventos Encerrados</Menu.Item>
               </Col>
 
             </Row>
