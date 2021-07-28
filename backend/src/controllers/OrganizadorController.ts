@@ -46,6 +46,14 @@ class OrganizadorController {
                                   .getMany();
     response.json(organizadorList);
   }
+
+  async search(request: Request, response: Response) {
+    const organizadorSearch = await getRepository(Organizador)
+      .createQueryBuilder("organizadores")
+      .where("cpf = :cpf", {cpf: request.params.cpf})
+      .getOne();
+    return response.json(organizadorSearch);
+  }
 }
 
 export { OrganizadorController };

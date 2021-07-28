@@ -3,7 +3,7 @@
 
 
 .layout .header-menu {
-  background-color: #196618;
+  background-color: transparent;
 }
 
 
@@ -32,9 +32,10 @@
   font: 700 16px 'Roboto', sans-serif;
   margin-top: 20px;
   cursor: pointer;
+  
 }
 
-.layout .header-menu .menu .participante-info p {
+.layout .header-menu .menu .user-info p {
   color: #fff;
   font: 400 16px 'Roboto', sans-serif;
   
@@ -42,14 +43,14 @@
 
 
 
-.layout .header-menu .menu .participante-info .button-logout {
+.layout .header-menu .menu .user-info .button-logout {
   background-color: #062500;
   border: none;
   border-radius: 5px;
   transition: 0.4s;
   font: 400 16px 'Roboto', sans-serif;
 } 
-.layout .header-menu .menu .participante-info .button-logout:hover {
+.layout .header-menu .menu .user-info .button-logout:hover {
   background-color: #16460d;
 } 
 

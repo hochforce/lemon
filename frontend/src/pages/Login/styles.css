@@ -1,46 +1,79 @@
-p {
-  margin-top: 10px;
+.content-externo {
+  position: relative;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
+.content-externo .fundo {
+  display: block;
+  background-image: url(../../assets/images/fundo-login.png);
+  background-repeat: no-repeat, repeat;
+  background-attachment: scroll, fixed;
+  background-blend-mode: luminosity;
+  height: 100%;
+  width: 100%;
+  opacity : 0.1 ;
 }
-
-body {
-  background: #f8f8f8;
-  color: #29292e;
-}
-
-.main-content {
+ 
+.content-externo .content-login {
+  height: 100vh;
+  background-color: #fafafa;
   display: flex;
-  flex-direction: row;
-  background-color: rgb(255, 255, 255);
-  max-width: 300px;
-  margin-left: 40%;
-  margin-top: 100px;
-  padding: 10px;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
 }
 
-body, input, button, textarea {
-  font: 400 16px 'Roboto', sans-serif;
-  
-}
-.login-form {
-  margin-left: 60px;
+.content-externo .form-login{
+  height: 50%;
+  background-color: #7F998B;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+
 }
 
-.login-form .input {
-  margin-top: 10px;
-}
-.login-form .btn {
-  margin-top: 10px;
+.content-externo .form-login label{
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
 }
 
-.login-form p {
-  margin-top: 10px;
+.content-externo .form-login input {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  padding-left: 8px;
+  font-size: 16px;
 }
+
+.content-externo .form-login button {
+  margin-top: 20px;
+  border: none;
+  padding: 8px;
+  width: 100px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #616161;
+  background-color: #7EDBBB;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.content-externo .form-login button:hover{
+  background-color: rgb(120, 179, 166)
+}
+
+.content-externo .logo-login {
+  font-weight: bold;
+  font-size: 27px;
+  color: #498F6B;
+} 
 

@@ -53,7 +53,7 @@ const Participant = () => {
   return (
 
     <Layout className="layout">
-      <Header className="header-menu" style={{ position: 'fixed', zIndex: 1, width: "100%", height: 0 }}>
+      <Header className="header-menu">
 
         <Menu className="menu" mode="horizontal" style={{ borderRadius: "0px 0px 5px 5px" }}>
 
@@ -61,18 +61,18 @@ const Participant = () => {
             <Row gutter={24}>
               <Col md={10} sm={24} xs={24}>
                 {/* <Image src={imgLogo} alt="Logo do Site" style={{ width: 20 }} preview={false} /> */}
-                <a href="/participant">LEMON</a>
+                <a href="/participant" title="Home">LEMON</a>
               </Col>
               <Col md={9} sm={24} xs={24}>
-                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="1" >Eventos Ativos</Menu.Item>
+                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="Mostrar Eventos Ativos" >Eventos Ativos</Menu.Item>
               </Col>
               <Col md={5} sm={24} xs={24}>
-                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(2)}} key="2" className="item">Eventos Encerrados</Menu.Item>
+                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(2)}} key="2" className="item" title="Mostrar Eventos Encerrados">Eventos Encerrados</Menu.Item>
               </Col>
 
             </Row>
           </div>
-          <div className="participante-info" style={{ paddingRight: 0 }}>
+          <div className="user-info" style={{ paddingRight: 0 }}>
             <Row gutter={24}>
               <Col md={12} sm={24} xs={24} style={{ paddingRight: 0, textAlign: "right" }}>
                 <p style={{ margin: "20px 0px 0px" }}>{participante.nome}</p>
@@ -83,6 +83,7 @@ const Participant = () => {
                   type="primary"
                   icon={<PoweroffOutlined />}
                   onClick={handleLogOut}
+                  title="Desconectar do usuário atual"
                 >Sair</Button>
               </Col>
             </Row>

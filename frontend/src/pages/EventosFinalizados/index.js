@@ -36,7 +36,7 @@ export default function Finalizados (){
           <Breadcrumb.Item>Início</Breadcrumb.Item>
           <Breadcrumb.Item>Eventos Encerrados</Breadcrumb.Item>
         </Breadcrumb>
-        <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
+        <div className="site-layout-background" style={{ padding: 24, minHeight: 380, borderRadius: 5 }}>
           <div className="cards">
             {Array.isArray(eventos) && eventos.map((evento) =>
               <Space direction="horizontal">
