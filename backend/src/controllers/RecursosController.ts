@@ -13,6 +13,14 @@ class RecursosController{
     return response.json(recursos);
   }
 
+  async search(request: Request, response: Response) {
+    const buscaRecursos = await getRepository(Recursos)
+      .createQueryBuilder("recursos")
+      .where("id = :id", {id: request.params.id})
+      .getOne();
+    return response.json(buscaRecursos);
+  }
+
 }
 
 export { RecursosController };

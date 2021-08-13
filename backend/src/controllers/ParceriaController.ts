@@ -12,6 +12,14 @@ class ParceriaController{
     parceriaRepositorio.save(parceria);
     return response.json(parceria);
   }
+
+  async search(request: Request, response: Response) {
+    const buscaParcerias = await getRepository(Parceria)
+      .createQueryBuilder("parcerias")
+      .where("id = :id", {id: request.params.id})
+      .getOne();
+    return response.json(buscaParcerias);
+  }
 }
 
 export { ParceriaController };

@@ -38,8 +38,9 @@ const Login = ({ history }) => {
 
   return (
     <div className="content-externo">
-      <img className="fundo" src={fundo} alt="Imagem de Fundo" />
-      <div className="content-login">
+      <img className="img-fundo" src={fundo} alt="Imagem de Fundo" />
+
+      {/* <div className="content-login"> */}
         <label className="logo-login">LEMON</label>
         <div className="form-login">
           <label>CPF</label>
@@ -57,7 +58,7 @@ const Login = ({ history }) => {
 
           <button onClick={handleSubmit}>Entrar</button>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { Evento } from '../models/Evento';
 
 class EventoController {
@@ -29,6 +29,22 @@ class EventoController {
     return response.json(evento);
   }
 
+  async update(request: Request, response: Response) {
+    const {
+      titulo,
+      descricao,
+      tipo
+    } = request.body;
+    const eventoRepositorio = getRepository(Evento);
+    const evento = eventoRepositorio.save({
+      id: request.params.id,
+      titulo: request.body.titulo,
+      descricao: request.body.descricao,
+      tipo: request.body.tipo
+    });
+    return response.json(response.status);
+  }
+
   async list(request: Request, response: Response) {
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
@@ -47,16 +63,16 @@ class EventoController {
   async searchByStatusAtivo(request: Request, response: Response) {
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
-      .where("status = :status", {status: "ativo"})
+      .where("status = :status", { status: "ativo" })
       .getMany();
-      return response.json(eventosList);
+    return response.json(eventosList);
   }
   async searchByStatusFinalizado(request: Request, response: Response) {
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
-      .where("status = :status", {status: "finalizado"})
+      .where("status = :status", { status: "finalizado" })
       .getMany();
-      return response.json(eventosList);
+    return response.json(eventosList);
   }
 }
 

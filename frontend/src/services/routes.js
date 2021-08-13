@@ -14,6 +14,7 @@ import Ativos from '../pages/EventosAtivos';
 import Finalizados from '../pages/EventosFinalizados';
 import EventoInfo from '../pages/EventInfo';
 import EventoInscricao from '../pages/EventoInscricao';
+import ListaParticipantes from '../pages/ListaParticipantes';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props =>(
@@ -40,7 +41,8 @@ export default function Routes(){
         <PrivateRoute path="/eventos-ativos" component={Ativos} />
         <PrivateRoute path="/eventos-finalizados" component={Finalizados} />
         <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
-        <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />*asYup
+        <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
+        <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
       </Switch>
     </BrowserRouter>
   )

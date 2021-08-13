@@ -18,6 +18,14 @@ class EnderecoController{
     enderecoRepositorio.save(endereco);
     return response.json(endereco);
   }
+
+  async search(request: Request, response: Response) {
+    const buscaEndereco = await getRepository(Endereco)
+      .createQueryBuilder("enderecos")
+      .where("id = :id", {id: request.params.id})
+      .getOne();
+    return response.json(buscaEndereco);
+  }
 }
 
 export { EnderecoController };

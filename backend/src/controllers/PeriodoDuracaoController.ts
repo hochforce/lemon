@@ -14,6 +14,14 @@ class PeriodoDuracaoController{
     return response.json(periodoDuracao);
   }
 
+  async search(request: Request, response: Response) {
+    const buscaHorario = await getRepository(PeriodoDuracao)
+      .createQueryBuilder("periodo_duracao")
+      .where("id = :id", {id: request.params.id})
+      .getOne();
+    return response.json(buscaHorario);
+  }
+
 }
 
 export { PeriodoDuracaoController };
