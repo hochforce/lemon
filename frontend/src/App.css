@@ -27,10 +27,14 @@ html, body, #root {
   min-height: 100%;
   background-color: #f7f7f7;
   list-style: none;
+  width: 100%;
+  margin: 0px !important;
+  padding: 0px !important;
 }
 
 body {
   -webkit-font-smoothing: antialiased !important;
+  
 }
 
 body, input, button {
@@ -39,8 +43,6 @@ body, input, button {
 }
 
 .container {
-  margin: 20px auto 0;
-  max-width: 450px;
   width: 100%;
   display: flex;
   flex-direction: column;
