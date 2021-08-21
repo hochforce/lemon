@@ -43,7 +43,13 @@ router.post("/periododuracao", periodoDuracaoController.create);
 router.post("/user-auth", userAuthController.store);
 router.post("/auth", authController.authenticate);
 router.post("/inscricoes", inscricoesEventoController.create);
+
 router.post("/updates/:id", eventoController.update);
+router.post("/updatePeriodo/:id", periodoDuracaoController.update);
+router.post("/updateEndereco/:id", enderecoController.update);
+router.post("/updateParceria/:id", parceriaController.update);
+router.post("/updateRecurso/:id", recursosController.update);
+router.post("/updateBolsa/:id", bolsaController.update);
 
 router.get("/listEventos/:id", eventoController.search);
 router.get("/searchParticipant/:cpf", participanteController.search);
@@ -60,6 +66,7 @@ router.get("/listPeriodos/:id", periodoDuracaoController.search);
 router.get("/listEnderecos/:id", enderecoController.search);
 router.get("/listParcerias/:id", parceriaController.search);
 router.get("/listRecursos/:id", recursosController.search);
+router.get("/listBolsa/:id", bolsaController.search);
 
 export { router }
 

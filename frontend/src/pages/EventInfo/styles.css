@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+
 .header{
   background-color: #7ffaae;
   width: 100%;
@@ -11,6 +14,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  margin-top: 10px;
 }
 
 .content-modal{
@@ -65,6 +69,57 @@ button:hover{
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+
+/*+++++++++++MENU+++++++++++++++*/
+.header-menu {
+  background-color: transparent;
+}
+
+.menu {
+  background-color: #196618;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.item{
+  color: #a3e021;
+  font: 400 16px 'Roboto', sans-serif;
+  margin-top: 20px;
+  margin-right: 40px;
+}
+
+.item:hover{
+  color: #c2eb6b;
+  transition: 0.2s;
+}
+
+.menu-item a{
+  color: #fff;
+  font: 700 16px 'Roboto', sans-serif;
+  margin-top: 20px;
+  cursor: pointer;
+  
+}
+
+.user-info p {
+  color: #fff;
+  font: 400 16px 'Roboto', sans-serif;
+  
+}
+
+.button-logout {
+  background-color: #062500;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s;
+  font: 400 16px 'Roboto', sans-serif;
+} 
+
+.button-logout:hover {
+  background-color: #16460d;
+} 
 
 /* Safari */
 @-webkit-keyframes spin {

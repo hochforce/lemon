@@ -21,6 +21,24 @@ class RecursosController{
     return response.json(buscaRecursos);
   }
 
+  async update(request: Request, response: Response) {
+    const {
+      id_bolsa, 
+      materiais, 
+      recursos_humanos, 
+      instalacoes
+    } = request.body;
+    const materialRepositorio = getRepository(Recursos);
+    const recurso = materialRepositorio.save({
+      id: request.params.id,
+      id_bolsa: request.body.id_bolsa,
+      materiais: request.body.materiais,
+      recursos_humanos: request.body.recursos_humanos,
+      instalacoes: request.body.instalacoes
+    });
+    return response.json(response.status);
+  }
+
 }
 
 export { RecursosController };

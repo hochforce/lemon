@@ -20,6 +20,22 @@ class ParceriaController{
       .getOne();
     return response.json(buscaParcerias);
   }
+
+  async update(request: Request, response: Response) {
+    const {
+      parceiro, 
+      tipo_parceria, 
+      valor
+    } = request.body;
+    const parceriaRepositorio = getRepository(Parceria);
+    const parceria = parceriaRepositorio.save({
+      id: request.params.id,
+      parceiro: request.body.parceiro,
+      tipo_parceria: request.body.tipo_parceria,
+      valor: request.body.valor
+    });
+    return response.json(response.status);
+  }
 }
 
 export { ParceriaController };
