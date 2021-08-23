@@ -89,7 +89,6 @@ const Manager = () => {
       </Header>
 
       {menuItem === 1 ? <Ativos /> : <Finalizados />}
-
       <Rodape />
 
       {redirect && <Redirect to={{ pathname: redirect }} />}

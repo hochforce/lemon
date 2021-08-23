@@ -59,3 +59,7 @@ input:checked + .checkEventos .titulo::after {
   transform: rotate(45deg) scale(1.08);
 }
 
+.criar-evento{
+  color:#062500;
+}
+

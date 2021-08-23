@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 
 export default function Ativos() {
- 
+
   const { Content } = Layout;
   const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
@@ -93,8 +93,8 @@ export default function Ativos() {
           </div>
 
           :
-
           <div className="site-layout-background" style={{ padding: 24, minHeight: 380, borderRadius: 5 }}>
+            <a href="/new-event" className="criar-evento">+ NOVO EVENTO</a>
             <div className="cards">
               {Array.isArray(eventos) && eventos.map((evento) =>
                 <Space direction="horizontal">
@@ -120,18 +120,18 @@ export default function Ativos() {
                         Editar
                       </Button>,
                       <Button
-                      style={{
-                        backgroundColor: "lawngreen",
-                        border: "none",
-                        color: "darkgreen"
-                      }}
-                      type="primary"
-                      icon={<DeleteOutlined />}
-                      onClick={() => {
-                        setRedirect(`/evento-info/${evento.id}`)
-                      }}>
-                      Excluir
-                    </Button>
+                        style={{
+                          backgroundColor: "lawngreen",
+                          border: "none",
+                          color: "darkgreen"
+                        }}
+                        type="primary"
+                        icon={<DeleteOutlined />}
+                        onClick={() => {
+                          setRedirect(`/evento-info/${evento.id}`)
+                        }}>
+                        Excluir
+                      </Button>
                     ]}
                   >
                     <Meta

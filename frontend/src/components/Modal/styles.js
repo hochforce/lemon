@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const Container = styled.div`
   width: 100%;
   display: flex;
@@ -9,7 +10,7 @@ export const Container = styled.div`
   margin-top: 20px;
 `
 
-export const Header = styled.header`
+export const Headerm = styled.header`
   background-color: ${({ background }) => {
     if (background === undefined) {
       return '#c4c4c4';
@@ -18,13 +19,13 @@ export const Header = styled.header`
       return '#ef5350'
     }
     return '#a2fcc4'
-  }};
-  width: 80%;
+  }} !important;
+  width: 80% !important;
   height: 50px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   cursor: pointer;
   border-radius: 4px 4px 0 0;
 `
@@ -37,6 +38,11 @@ export const Content = styled.div`
 `
 
 export const Title = styled.h1`
-  color: #212121 !important
+  color: #062500 !important;
+  margin-left: 30px !important;
 `
+export const Icon = styled.div`
+  margin-right: 30px;
+`
+
 
