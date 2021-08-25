@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { api } from '../../services/api';
 import { Modal } from '../../components/Modal';
-import { Button, Menu, Layout, Row, Col, } from 'antd';
+import { Button, Menu, Layout, Row, Col, Result, } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
 import './styles.css';
 import { Headerm } from '../../components/Modal/styles';
 
 
-const EventInfo = ({ match }) => {
+const EventInfo = ({ match, history }) => {
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
   const [endereco, setEndereco] = useState('');
@@ -162,9 +162,19 @@ const EventInfo = ({ match }) => {
 
   return (
     <>
-      <div className="container">
+      {!userId ?
+        <Result
+          status="403"
+          title="403"
+          subTitle="Desculpe, você não pode acessar essa página."
+          extra={<Button type="primary" onClick={()=> history.push("/participant")}>Voltar</Button>}
+        />
+        
+        :
 
-        <div className="header-edicao">
+        <div className="container">
+
+          <div className="header-edicao">
             <div className="logo-edicao" >
               <a href="/manager">LEMON</a>
             </div>
@@ -180,254 +190,255 @@ const EventInfo = ({ match }) => {
                 onClick={handleLogOut}
               >Sair</Button>
             </div>
-          
-        </div>
 
-        <div className="eventoInfo">
-          <Modal title="Descrição" background={validate.event}>
-            <div className="content-modal">
-              <div className="content-column">
-                <label>Título</label>
-                <input
-                  type="text"
-                  value={evento.titulo}
-                  onChange={event => setEvento({ ...evento, titulo: event.target.value })}
-                />
-              </div>
+          </div>
 
-              <div className="content-column">
-                <label>Descrição</label>
-                <input
-                  type="text"
-                  value={evento.descricao}
-                  onChange={event => setEvento({ ...evento, descricao: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Tipo</label>
-                <input
-                  type="text"
-                  value={evento.tipo}
-                  onChange={event => setEvento({ ...evento, tipo: event.target.value })}
-                />
-              </div>
-            </div>
-            <button onClick={handleChangeDescricao} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
-          <Modal title="Data e Horário" background={validate.time}>
-            <div className="content-modal">
-              <div className="content-column">
-                <label>Data Início</label>
-                <input
-                  type="date"
-                  value={periodo.data_inicio}
-                  onChange={event => setPeriodo({ ...periodo, data_inicio: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Hora Início</label>
-                <input
-                  type="time"
-                  value={periodo.hora_inicio}
-                  onChange={event => setPeriodo({ ...periodo, hora_inicio: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Data Fim</label>
-                <input
-                  type="date"
-                  value={periodo.data_fim}
-                  onChange={event => setPeriodo({ ...periodo, data_fim: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Hora Fim</label>
-                <input
-                  type="time"
-                  value={periodo.hora_fim}
-                  onChange={event => setPeriodo({ ...periodo, hora_fim: event.target.value })}
-                />
-              </div>
-            </div>
-            <button onClick={handleChangeDataEHorario} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
-          <Modal title="Local" background={validate.address}>
-            <div className="content-column">
-              <div className="content-column">
-                <label>Logradouro</label>
-                <input
-                  type="text"
-                  className="street"
-                  value={endereco.logradouro}
-                  onChange={event => setEndereco({ ...endereco, logradouro: event.target.value })}
-                />
-              </div>
-
+          <div className="eventoInfo">
+            <Modal title="Descrição" background={validate.event}>
               <div className="content-modal">
                 <div className="content-column">
-                  <label>Número</label>
+                  <label>Título</label>
                   <input
-                    type="number"
-                    value={endereco.numero}
-                    onChange={event => setEndereco({ ...endereco, numero: event.target.value })}
+                    type="text"
+                    value={evento.titulo}
+                    onChange={event => setEvento({ ...evento, titulo: event.target.value })}
                   />
                 </div>
 
                 <div className="content-column">
-                  <label>Complemento</label>
+                  <label>Descrição</label>
                   <input
                     type="text"
-                    value={endereco.complemento}
-                    onChange={event => setEndereco({ ...endereco, complemento: event.target.value })}
+                    value={evento.descricao}
+                    onChange={event => setEvento({ ...evento, descricao: event.target.value })}
                   />
                 </div>
 
                 <div className="content-column">
-                  <label>Bairro</label>
+                  <label>Tipo</label>
                   <input
                     type="text"
-                    value={endereco.bairro}
-                    onChange={event => setEndereco({ ...endereco, bairro: event.target.value })}
+                    value={evento.tipo}
+                    onChange={event => setEvento({ ...evento, tipo: event.target.value })}
                   />
                 </div>
               </div>
+              <button onClick={handleChangeDescricao} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+            <Modal title="Data e Horário" background={validate.time}>
+              <div className="content-modal">
+                <div className="content-column">
+                  <label>Data Início</label>
+                  <input
+                    type="date"
+                    value={periodo.data_inicio}
+                    onChange={event => setPeriodo({ ...periodo, data_inicio: event.target.value })}
+                  />
+                </div>
 
+                <div className="content-column">
+                  <label>Hora Início</label>
+                  <input
+                    type="time"
+                    value={periodo.hora_inicio}
+                    onChange={event => setPeriodo({ ...periodo, hora_inicio: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Data Fim</label>
+                  <input
+                    type="date"
+                    value={periodo.data_fim}
+                    onChange={event => setPeriodo({ ...periodo, data_fim: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Hora Fim</label>
+                  <input
+                    type="time"
+                    value={periodo.hora_fim}
+                    onChange={event => setPeriodo({ ...periodo, hora_fim: event.target.value })}
+                  />
+                </div>
+              </div>
+              <button onClick={handleChangeDataEHorario} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+            <Modal title="Local" background={validate.address}>
+              <div className="content-column">
+                <div className="content-column">
+                  <label>Logradouro</label>
+                  <input
+                    type="text"
+                    className="street"
+                    value={endereco.logradouro}
+                    onChange={event => setEndereco({ ...endereco, logradouro: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-modal">
+                  <div className="content-column">
+                    <label>Número</label>
+                    <input
+                      type="number"
+                      value={endereco.numero}
+                      onChange={event => setEndereco({ ...endereco, numero: event.target.value })}
+                    />
+                  </div>
+
+                  <div className="content-column">
+                    <label>Complemento</label>
+                    <input
+                      type="text"
+                      value={endereco.complemento}
+                      onChange={event => setEndereco({ ...endereco, complemento: event.target.value })}
+                    />
+                  </div>
+
+                  <div className="content-column">
+                    <label>Bairro</label>
+                    <input
+                      type="text"
+                      value={endereco.bairro}
+                      onChange={event => setEndereco({ ...endereco, bairro: event.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className="content-modal">
+
+                  <div className="content-column">
+                    <label>Cidade</label>
+                    <input
+                      type="text"
+                      value={endereco.cidade}
+                      onChange={event => setEndereco({ ...endereco, cidade: event.target.value })}
+                    />
+                  </div>
+
+                  <div className="content-column">
+                    <label>Estado</label>
+                    <input
+                      type="text"
+                      value={endereco.estado}
+                      onChange={event => setEndereco({ ...endereco, estado: event.target.value })}
+                    />
+                  </div>
+
+                  <div className="content-column">
+                    <label>CEP</label>
+                    <input
+                      type="text"
+                      value={endereco.cep}
+                      onChange={event => setEndereco({ ...endereco, cep: event.target.value })}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button onClick={handleChangeLocal} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+            <Modal title="Parceria" background={validate.together}>
+              <div className="content-modal">
+                <div className="content-column">
+                  <label>Parceiro</label>
+                  <input
+                    type="text"
+                    value={parceria.parceiro}
+                    onChange={event => setParceria({ ...parceria, parceiro: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Tipo de Parceria</label>
+                  <input
+                    type="text"
+                    value={parceria.tipo_parceria}
+                    onChange={event => setParceria({ ...parceria, tipo_parceria: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Valor</label>
+                  <input
+                    type="text"
+                    value={parceria.valor}
+                    onChange={event => setParceria({ ...parceria, valor: event.target.value })}
+                  />
+                </div>
+              </div>
+              <button onClick={handleChangeParceria} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+            <Modal title="Recursos" background={validate.necessary}>
+              <div className="content-modal">
+                <div className="content-column">
+                  <label>Materiais</label>
+                  <input
+                    type="text"
+                    value={recurso.materiais}
+                    onChange={event => setRecurso({ ...recurso, materiais: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Recursos humanos</label>
+                  <input
+                    type="text"
+                    value={recurso.recursos_humanos}
+                    onChange={event => setRecurso({ ...recurso, recursos_humanos: event.target.value })}
+                  />
+                </div>
+
+                <div className="content-column">
+                  <label>Instalações</label>
+                  <input
+                    type="text"
+                    value={recurso.instalacoes}
+                    onChange={event => setRecurso({ ...recurso, instalacoes: event.target.value })}
+                  />
+                </div>
+              </div>
+              <button onClick={handleChangeRecurso} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+            <Modal title="Bolsas" background={validate.scholarship}>
               <div className="content-modal">
 
                 <div className="content-column">
-                  <label>Cidade</label>
+                  <label>Financiamento</label>
                   <input
                     type="text"
-                    value={endereco.cidade}
-                    onChange={event => setEndereco({ ...endereco, cidade: event.target.value })}
+                    value={bolsa.financiamento}
+                    onChange={event => setBolsa({ ...bolsa, financiamento: event.target.value })}
                   />
                 </div>
 
                 <div className="content-column">
-                  <label>Estado</label>
+                  <label>Tipo de bolsa</label>
                   <input
                     type="text"
-                    value={endereco.estado}
-                    onChange={event => setEndereco({ ...endereco, estado: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>CEP</label>
-                  <input
-                    type="text"
-                    value={endereco.cep}
-                    onChange={event => setEndereco({ ...endereco, cep: event.target.value })}
+                    value={bolsa.tipo_bolsa}
+                    onChange={event => setBolsa({ ...bolsa, tipo_bolsa: event.target.value })}
                   />
                 </div>
               </div>
-            </div>
-            <button onClick={handleChangeLocal} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
-          <Modal title="Parceria" background={validate.together}>
-            <div className="content-modal">
-              <div className="content-column">
-                <label>Parceiro</label>
-                <input
-                  type="text"
-                  value={parceria.parceiro}
-                  onChange={event => setParceria({ ...parceria, parceiro: event.target.value })}
-                />
-              </div>
+              <button onClick={handleChangeBolsa} >
+                {!progressEvent ? "Salvar" : <div className="loader"></div>}
+              </button>
+            </Modal>
+          </div>
 
-              <div className="content-column">
-                <label>Tipo de Parceria</label>
-                <input
-                  type="text"
-                  value={parceria.tipo_parceria}
-                  onChange={event => setParceria({ ...parceria, tipo_parceria: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Valor</label>
-                <input
-                  type="text"
-                  value={parceria.valor}
-                  onChange={event => setParceria({ ...parceria, valor: event.target.value })}
-                />
-              </div>
-            </div>
-            <button onClick={handleChangeParceria} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
-          <Modal title="Recursos" background={validate.necessary}>
-            <div className="content-modal">
-              <div className="content-column">
-                <label>Materiais</label>
-                <input
-                  type="text"
-                  value={recurso.materiais}
-                  onChange={event => setRecurso({ ...recurso, materiais: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Recursos humanos</label>
-                <input
-                  type="text"
-                  value={recurso.recursos_humanos}
-                  onChange={event => setRecurso({ ...recurso, recursos_humanos: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Instalações</label>
-                <input
-                  type="text"
-                  value={recurso.instalacoes}
-                  onChange={event => setRecurso({ ...recurso, instalacoes: event.target.value })}
-                />
-              </div>
-            </div>
-            <button onClick={handleChangeRecurso} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
-          <Modal title="Bolsas" background={validate.scholarship}>
-            <div className="content-modal">
-
-              <div className="content-column">
-                <label>Financiamento</label>
-                <input
-                  type="text"
-                  value={bolsa.financiamento}
-                  onChange={event => setBolsa({ ...bolsa, financiamento: event.target.value })}
-                />
-              </div>
-
-              <div className="content-column">
-                <label>Tipo de bolsa</label>
-                <input
-                  type="text"
-                  value={bolsa.tipo_bolsa}
-                  onChange={event => setBolsa({ ...bolsa, tipo_bolsa: event.target.value })}
-                />
-              </div>
-            </div>
-            <button onClick={handleChangeBolsa} >
-              {!progressEvent ? "Salvar" : <div className="loader"></div>}
-            </button>
-          </Modal>
         </div>
-
-      </div>
+      }
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </>
   )

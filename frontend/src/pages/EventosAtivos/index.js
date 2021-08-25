@@ -14,37 +14,65 @@ export default function Ativos() {
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
   const [organizador, setOrganizador] = useState('');
+  const [checkInscricao, setCheckInscricao] = useState('');
+  const [cpf, setCpf] = useState('');
 
-  async function search() {
-    const buscaCPF = await api.get(`/searchCpf/${userId}`);
-    const cpf = buscaCPF.data.cpf;
-    const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
-    setParticipante(buscaParticipante.data);
-    const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
-    setOrganizador(buscaOrganizador);
+  async function searchEvent() {
     const buscaEventosAtivos = await api.get('/listEventosAtivos');
     setEventos(buscaEventosAtivos.data);
+  }
+
+  async function searchParticipant() {
+    const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
+    setParticipante(buscaParticipante.data);
   };
 
+  async function searchOrganizador() {
+    const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
+    setOrganizador(buscaOrganizador);
+  }
+  async function searchInscricao() {
+    const buscaInscricao = await api.get(`/searchInscricao/${participante.id}`);
+    setCheckInscricao(buscaInscricao.data);
+    
+  }
+  // console.log("TremB: ", eventos.map((event) => event.id === checkInscricao.id_evento))
+  
+
+  async function searchCpf() {
+    const buscaCPF = await api.get(`/searchCpf/${userId}`);
+    setCpf(buscaCPF.data.cpf)
+
+  }
+
   useEffect(() => {
-    (async function () {
-      search()
-    })()
+    searchEvent()
   }, [])
+
+
+  useEffect(() => {
+    searchCpf()
+    searchParticipant()
+    searchOrganizador()
+    searchInscricao()
+  }, [eventos])
 
   return (
 
     <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
       <Breadcrumb style={{ margin: '16px 0' }}>
         <Breadcrumb.Item>Início</Breadcrumb.Item>
+
         <Breadcrumb.Item>Eventos Ativos</Breadcrumb.Item>
       </Breadcrumb>
+
 
       {
         participante ?
 
           <div className="site-layout-background" style={{ padding: 24, minHeight: 380, borderRadius: 5 }}>
             <div className="cards">
+
               {Array.isArray(eventos) && eventos.map((evento) =>
                 <Space direction="horizontal">
                   <Card
@@ -55,6 +83,23 @@ export default function Ativos() {
                     }}
                     className="card"
                     actions={[
+                      // {checkInscricao.id_participante === participante.id && eventos.map((event)=>{event.id === checkInscricao.id_evento})  ? 
+                      //   : 
+
+                      // }
+                      // <Button
+                      //   style={{
+                      //     backgroundColor: "lawngreen",
+                      //     border: "none",
+                      //     color: "darkgreen"
+                      //   }}
+                      //   type="primary"
+                      //   icon={<EditOutlined />}
+                      //   onClick={() => {
+                      //     setRedirect(`/inscricao/${evento.id}`)
+                      //   }}>
+                      //   Inscrever
+                      // </Button>
                       <Button
                         style={{
                           backgroundColor: "lawngreen",

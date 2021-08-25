@@ -243,6 +243,7 @@ const NewEvent = ({ match }) => {
 
               <div className="content-modal">
                 <div className="content-column">
+                  <label>Número</label>
                   <input name="numero"
                     type="number"
                     placeholder="Número"

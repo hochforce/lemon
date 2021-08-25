@@ -5,7 +5,7 @@ import { Form } from '@unform/web';
 import { Input } from '../../components/Form/input';
 import { api } from '../../services/api';
 import './styles.css';
- 
+
 export default function NewParticipant({ history }) {
 
   const [nome, setNome] = useState('');
@@ -39,33 +39,28 @@ export default function NewParticipant({ history }) {
         campus_instituicao,
         password
       });
-
-      await api.post('/user-auth', {
-        cpf,
-        password,
-        "tipo": "participante"
-      })
-      
-      // const { id } = saveParticipante.data;
-      // localStorage.setItem('participante', id);
-
-      //Para pegar uma propriedade do response
-      //const { _id } = response.data;
-
+      try {
+        await api.post('/user-auth', {
+          cpf,
+          password,
+          "tipo": "participante"
+        })
+        history.push('/dashboard');
+      } catch {
+        alert("CPF inválido!");
+      }
       formRef.current.setErrors({});
       reset();
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
-
         err.inner.forEach(error => {
           errorMessages[error.path] = error.message;
         })
-
         formRef.current.setErrors(errorMessages);
       }
     }
-    history.push('/dashboard');
+
   }
 
   return (

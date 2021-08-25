@@ -18,6 +18,7 @@ const Participant = () => {
   const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
   const [menuItem, setMenuItem] = useState('');
+  
 
   async function search() {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
@@ -27,8 +28,8 @@ const Participant = () => {
     setParticipante(buscaParticipante.data);
 
     const buscaEventos = await api.get('/listEventos');
-
     setEventos(buscaEventos.data);
+    
   };
   useEffect(() => {
     (async function () {

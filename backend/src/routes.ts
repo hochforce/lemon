@@ -67,6 +67,7 @@ router.get("/listEnderecos/:id", enderecoController.search);
 router.get("/listParcerias/:id", parceriaController.search);
 router.get("/listRecursos/:id", recursosController.search);
 router.get("/listBolsa/:id", bolsaController.search);
+router.get("/searchInscricao/:id", inscricoesEventoController.search);
 
 export { router }
 

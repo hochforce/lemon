@@ -43,9 +43,9 @@ const Login = ({ history }) => {
       {/* <div className="content-login"> */}
         <label className="logo-login">LEMON</label>
         <div className="form-login">
-          <label>CPF</label>
+          <label>CPF (Somente números)</label>
           <input
-            value={cpf}
+            value= {cpf}
             onChange={event => setCpf(event.target.value)}
             type="text"
           />

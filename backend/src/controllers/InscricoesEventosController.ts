@@ -14,6 +14,14 @@ class InscricoesEventoController{
     return response.json(inscricoeseventos);
   }
 
+  async search(request: Request, response: Response) {
+    const search = await getRepository(InscricoesEventos)
+      .createQueryBuilder("inscricoesEventos")
+      .where("id_participante = :id", {id: request.params.id})
+      .getOne();
+    return response.json(search);
+  }
+
   // async list(request: Request, response: Response){
   //   const eventosList = await getRepository(Evento)
   //                       .createQueryBuilder("eventos")

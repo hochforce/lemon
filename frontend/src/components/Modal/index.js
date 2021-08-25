@@ -17,7 +17,6 @@ export const Modal = ({ title, children, background }) => {
         </Title>
         <Icon>
           {!showModal ? <img src={down} alt="" /> : <img src={up} alt="" />}
-        
         </Icon>
       </Headerm>
       <Content showModal={showModal}>
