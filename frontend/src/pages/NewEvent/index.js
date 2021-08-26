@@ -107,7 +107,13 @@ const NewEvent = ({ match }) => {
         id_endereco,
         status
       });
+
+      setValidate({ ...validate, event: true })
+      setValidate({ ...validate, time: true })
+      setValidate({ ...validate, address: true })
       setValidate({ ...validate, together: true })
+      setValidate({ ...validate, necessary: true })
+      setValidate({ ...validate, scholarship: true })
     } catch (err) {
       setValidate({ ...validate, together: false })
     }

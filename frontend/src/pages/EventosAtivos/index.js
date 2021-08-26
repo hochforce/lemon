@@ -17,45 +17,52 @@ export default function Ativos() {
   const [checkInscricao, setCheckInscricao] = useState('');
   const [cpf, setCpf] = useState('');
 
-  async function searchEvent() {
+  const searchEvent = async () => {
     const buscaEventosAtivos = await api.get('/listEventosAtivos');
     setEventos(buscaEventosAtivos.data);
+
   }
 
-  async function searchParticipant() {
-    const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
-    setParticipante(buscaParticipante.data);
-  };
-
-  async function searchOrganizador() {
-    const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
-    setOrganizador(buscaOrganizador);
-  }
-  async function searchInscricao() {
-    const buscaInscricao = await api.get(`/searchInscricao/${participante.id}`);
-    setCheckInscricao(buscaInscricao.data);
-    
-  }
-  // console.log("TremB: ", eventos.map((event) => event.id === checkInscricao.id_evento))
-  
-
-  async function searchCpf() {
+  const searchCpf = async () => {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     setCpf(buscaCPF.data.cpf)
 
   }
 
+  const searchParticipant = async () => {
+    const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
+    setParticipante(buscaParticipante.data);
+    console.log("CPF: ", cpf)
+  };
+
+  const searchOrganizador = async () => {
+    const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
+    setOrganizador(buscaOrganizador);
+  }
+  // const searchInscricao = async () => {
+  //   const buscaInscricao = await api.get(`/searchInscricao/${participante.id}`);
+  //   setCheckInscricao(buscaInscricao.data);
+
+  // }
+  // console.log("TremB: ", eventos.map((event) => event.id === checkInscricao.id_evento))
+
+
+
+
   useEffect(() => {
-    searchEvent()
+
   }, [])
 
 
   useEffect(() => {
-    searchCpf()
-    searchParticipant()
-    searchOrganizador()
-    searchInscricao()
-  }, [eventos])
+    (() => {
+      searchEvent()
+      searchCpf()
+      searchParticipant()
+      searchOrganizador()
+      // searchInscricao()
+    })()
+  }, [])
 
   return (
 
@@ -139,7 +146,7 @@ export default function Ativos() {
 
           :
           <div className="site-layout-background" style={{ padding: 24, minHeight: 380, borderRadius: 5 }}>
-            <a href="/new-event" className="criar-evento">+ NOVO EVENTO</a>
+            <a href="/new-event" className="novo-evento">+ NOVO EVENTO</a>
             <div className="cards">
               {Array.isArray(eventos) && eventos.map((evento) =>
                 <Space direction="horizontal">

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+
 .content-externo {
   position: relative;
   
@@ -86,10 +89,24 @@
 .logo-login {
   font-weight: bold;
   font-size: 27px;
-  color: #7F998B;
+  color: #616161;
   position: absolute;
   bottom: 50%;
   left: 47%;
   top: 10%;
 } 
 
+.envios {
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+  
+  
+}
+
+a{
+  color: #fff !important;
+  text-decoration: none !important;
+  font: 400 16px 'Roboto', sans-serif;
+  margin-left: 8px;
+}

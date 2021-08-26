@@ -1,6 +1,7 @@
 // import { Form, Input, Button, Alert } from 'antd';
 import { api } from '../../services/api';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './styles.css';
 import fundo from '../../../src/assets/images/fundo-login.png'
@@ -41,23 +42,30 @@ const Login = ({ history }) => {
       <img className="img-fundo" src={fundo} alt="Imagem de Fundo" />
 
       {/* <div className="content-login"> */}
-        <label className="logo-login">LEMON</label>
-        <div className="form-login">
-          <label>CPF (Somente números)</label>
-          <input
-            value= {cpf}
-            onChange={event => setCpf(event.target.value)}
-            type="text"
-          />
+      <label className="logo-login">LEMON</label>
+      <div className="form-login">
+        <label>CPF (Somente números)</label>
+        <input
+          value={cpf}
+          onChange={event => setCpf(event.target.value)}
+          type="text"
+        />
 
-          <label>Senha</label>
-          <input
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-            type="password" />
+        <label>Senha</label>
+        <input
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+          type="password" />
+        <div className="envios">
 
           <button onClick={handleSubmit}>Entrar</button>
+          
+          <p>
+            <Link to="/new-participant">Cadastrar-me</Link>
+          </p>
+          
         </div>
+      </div>
       {/* </div> */}
     </div>
   )

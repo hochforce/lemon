@@ -45,7 +45,7 @@ export default function NewParticipant({ history }) {
           password,
           "tipo": "participante"
         })
-        history.push('/dashboard');
+        history.push('/participant');
       } catch {
         alert("CPF inválido!");
       }
@@ -65,44 +65,55 @@ export default function NewParticipant({ history }) {
 
   return (
     <>
-      <div className="menu-temp">
-        <a href="http://localhost:3000/new-participant">Participante</a>
-        <a href="http://localhost:3000/new-manager">Organizador</a>
-        <a href="http://localhost:3000/new-event">Evento</a>
-        <a href="http://localhost:3000/">Login</a>
-        <a href="http://localhost:3000/new-certificate">Gerar Certificado</a>
-        <a href="http://localhost:3000/manager">Dash Organizador</a>
+      <div className="header-cadastro">
+        <div className="logo-cadastro" >
+          <a href="/">LEMON</a>
+        </div>
+        <div className="titulo-cadastro">
+          <h1>Cadastro de Participante</h1>
+        </div>
       </div>
-      <h1>CADASTRO DE NOVO USUÁRIO</h1>
-      <div className="container">
+
+      <div className="content-cadastro">
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <label >Usuário</label>
-          <Input name="nome"
-            placeholder="Nome"
-            value={nome}
-            onChange={event => setNome(event.target.value)}
-          />
-          <Input name="sobrenome"
-            placeholder="Sobrenome"
-            value={sobrenome}
-            onChange={event => setSobrenome(event.target.value)}
-          />
-          <Input name="cpf"
-            placeholder="CPF"
-            value={cpf}
-            onChange={event => setCpf(event.target.value)}
-          />
-          <Input name="campus_instituicao"
-            placeholder="Campus Instituição"
-            value={campus_instituicao}
-            onChange={event => setCampus_instituicao(event.target.value)}
-          />
-          <Input name="password"
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
+          
+              <label >Nome</label>
+              <Input name="nome"
+                placeholder="Nome"
+                value={nome}
+                onChange={event => setNome(event.target.value)}
+              />
+            
+              <label className="tro">Sobrenome</label>
+              <Input name="sobrenome"
+                placeholder="Sobrenome"
+                value={sobrenome}
+                onChange={event => setSobrenome(event.target.value)}
+              />
+           
+          
+              <label>CPF (Somente Números)</label>
+              <Input name="cpf"
+                placeholder="CPF"
+                value={cpf}
+                onChange={event => setCpf(event.target.value)}
+              />
+            
+           
+              <label>Campus/Instituição</label>
+              <Input name="campus_instituicao"
+                placeholder="Campus Instituição"
+                value={campus_instituicao}
+                onChange={event => setCampus_instituicao(event.target.value)}
+              />
+           
+              <label>Senha</label>
+              <Input name="password"
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={event => setPassword(event.target.value)}
+              />
 
           <button className="btn" type="submit">Cadastrar</button>
           <Link to="/">Já sou cadastrado</Link>
