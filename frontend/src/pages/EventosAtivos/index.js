@@ -14,53 +14,25 @@ export default function Ativos() {
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
   const [organizador, setOrganizador] = useState('');
-  const [checkInscricao, setCheckInscricao] = useState('');
-  const [cpf, setCpf] = useState('');
+  
 
-  const searchEvent = async () => {
-    const buscaEventosAtivos = await api.get('/listEventosAtivos');
-    setEventos(buscaEventosAtivos.data);
+  async function search () {
+    const buscaCpf = await api.get(`/searchCpf/${userId}`);
+    const cpf = buscaCpf.data.cpf;
 
-  }
-
-  const searchCpf = async () => {
-    const buscaCPF = await api.get(`/searchCpf/${userId}`);
-    setCpf(buscaCPF.data.cpf)
-
-  }
-
-  const searchParticipant = async () => {
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
-    console.log("CPF: ", cpf)
-  };
-
-  const searchOrganizador = async () => {
+    
     const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
     setOrganizador(buscaOrganizador);
+
+    const buscaEventosAtivos = await api.get('/listEventosAtivos');
+    setEventos(buscaEventosAtivos.data);
   }
-  // const searchInscricao = async () => {
-  //   const buscaInscricao = await api.get(`/searchInscricao/${participante.id}`);
-  //   setCheckInscricao(buscaInscricao.data);
-
-  // }
-  // console.log("TremB: ", eventos.map((event) => event.id === checkInscricao.id_evento))
-
-
-
 
   useEffect(() => {
-
-  }, [])
-
-
-  useEffect(() => {
-    (() => {
-      searchEvent()
-      searchCpf()
-      searchParticipant()
-      searchOrganizador()
-      // searchInscricao()
+    (async function() {
+      search()
     })()
   }, [])
 
@@ -90,23 +62,6 @@ export default function Ativos() {
                     }}
                     className="card"
                     actions={[
-                      // {checkInscricao.id_participante === participante.id && eventos.map((event)=>{event.id === checkInscricao.id_evento})  ? 
-                      //   : 
-
-                      // }
-                      // <Button
-                      //   style={{
-                      //     backgroundColor: "lawngreen",
-                      //     border: "none",
-                      //     color: "darkgreen"
-                      //   }}
-                      //   type="primary"
-                      //   icon={<EditOutlined />}
-                      //   onClick={() => {
-                      //     setRedirect(`/inscricao/${evento.id}`)
-                      //   }}>
-                      //   Inscrever
-                      // </Button>
                       <Button
                         style={{
                           backgroundColor: "lawngreen",

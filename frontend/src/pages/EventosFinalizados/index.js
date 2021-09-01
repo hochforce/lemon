@@ -25,7 +25,7 @@ export default function Finalizados() {
     const buscaEventosFinalizados = await api.get('/listEventosFinalizados');
     setEventos(buscaEventosFinalizados.data);
   };
-
+ 
   useEffect(() => {
     (async function () {
       search()

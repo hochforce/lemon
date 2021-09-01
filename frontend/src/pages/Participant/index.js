@@ -65,10 +65,10 @@ const Participant = () => {
                 <a href="/participant" title="Home">LEMON</a>
               </Col>
               <Col md={9} sm={24} xs={24}>
-                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="Mostrar Eventos Ativos" >Eventos Ativos</Menu.Item>
+                <Menu.Item style={{color: "white"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="Mostrar Eventos Ativos" >Eventos Ativos</Menu.Item>
               </Col>
               <Col md={5} sm={24} xs={24}>
-                <Menu.Item style={{color: "lawngreen"}} onClick={()=>{setMenuItem(2)}} key="2" className="item" title="Mostrar Eventos Encerrados">Eventos Encerrados</Menu.Item>
+                <Menu.Item style={{color: "white"}} onClick={()=>{setMenuItem(2)}} key="2" className="item" title="Mostrar Eventos Encerrados">Eventos Encerrados</Menu.Item>
               </Col>
 
             </Row>
