@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+
+
+.layout .header-menu {
+  background-color: transparent;
+}
+
+
+.layout .header-menu .menu {
+  background-color: #196618;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.layout .header-menu .menu .menu-item .item{
+  color: #a3e021;
+  font: 400 16px 'Roboto', sans-serif;
+  margin-top: 20px;
+  margin-right: 40px;
+}
+
+.layout .header-menu .menu .menu-item .item:hover{
+  color: #c2eb6b;
+  transition: 0.2s;
+}
+
+.layout .header-menu .menu .menu-item a{
+  color: #fff;
+  font: 700 16px 'Roboto', sans-serif;
+  margin-top: 20px;
+  cursor: pointer;
+  
+}
+
+.layout .header-menu .menu .user-info p {
+  color: #fff;
+  font: 400 16px 'Roboto', sans-serif;
+  
+}
+
+
+
+.layout .header-menu .menu .user-info .button-logout {
+  background-color: #062500;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s;
+  font: 400 16px 'Roboto', sans-serif;
+} 
+.layout .header-menu .menu .user-info .button-logout:hover {
+  background-color: #16460d;
+} 
+
+
+
+/* #components-layout-demo-fixed .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.2);
+} */
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.site-layout .site-layout-background .cards .card{
+  background: #196618;
+  color: #fff;
+  
+}
