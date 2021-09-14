@@ -14,12 +14,12 @@ flex-direction: column;
 align-items: center;
 justify-content: center; */
 display: inline-block;
-  position: relative;
+position: relative;
 
 `
 export const Background = styled.img`
 margin-left: 0;
-margin-top: 2px;
+margin-top: -370px;
 height: 100vw;
 width: 100vw;
 position: absolute;

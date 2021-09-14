@@ -1,18 +1,19 @@
-// import { Form, Input, Button, Alert } from 'antd';
 import { api } from '../../services/api';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import './styles.css';
-import fundo from '../../../src/assets/images/fundo-login.png'
+
+import React from 'react';
+import { Button } from '../../components/Button';
+import { LoginInput } from '../../components/LoginInput';
+import { Background, Container, Content, Title } from './styles';
+import img from "./login.svg";
 
 const Login = ({ history }) => {
-
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [validaLogin, setValidaLogin] = useState('');
   let resp;
-
+  
   async function handleSubmit() {
     try {
 
@@ -38,37 +39,29 @@ const Login = ({ history }) => {
   }
 
   return (
-    <div className="content-externo">
-      <img className="img-fundo" src={fundo} alt="Imagem de Fundo" />
-
-      {/* <div className="content-login"> */}
-      <label className="logo-login">LEMON</label>
-      <div className="form-login">
-        <label>CPF (Somente números)</label>
-        <input
+    <Container >
+      <Background src={img} />
+      <Content >
+        <Title>LEMON</Title>
+        <LoginInput
+          title="CPF"
           value={cpf}
           onChange={event => setCpf(event.target.value)}
           type="text"
         />
-
-        <label>Senha</label>
-        <input
+        <LoginInput
           value={password}
           onChange={event => setPassword(event.target.value)}
-          type="password" />
-        <div className="envios">
+          type="password"
+        />
 
-          <button onClick={handleSubmit}>Entrar</button>
-          
-          <p>
-            <Link to="/new-participant">Cadastrar-me</Link>
-          </p>
-          
-        </div>
-      </div>
-      {/* </div> */}
-    </div>
+        <Button onClick={handleSubmit} />
+        <p>
+          <Link to="/new-participant">Cadastrar-me</Link>
+        </p>
+
+      </Content>
+    </Container>
   )
 }
-
-export default Login
+export default Login;
