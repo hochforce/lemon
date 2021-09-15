@@ -1,17 +1,22 @@
-import { Container, Input, Svg } from '../LoginInput/styles';
-import usr from '../../assets/images/user.svg';
-import psw from '../../assets/images/psw.svg';
+import { Container, Input } from '../LoginInput/styles';
 
-export const LoginInput = ({ title }) => {
+
+export const LoginInput = ({ name, placeholder, type, icon, onChange, value }) => {
   return (
-    <Container>
-      {title ? <Svg src={usr}/> : <Svg src={psw}/>}
-
-      {title?
-      <Input placeholder="CPF"/>
-      :
-      <Input placeholder="Senha" type="password"/>
-      }
+    <Container >
+      {icon && icon}
+      
+      <Input 
+      placeholder={placeholder} 
+      onChange={onChange}
+      name={name}
+      type={type}
+      icon={icon}
+      value={value}
+      />
+      
+      
+      
     </Container>
   )
 }

@@ -1,13 +1,16 @@
-// import { Form, Input, Button, Alert } from 'antd';
 import { api } from '../../services/api';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import './styles.css';
-import fundo from '../../../src/assets/images/fundo-login.png'
+
+import React from 'react';
+import { Button } from '../../components/Button';
+import { LoginInput } from '../../components/LoginInput';
+import { Background, Container, Content, Title, View,Svg } from './styles';
+import img from "../../assets/images/login.svg";
+import usr from '../../assets/images/user.svg';
+import psw from '../../assets/images/psw.svg';
 
 const Login = ({ history }) => {
-
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [validaLogin, setValidaLogin] = useState('');
@@ -38,37 +41,37 @@ const Login = ({ history }) => {
   }
 
   return (
-    <div className="content-externo">
-      <img className="img-fundo" src={fundo} alt="Imagem de Fundo" />
-
-      {/* <div className="content-login"> */}
-      <label className="logo-login">LEMON</label>
-      <div className="form-login">
-        <label>CPF (Somente números)</label>
-        <input
+    <Container >
+      <Background src={img} />
+      <Content >
+        <Title>LEMON</Title>
+        <LoginInput
+          name="CPF"
           value={cpf}
           onChange={event => setCpf(event.target.value)}
           type="text"
+          placeholder="CPF"
+          icon={<Svg src={usr}/>}
         />
-
-        <label>Senha</label>
-        <input
+        <LoginInput
           value={password}
           onChange={event => setPassword(event.target.value)}
-          type="password" />
-        <div className="envios">
+          type="password"
+          name="password"
+          placeholder="Senha"
+          icon={<Svg src={psw}/>}
+        />
 
-          <button onClick={handleSubmit}>Entrar</button>
-          
-          <p>
-            <Link to="/new-participant">Cadastrar-me</Link>
-          </p>
-          
-        </div>
-      </div>
-      {/* </div> */}
-    </div>
+        <Button onClick={()=>handleSubmit()} name="Entrar" />
+
+        <View>
+          <Link to="/new-participant">
+            <p>Cadastrar-me</p>
+          </Link>
+        </View>
+
+      </Content>
+    </Container>
   )
 }
-
-export default Login
+export default Login;

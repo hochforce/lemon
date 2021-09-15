@@ -43,5 +43,9 @@ p {
     text-decoration: none;
   }
 `
-
+export const Svg = styled.img`
+margin-right: 8px;
+height: 30px;
+width: 30px;
+`
 
