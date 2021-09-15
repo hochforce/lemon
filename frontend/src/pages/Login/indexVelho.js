@@ -1,14 +1,13 @@
+// import { Form, Input, Button, Alert } from 'antd';
 import { api } from '../../services/api';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import React from 'react';
-import { Button } from '../../components/Button';
-import { LoginInput } from '../../components/LoginInput';
-import { Background, Container, Content, Title, View } from './styles';
-import img from "../../assets/images/login.svg";
+// import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import './styles.css';
+import fundo from '../../../src/assets/images/fundo-login.png'
 
 const Login = ({ history }) => {
+
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [validaLogin, setValidaLogin] = useState('');
@@ -39,32 +38,37 @@ const Login = ({ history }) => {
   }
 
   return (
-    <Container >
-      <Background src={img} />
-      <Content >
-        <Title>LEMON</Title>
-        <LoginInput
-          title="CPF"
+    <div className="content-externo">
+      <img className="img-fundo" src={fundo} alt="Imagem de Fundo" />
+
+      {/* <div className="content-login"> */}
+      <label className="logo-login">LEMON</label>
+      <div className="form-login">
+        <label>CPF (Somente números)</label>
+        <input
           value={cpf}
           onChange={event => setCpf(event.target.value)}
           type="text"
         />
-        <LoginInput
+
+        <label>Senha</label>
+        <input
           value={password}
           onChange={event => setPassword(event.target.value)}
-          type="password"
-        />
+          type="password" />
+        <div className="envios">
 
-        <Button onClick={()=>handleSubmit()} name="Entrar" />
-
-        <View>
-          <Link to="/new-participant">
-            <p>Cadastrar-me</p>
-          </Link>
-        </View>
-
-      </Content>
-    </Container>
+          <button onClick={handleSubmit}>Entrar</button>
+          
+          <p>
+            <Link to="/new-participant">Cadastrar-me</Link>
+          </p>
+          
+        </div>
+      </div>
+      {/* </div> */}
+    </div>
   )
 }
-export default Login;
+
+export default Login

@@ -13,11 +13,7 @@ border: 1px solid #4C5175;
 box-sizing: border-box;
 border-radius: 4px;
 `
-export const Svg = styled.img`
-margin-right: 8px;
-height: 30px;
-width: 30px;
-`
+
 export const Input = styled.input`
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
 font: 300 20px 'Roboto', sans-serif;
