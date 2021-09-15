@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { Button } from '../../components/Button';
 import { LoginInput } from '../../components/LoginInput';
-import { Background, Container, Content, Title } from './styles';
-import img from "./login.svg";
+import { Background, Container, Content, Title, View } from './styles';
+import img from "../../assets/images/login.svg";
 
 const Login = ({ history }) => {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [validaLogin, setValidaLogin] = useState('');
   let resp;
-  
+
   async function handleSubmit() {
     try {
 
@@ -55,10 +55,13 @@ const Login = ({ history }) => {
           type="password"
         />
 
-        <Button onClick={handleSubmit} />
-        <p>
-          <Link to="/new-participant">Cadastrar-me</Link>
-        </p>
+        <Button onClick={()=>handleSubmit()} name="Entrar" />
+
+        <View>
+          <Link to="/new-participant">
+            <p>Cadastrar-me</p>
+          </Link>
+        </View>
 
       </Content>
     </Container>

@@ -1,9 +1,9 @@
 import { ButtonStyle } from "./styles";
 
-export const Button = ()=>{
+export const Button = ({ name, onClick })=>{
   return(
-    <ButtonStyle>
-      ENTRAR
+    <ButtonStyle onClick={onClick}>
+      {name}
     </ButtonStyle>
   )
 }

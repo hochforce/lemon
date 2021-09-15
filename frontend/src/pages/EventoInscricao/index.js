@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 import { Modal } from '../../components/Modal';
 import { Button, Menu, Layout, Row, Col, } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
+import { Breadcrumb } from '../../components/Breadcrumb';
 import './styles.css';
 
 const EventInscricao = ({ match }) => {
@@ -134,7 +135,7 @@ const EventInscricao = ({ match }) => {
         </div>
 
         <div className="eventoInfo">
-
+          <Breadcrumb name="Breader"/>
           <h2>{evento.titulo}</h2>
 
           <h3>Duração</h3>
