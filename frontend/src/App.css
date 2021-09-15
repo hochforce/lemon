@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
 @import '~antd/dist/antd.css';
 
-/*Menu temporário */
+/*Menu temporário 
 .menu-temp {
   margin: 10px 0 0 10px;
 }
@@ -109,3 +109,4 @@ body, input, button {
 .container form button.btn:hover {
   background: #0090B2;
 }
+*/

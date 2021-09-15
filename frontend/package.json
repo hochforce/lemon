@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "html2pdf": "^0.0.11",
     "jspdf": "^2.3.1",
+    "nextjs-breadcrumbs": "^1.1.9",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

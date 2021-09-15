@@ -12,8 +12,10 @@ export default function NewCertificate() {
       unit: 'cm',
       format: 'a4'
     });
+    
 
     certificado.addImage(image, 'JPEG', 0, 0, 29.7, 21);
+    
     certificado.setFontSize(40);
     certificado.text(10, 4, 'CERTIFICADO');
     certificado.setFontSize(20);
