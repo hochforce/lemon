@@ -14,9 +14,6 @@ export const LoginInput = ({ name, placeholder, type, icon, onChange, value }) =
       icon={icon}
       value={value}
       />
-      
-      
-      
     </Container>
   )
 }
