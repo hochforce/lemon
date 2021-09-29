@@ -7,6 +7,7 @@ import './styles.css';
 import logo from '../../assets/images/imgLogo.png';
 import Ativos from '../EventosAtivos';
 import Finalizados from '../EventosFinalizados';
+import { Header } from '../../components/Header';
 
 const Participant = () => {
   const [participante, setParticipante] = useState('');
@@ -14,7 +15,7 @@ const Participant = () => {
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
   const imgLogo = logo;
-  const { Header, Content, Footer } = Layout;
+  const { Content, Footer } = Layout;
   const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
   const [menuItem, setMenuItem] = useState('');
@@ -54,46 +55,12 @@ const Participant = () => {
   return (
 
     <Layout className="layout">
-      <Header className="header-menu">
-
-        <Menu className="menu" mode="horizontal" style={{ borderRadius: "0px 0px 5px 5px" }}>
-
-          <div className="menu-item" >
-            <Row gutter={24}>
-              <Col md={10} sm={24} xs={24}>
-                {/* <Image src={imgLogo} alt="Logo do Site" style={{ width: 20 }} preview={false} /> */}
-                <a href="/participant" title="Home">LEMON</a>
-              </Col>
-              <Col md={9} sm={24} xs={24}>
-                <Menu.Item style={{color: "white"}} onClick={()=>{setMenuItem(1)}} key="1" className="item" title="Mostrar Eventos Ativos" >Eventos Ativos</Menu.Item>
-              </Col>
-              <Col md={5} sm={24} xs={24}>
-                <Menu.Item style={{color: "white"}} onClick={()=>{setMenuItem(2)}} key="2" className="item" title="Mostrar Eventos Encerrados">Eventos Encerrados</Menu.Item>
-              </Col>
-
-            </Row>
-          </div>
-          <div className="user-info" style={{ paddingRight: 0 }}>
-            <Row gutter={24}>
-              <Col md={12} sm={24} xs={24} style={{ paddingRight: 0, textAlign: "right" }}>
-                <p style={{ margin: "20px 0px 0px" }}>{participante.nome}</p>
-              </Col>
-              <Col md={12} sm={24} xs={24} >
-                <Button
-                  className="button-logout"
-                  type="primary"
-                  icon={<PoweroffOutlined />}
-                  onClick={handleLogOut}
-                  title="Desconectar do usuário atual"
-                >Sair</Button>
-              </Col>
-            </Row>
-          </div>
-        </Menu>
-        
-      </Header>
-      {/* <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}> */}
-        
+      
+      <Header 
+      user="manager"
+      userLogged="Organizador"
+      nameItem="Eventos"
+      />
         { menuItem === 1 ? <Ativos/> : <Finalizados/>}
         {/* <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
           <div className="cards">
