@@ -1,7 +1,14 @@
 import { Button } from "../Button";
-import { Container, Content, View, Img, Title, Align, Description, ViewButton } from "./styles"
+import { Container, Content, View, Img, Title, Align, Description, ViewButton } from "./styles";
 
-const Card = ({ creation, cardManager, title, description, onClick, cancel}) => {
+const Card = ({ 
+  creation, 
+  cardManager, 
+  title, 
+  description, 
+  onClick, 
+  cancel,
+  unavailable}) => {
   
 
   return (
@@ -26,7 +33,7 @@ const Card = ({ creation, cardManager, title, description, onClick, cancel}) => 
                   <Button name="Cancelar" onClick={cancel}/>
                 </Align>
                 :
-                <Button name="Inscrição" onClick={onClick}/>
+                <Button name="Inscrição" onClick={onClick} unavailable={unavailable}/>
               }
             </View>
         }

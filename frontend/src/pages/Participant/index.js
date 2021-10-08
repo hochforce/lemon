@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { api } from '../../services/api';
-import { Button, Menu, Layout, Breadcrumb, Card, Row, Col, Space } from 'antd';
-import { EditOutlined, PoweroffOutlined } from '@ant-design/icons';
-import './styles.css';
-import logo from '../../assets/images/imgLogo.png';
 import Ativos from '../EventosAtivos';
 import Finalizados from '../EventosFinalizados';
 import { Header } from '../../components/Header';
+import { Container } from './styles';
 
 const Participant = () => {
   const [participante, setParticipante] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
-  const imgLogo = logo;
-  const { Content, Footer } = Layout;
-  const { Meta } = Card;
   const [redirect, setRedirect] = useState('');
   const [menuItem, setMenuItem] = useState('');
   
@@ -53,40 +47,19 @@ const Participant = () => {
   }
   
   return (
-
-    <Layout className="layout">
-      
+    <Container>
       <Header 
       user="manager"
       userLogged="Organizador"
       nameItem="Eventos"
       />
-        { menuItem === 1 ? <Ativos/> : <Finalizados/>}
-        {/* <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-          <div className="cards">
-            {Array.isArray(eventos) && eventos.map((evento) =>
-              <Space direction="horizontal">
-                <Card
-                  style={{ width: 350, borderRadius: 8, margin: 40, }}
-                  className="card"
-                  actions={[
-                    <EditOutlined onClick={() => {setRedirect(`/inscricao/${evento.id}`)}} key="edit" />,
-                  ]}
-                >
-                  <Meta
-                    title={<p style={{color: "snow"}}>{evento.titulo}</p>}
-                    description={<p style={{color: "grey"}}>{evento.descricao}</p>}
-                  />
-                </Card>
-              </Space>
-            )}
-          </div>
-        </div> */}
 
-      {/* </Content> */}
-      <Footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</Footer>
+      { menuItem === 1 ? <Ativos/> : <Finalizados/>} 
+
+      <footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</footer>
+
       {redirect && <Redirect to={{ pathname: redirect }} />}
-    </Layout>
+    </Container>
   )
 }
 export default Participant;
