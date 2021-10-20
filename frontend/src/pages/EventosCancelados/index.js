@@ -22,8 +22,8 @@ export default function Ativos(){
     const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
     setOrganizador(buscaOrganizador);
 
-    const buscaEventosFinalizados = await api.get('/listEventosFinalizados');
-    setEventos(buscaEventosFinalizados.data);
+    const buscaEventosCancelados = await api.get('/listEventosCancelados');
+    setEventos(buscaEventosCancelados.data);
   }
 
   useEffect(() => {
@@ -56,16 +56,16 @@ export default function Ativos(){
       <View>
         {Array.isArray(eventos) && eventos.map((evento)=>
           <Card 
-          cardManager="true"
           title={evento.titulo}
           description={evento.descricao}
           onClick={() => {
-            setRedirect(`/evento-info`)
+            setRedirect(`/inscricao/${evento.id}`)
           }}
           
           />
         )}
       </View>
+      
       }
         {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>

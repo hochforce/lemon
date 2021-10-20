@@ -62,10 +62,10 @@ const Login = ({ history }) => {
           icon={<Svg src={psw}/>}
         />
 
-        <Button onClick={()=>handleSubmit()} name="Entrar" />
+        <Button onClick={()=>handleSubmit()} name="Entrar" loginButton/>
 
         <View>
-          <Link to="/new-participant">
+          <Link to="/new-participant" style={{textDecoration: "none"}}>
             <p>Cadastrar-me</p>
           </Link>
         </View>

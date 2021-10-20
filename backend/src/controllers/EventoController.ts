@@ -74,6 +74,13 @@ class EventoController {
       .getMany();
     return response.json(eventosList);
   }
+  async searchByStatusCancelado(request: Request, response: Response) {
+    const eventosList = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "cancelado" })
+      .getMany();
+    return response.json(eventosList);
+  }
 }
 
 export { EventoController };
