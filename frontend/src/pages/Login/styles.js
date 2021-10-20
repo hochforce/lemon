@@ -35,7 +35,7 @@ export const View = styled.div`
 width: 100%;
 display: flex;
 align-items: flex-start;
-margin-top: 10px;
+margin-top: 0;
 p {
     color: #4C5175;
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');

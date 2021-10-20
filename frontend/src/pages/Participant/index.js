@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { api } from '../../services/api';
-import Ativos from '../EventosAtivos';
-import Finalizados from '../EventosFinalizados';
+import Active from '../EventosAtivos';
+import Finish from '../EventosFinalizados';
 import { Header } from '../../components/Header';
 import { Container } from './styles';
 
@@ -13,6 +13,10 @@ const Participant = () => {
   const token = localStorage.getItem("TOKEN");
   const [redirect, setRedirect] = useState('');
   const [menuItem, setMenuItem] = useState('');
+  const [validation, setValidation] = useState({
+    active: true,
+    finish: false
+  });
   
 
   async function search() {
@@ -45,17 +49,29 @@ const Participant = () => {
     localStorage.removeItem('USER-ID');
     setRedirect('/');
   }
+
+  function handleUserInfo(){
+    console.log("Exibir user info")
+  }
   
   return (
     <Container>
       <Header 
-      user="manager"
-      userLogged="Organizador"
-      nameItem="Eventos"
+        user="participant"
+        userLogged="Participante"
+        nameItem="Eventos"
+        active={validation.active}
+        finish={validation.finish}
+        
+        onClick={(valid)=> {setValidation(valid)}}
+        onClickLogout={()=>handleLogOut()}
+        onClickUsr={()=>handleUserInfo()}
       />
 
-      { menuItem === 1 ? <Ativos/> : <Finalizados/>} 
-
+      {validation.active && <Active /> }
+      {validation.finish && <Finish /> }
+      
+      
       <footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</footer>
 
       {redirect && <Redirect to={{ pathname: redirect }} />}

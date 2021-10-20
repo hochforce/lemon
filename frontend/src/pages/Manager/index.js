@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import { Header } from "../../components/Header";
-import Ativos from '../EventosAtivos';
-import Finalizados from '../EventosFinalizados';
+import Active from '../EventosAtivos';
+import Finish from '../EventosFinalizados';
+import Canceled from '../EventosCancelados';
 import { Container } from "./styles";
 
 const Manager = () => {
+  const [redirect, setRedirect] = useState('');
   const [menuItem, setMenuItem] = useState('');
   const [validation, setValidation] = useState({
-    active: false,
-    finish: true,
+    active: true,
+    finish: false,
     canceled: false
   });
 
+  function handleLogOut() {
+    localStorage.removeItem('TOKEN');
+    localStorage.removeItem('organizador');
+    localStorage.removeItem('USER-ID');
+    setRedirect('/');
+  }
+
+  function handleUserInfo(){
+    console.log("Exibir user info")
+  }
 
   return (
     <Container>
@@ -22,10 +35,18 @@ const Manager = () => {
         active={validation.active}
         finish={validation.finish}
         canceled={validation.canceled}
+        onClick={(valid)=> {setValidation(valid)}}
+        onClickLogout={()=>handleLogOut()}
+        onClickUsr={()=>handleUserInfo()}
       />
-      { menuItem === 1 ? <Ativos/> : <Finalizados/>}
 
+      {validation.active && <Active /> }
+      {validation.finish && <Finish /> }
+      {validation.canceled && <Canceled /> }
+      
       <footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</footer>
+
+      {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
 }

@@ -5,6 +5,7 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: space-between;
+margin: 0px 20px 0px 20px;
 `
 
 export const Logo = styled.h1`
@@ -20,12 +21,13 @@ justify-content: center;
 align-items: center;
 `
 
-export const ItemMenu = styled.h3`
+export const ItemMenu = styled.div`
 color: #4C5175;
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
 font: 600 16px 'Montserrat', sans-serif;
 margin-right: 20px;
 text-decoration: ${({ active })=> active ? "underline" : "none"};
+cursor: pointer;
 `
 
 export const View = styled.div`
@@ -44,5 +46,17 @@ export const IconButton = styled.img`
 border-radius: 50%;
 height: 30px;
 width: 30px;
+
+`
+
+export const Button = styled.button`
+background-color: transparent;
+height: 30px;
+width: 30px;
+margin: 0px 5px 0px 0px !important;
 margin-right: 20px;
+padding: 0;
+&:hover{
+  background-color: transparent;
+}
 `
