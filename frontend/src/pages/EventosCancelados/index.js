@@ -43,9 +43,7 @@ export default function Ativos(){
           <Card 
           title={evento.titulo}
           description={evento.descricao}
-          onClick={() => {
-            setRedirect(`/inscricao/${evento.id}`)
-          }}
+          status={evento.status}
           
           />
         )}
@@ -58,9 +56,7 @@ export default function Ativos(){
           <Card 
           title={evento.titulo}
           description={evento.descricao}
-          onClick={() => {
-            setRedirect(`/inscricao/${evento.id}`)
-          }}
+          unavailable={true}
           
           />
         )}

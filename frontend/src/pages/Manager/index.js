@@ -44,8 +44,7 @@ const Manager = () => {
       {validation.finish && <Finish /> }
       {validation.canceled && <Canceled /> }
       
-      <footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</footer>
-
+      
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )

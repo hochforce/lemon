@@ -8,7 +8,8 @@ const Card = ({
   description, 
   onClick, 
   cancel,
-  unavailable}) => {
+  unavailable,
+  status}) => {
   
 
   return (
@@ -27,11 +28,16 @@ const Card = ({
 
               {cardManager
                 ?
-
+                <>
+                {status === "cancelado" && <Button name="Reativar" onClick={onClick}/>}
+                {status === "ativo" && 
                 <Align>
                   <Button name="Editar" onClick={onClick}/>
                   <Button name="Cancelar" onClick={cancel}/>
                 </Align>
+                }
+                {status === "finalizado" && <Button name="Relatórios" />}
+                </>
                 :
                 <Button name="Inscrição" onClick={onClick} unavailable={unavailable}/>
               }

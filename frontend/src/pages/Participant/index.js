@@ -72,8 +72,7 @@ const Participant = () => {
       {validation.finish && <Finish /> }
       
       
-      <footer style={{ textAlign: 'center' }}>Lemon ©2021 Created by Hugo Hoch</footer>
-
+      
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
