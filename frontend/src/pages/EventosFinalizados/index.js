@@ -46,7 +46,7 @@ export default function Ativos(){
           onClick={() => {
             setRedirect(`/inscricao/${evento.id}`)
           }}
-          
+          status={evento.status}
           />
         )}
       </View>
@@ -62,7 +62,7 @@ export default function Ativos(){
           onClick={() => {
             setRedirect(`/evento-info`)
           }}
-          
+          status={evento.status}
           />
         )}
       </View>

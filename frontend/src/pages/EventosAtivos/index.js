@@ -46,7 +46,7 @@ export default function Ativos(){
           onClick={() => {
             setRedirect(`/inscricao/${evento.id}`)
           }}
-          
+          status={evento.status}
           />
         )}
       </View>
@@ -71,6 +71,7 @@ export default function Ativos(){
       cancel={() => {
         setRedirect(`/cancelar-evento`)
       }}
+      status="ativo"
       />
 
       <Card 
@@ -83,6 +84,7 @@ export default function Ativos(){
       cancel={() => {
         setRedirect(`/cancelar-evento`)
       }}
+      status="ativo"
       />
       
       </View>

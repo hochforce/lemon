@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Form } from '@unform/web';
-import { Input } from '../../components/Form/input';
 import { api } from '../../services/api';
-import './styles.css';
+import { Button } from "../../components/Button";
+import Input from "../../components/Input";
+import { Header } from './../../components/Header/index';
+import { Container, Content, P, View, ViewInputs } from "./styles.js";
 
-export default function NewParticipant({ history }) {
+
+const NewParticipant = ({ history }) => {
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -60,65 +62,65 @@ export default function NewParticipant({ history }) {
         formRef.current.setErrors(errorMessages);
       }
     }
-
   }
 
   return (
-    <>
-      <div className="header-cadastro">
-        <div className="logo-cadastro" >
-          <a href="/">LEMON</a>
-        </div>
-        <div className="titulo-cadastro">
-          <h1>Cadastro de Participante</h1>
-        </div>
-      </div>
+    <Container>
+      <Header back="true" />
+      <Content>
+        <ViewInputs>
+          <Input
+            label="Nome"
+            type="text"
+            value={nome}
+            onChange={event => setNome(event.target.value)}
+          />
 
-      <div className="content-cadastro">
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          
-              <label >Nome</label>
-              <Input name="nome"
-                placeholder="Nome"
-                value={nome}
-                onChange={event => setNome(event.target.value)}
-              />
-            
-              <label className="tro">Sobrenome</label>
-              <Input name="sobrenome"
-                placeholder="Sobrenome"
-                value={sobrenome}
-                onChange={event => setSobrenome(event.target.value)}
-              />
-           
-          
-              <label>CPF (Somente Números)</label>
-              <Input name="cpf"
-                placeholder="CPF"
-                value={cpf}
-                onChange={event => setCpf(event.target.value)}
-              />
-            
-           
-              <label>Campus/Instituição</label>
-              <Input name="campus_instituicao"
-                placeholder="Campus Instituição"
-                value={campus_instituicao}
-                onChange={event => setCampus_instituicao(event.target.value)}
-              />
-           
-              <label>Senha</label>
-              <Input name="password"
-                type="password"
-                placeholder="Senha"
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-              />
+          <Input
+            label="Sobrenome"
+            type="text"
+            value={sobrenome}
+            onChange={event => setSobrenome(event.target.value)}
+          />
 
-          <button className="btn" type="submit">Cadastrar</button>
-          <Link to="/">Já sou cadastrado</Link>
-        </Form>
-      </div>
-    </>
+          <Input
+            label="CPF"
+            type="text"
+            value={cpf}
+            onChange={event => setCpf(event.target.value)}
+          />
+
+          <Input
+            label="Campus/Instituição"
+            type="text"
+            value={campus_instituicao}
+            onChange={event => setCampus_instituicao(event.target.value)}
+          />
+
+          <Input
+            label="Senha"
+            type="password"
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
+
+          <Input
+            label="Repetir a Senha"
+            type="password"
+          />
+
+          <View>
+            <Button name="Cadastrar" onClick={handleSubmit}/>
+            <P>
+              <Link to="/" style={{textDecoration: "none"}}>
+                <p>Voltar ao login</p>
+              </Link>
+            </P>
+          </View>
+        </ViewInputs>
+      </Content>
+    </Container>
   )
 }
+
+export default NewParticipant;

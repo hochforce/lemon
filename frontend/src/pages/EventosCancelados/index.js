@@ -54,10 +54,10 @@ export default function Ativos(){
       <View>
         {Array.isArray(eventos) && eventos.map((evento)=>
           <Card 
+          cardManager="true"
           title={evento.titulo}
           description={evento.descricao}
-          unavailable={true}
-          
+          status={evento.status}
           />
         )}
       </View>

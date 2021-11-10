@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection, getRepository, SimpleConsoleLogger } from 'typeorm';
 import { Evento } from '../models/Evento';
 
 class EventoController {
@@ -81,6 +81,16 @@ class EventoController {
       .getMany();
     return response.json(eventosList);
   }
+  async searchWithLimit(request: Request, response: Response){
+    let limit = parseInt(request.params.limit);
+    let currentPage = parseInt(request.params.currentPage);
+    const eventosList = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .limit(limit)
+      .getMany();
+      console.log("ValorLimite: ", limit)
+      console.log("currentPage", currentPage)
+      return response.json(eventosList);
+  }
 }
-
 export { EventoController };

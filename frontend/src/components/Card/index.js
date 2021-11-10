@@ -11,7 +11,6 @@ const Card = ({
   unavailable,
   status}) => {
   
-
   return (
     <Container creation={creation}>
       <Content >
@@ -29,14 +28,15 @@ const Card = ({
               {cardManager
                 ?
                 <>
-                {status === "cancelado" && <Button name="Reativar" onClick={onClick}/>}
-                {status === "ativo" && 
-                <Align>
-                  <Button name="Editar" onClick={onClick}/>
-                  <Button name="Cancelar" onClick={cancel}/>
-                </Align>
-                }
-                {status === "finalizado" && <Button name="Relatórios" />}
+                  {console.log("STATUS:",title)}
+                  {status === "cancelado" && <Button name="Reativar" onClick={onClick}/>}
+                  {status === "ativo" && 
+                  <Align>
+                    <Button name="Editar" onClick={onClick}/>
+                    <Button name="Cancelar" onClick={cancel}/>
+                  </Align>
+                  }
+                  {status === "finalizado" && <Button name="Relatórios" />}
                 </>
                 :
                 <Button name="Inscrição" onClick={onClick} unavailable={unavailable}/>
