@@ -83,14 +83,21 @@ class EventoController {
   }
   async searchWithLimit(request: Request, response: Response){
     let limit = parseInt(request.params.limit);
-    let currentPage = parseInt(request.params.currentPage);
+    let page = parseInt(request.params.page);
+    
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
       .limit(limit)
+      .offset((page -1) * limit)
       .getMany();
-      console.log("ValorLimite: ", limit)
-      console.log("currentPage", currentPage)
-      return response.json(eventosList);
+
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({length, eventosList});
   }
 }
 export { EventoController };

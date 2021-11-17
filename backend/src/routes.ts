@@ -69,7 +69,7 @@ router.get("/listParcerias/:id", parceriaController.search);
 router.get("/listRecursos/:id", recursosController.search);
 router.get("/listBolsa/:id", bolsaController.search);
 router.get("/searchInscricao/:id", inscricoesEventoController.search);
-router.get("/eventos/:current&:limit", eventoController.searchWithLimit);
+router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
 
 export { router }
 
