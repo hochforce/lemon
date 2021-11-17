@@ -56,7 +56,7 @@ router.get("/searchParticipant/:cpf", participanteController.search);
 router.get("/searchOrganizador/:cpf", organizadorController.search);
 router.get("/searchCpf/:id", userAuthController.search);
 router.get("/listEventos/", eventoController.list);
-router.get("/listEventosAtivos", eventoController.searchByStatusAtivo);
+router.get("/listEventosAtivos/:page/:limit", eventoController.searchByStatusAtivo);
 router.get("/listEventosFinalizados", eventoController.searchByStatusFinalizado);
 router.get("/listEventosCancelados", eventoController.searchByStatusCancelado);
 router.get("/listParticipantes", participanteController.list);
