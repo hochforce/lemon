@@ -61,24 +61,12 @@ class EventoController {
   }
 
   async searchByStatusAtivo(request: Request, response: Response) {
-    let limit = parseInt(request.params.limit);
-    let page = parseInt(request.params.page);
-
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
       .where("status = :status", { status: "ativo" })
-      .limit(limit)
-      .offset((page - 1) * limit)
       .getMany();
 
-    const eventsLength = await getRepository(Evento)
-      .createQueryBuilder("eventos")
-      .where("status = :status", { status: "ativo" })
-      .getMany();
-
-    let length = eventsLength.length;
-
-    return response.json({ length, eventosList });
+    return response.json(eventosList);
   }
   async searchByStatusFinalizado(request: Request, response: Response) {
     const eventosList = await getRepository(Evento)
@@ -106,6 +94,26 @@ class EventoController {
 
     const eventsLength = await getRepository(Evento)
       .createQueryBuilder("eventos")
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({ length, eventosList });
+  }
+  async searchWithLimitAtivo(request: Request, response: Response) {
+    let limit = parseInt(request.params.limit);
+    let page = parseInt(request.params.page);
+
+    const eventosList = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "ativo" })
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .getMany();
+
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "ativo" })
       .getMany();
 
     let length = eventsLength.length;

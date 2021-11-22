@@ -21,7 +21,7 @@ export default function Ativos() {
 
   useEffect(()=>{
     async function pagination(){
-      const response = await api.get(`/listEventosAtivos/${currentPage}/${limit}`);
+      const response = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
       setTotal(response.data.length);
 
       //Função para arredondar a divisão para cima.
@@ -45,9 +45,6 @@ export default function Ativos() {
 
     const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
     setOrganizador(buscaOrganizador);
-
-    const buscaEventosAtivos = await api.get('/listEventosAtivos');
-    setEventos(buscaEventosAtivos.data);
   }
 
   useEffect(() => {

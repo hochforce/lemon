@@ -28,7 +28,6 @@ const Card = ({
               {cardManager
                 ?
                 <>
-                  {console.log("STATUS:",title)}
                   {status === "cancelado" && <Button name="Reativar" onClick={onClick}/>}
                   {status === "ativo" && 
                   <Align>

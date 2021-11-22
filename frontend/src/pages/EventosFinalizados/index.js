@@ -3,6 +3,7 @@ import Card from '../../components/Card';
 import { Redirect } from 'react-router-dom';
 import { Container, View } from './styles';
 import { api } from '../../services/api';
+import { Pagination } from '../../components/Pagination';
 
 export default function Ativos(){
   const [redirect, setRedirect] = useState('');
@@ -67,7 +68,9 @@ export default function Ativos(){
         )}
       </View>
       }
-        {redirect && <Redirect to={{ pathname: redirect }} />}
+
+      <Pagination/>
+      {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
 }

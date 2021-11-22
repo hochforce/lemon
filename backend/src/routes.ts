@@ -56,7 +56,7 @@ router.get("/searchParticipant/:cpf", participanteController.search);
 router.get("/searchOrganizador/:cpf", organizadorController.search);
 router.get("/searchCpf/:id", userAuthController.search);
 router.get("/listEventos/", eventoController.list);
-router.get("/listEventosAtivos/:page/:limit", eventoController.searchByStatusAtivo);
+router.get("/listEventosAtivos", eventoController.searchByStatusAtivo);
 router.get("/listEventosFinalizados", eventoController.searchByStatusFinalizado);
 router.get("/listEventosCancelados", eventoController.searchByStatusCancelado);
 router.get("/listParticipantes", participanteController.list);
@@ -70,6 +70,7 @@ router.get("/listRecursos/:id", recursosController.search);
 router.get("/listBolsa/:id", bolsaController.search);
 router.get("/searchInscricao/:id", inscricoesEventoController.search);
 router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
+router.get("/searchWithLimitAtivo/:page/:limit", eventoController.searchWithLimitAtivo);
 
 export { router }
 
