@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Card from '../../components/Card';
 import { Redirect } from 'react-router-dom';
-import { Container, View, Pagination, PaginationButton, PaginationItem, Img } from './styles';
+import { Container, View } from './styles';
 import { api } from '../../services/api';
-import next from '../../assets/images/next.svg';
-import preview from '../../assets/images/preview.svg';
+import { Pagination } from '../../components/Pagination';
+
 
 export default function Ativos() {
   const [redirect, setRedirect] = useState('');
@@ -12,29 +12,12 @@ export default function Ativos() {
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
   const [organizador, setOrganizador] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [limit, setLimit] = useState(2);
 
-  //Pagination Itens
-  const [ total, setTotal ] = useState(0);
-  const [ limit, setLimit ] = useState(2);
-  const [ pages, setPages ] = useState([]);
-  const [ currentPage, setCurrentPage ] = useState(1);
 
-  useEffect(()=>{
-    async function pagination(){
-      const response = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
-      setTotal(response.data.length);
 
-      //Função para arredondar a divisão para cima.
-      const totalPages = Math.ceil(total / limit);
-      const arrayPages = [];
-      for(let i=1; i<= totalPages; i++){
-        arrayPages.push(i);
-      }
-      setPages(arrayPages);
-      setEventos(response.data.eventosList);
-    }
-    pagination();
-  }, [total, limit, currentPage]);
 
   async function search() {
     const buscaCpf = await api.get(`/searchCpf/${userId}`);
@@ -45,6 +28,10 @@ export default function Ativos() {
 
     const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
     setOrganizador(buscaOrganizador);
+
+    const paginationInfo = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
+    setTotal(paginationInfo.data.length);
+    setEventos(paginationInfo.data.eventosList);
   }
 
   useEffect(() => {
@@ -110,25 +97,12 @@ export default function Ativos() {
 
           </View>
       }
- 
-      <Pagination>
-        {/* <div>Total: {total}</div> */}
-        <PaginationButton>
-          {currentPage > 1 &&
-            <PaginationItem onClick={() => setCurrentPage(currentPage - 1)}><Img src={preview} /></PaginationItem>
-          }
-          {pages.map(page => (
-            <PaginationItem
-              isSelect={page === currentPage}
-              key={page} onClick={() => setCurrentPage(page)}>
-              {page}
-            </PaginationItem>
-          ))}
-          {currentPage < pages.length &&
-            <PaginationItem onClick={() => setCurrentPage(currentPage + 1)}><Img src={next} /></PaginationItem>
-          }
-        </PaginationButton>
-      </Pagination>
+
+      <Pagination
+        currentPageFunction={(page) => setCurrentPage(page)}
+        total={total}
+        limit={limit}
+      />
 
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>

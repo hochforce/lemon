@@ -15,6 +15,8 @@ flex: 1;
 display: flex;
 align-items: center;
 justify-content: center;
+background-color: #bce7d9;
+z-index: 1;
 `
 export const Background = styled.img`
 z-index: -1;
