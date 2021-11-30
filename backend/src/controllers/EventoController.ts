@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection, getRepository, SimpleConsoleLogger } from 'typeorm';
 import { Evento } from '../models/Evento';
 
 class EventoController {
@@ -65,22 +65,83 @@ class EventoController {
       .createQueryBuilder("eventos")
       .where("status = :status", { status: "ativo" })
       .getMany();
+
     return response.json(eventosList);
   }
   async searchByStatusFinalizado(request: Request, response: Response) {
+    let limit = parseInt(request.params.limit);
+    let page = parseInt(request.params.page);
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
       .where("status = :status", { status: "finalizado" })
+      .limit(limit)
+      .offset((page - 1) * limit)
       .getMany();
-    return response.json(eventosList);
+
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "finalizado" })
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({ length, eventosList });
   }
   async searchByStatusCancelado(request: Request, response: Response) {
+    let limit = parseInt(request.params.limit);
+    let page = parseInt(request.params.page);
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
       .where("status = :status", { status: "cancelado" })
+      .limit(limit)
+      .offset((page - 1) * limit)
       .getMany();
-    return response.json(eventosList);
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "cancelado" })
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({ length, eventosList });
+  }
+  async searchWithLimit(request: Request, response: Response) {
+    let limit = parseInt(request.params.limit);
+    let page = parseInt(request.params.page);
+
+    const eventosList = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .getMany();
+
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({ length, eventosList });
+  }
+  async searchWithLimitAtivo(request: Request, response: Response) {
+    let limit = parseInt(request.params.limit);
+    let page = parseInt(request.params.page);
+
+    const eventosList = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "ativo" })
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .getMany();
+
+    const eventsLength = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("status = :status", { status: "ativo" })
+      .getMany();
+
+    let length = eventsLength.length;
+
+    return response.json({ length, eventosList });
   }
 }
-
 export { EventoController };

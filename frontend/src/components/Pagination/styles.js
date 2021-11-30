@@ -1,18 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  
-`
-export const View = styled.div`
-  width: 90%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`
-
-export const Pagination = styled.div`
   display: flex;
   justify-content: right;
 `
