@@ -13,47 +13,44 @@ const NewParticipant = ({ history }) => {
   const [sobrenome, setSobrenome] = useState('');
   const [campus_instituicao, setCampus_instituicao] = useState('');
   const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('')
-  const [repeatPass, setRepeatPass] = useState(null)
+  const [password, setPassword] = useState('');
+  const [repeatPass, setRepeatPass] = useState(null);
+  const [eventSubmit, setEventSubmit] = useState(false);
+  const [cpfIsValid, setCpfIsValid] = useState(true);
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setEventSubmit(true);
 
 
-    if (nome === '' ||
-      sobrenome === '' ||
-      campus_instituicao === '' ||
-      cpf === '' ||
-      password === '') {
-      alert("Preencha todos os campos antes de continuar.")
-
+    if (password !== repeatPass) {
+      alert("As senhas digitadas não são iguais.")
     } else {
-      if (password !== repeatPass) {
-        alert("As senhas digitadas não são iguais.")
-      } else {
+      try {
+        await api.post('/participantes', {
+          nome,
+          sobrenome,
+          cpf,
+          campus_instituicao,
+          password
+        });
         try {
-          await api.post('/participantes', {
-            nome,
-            sobrenome,
+          await api.post('/user-auth', {
             cpf,
-            campus_instituicao,
-            password
-          });
-          try {
-            await api.post('/user-auth', {
-              cpf,
-              password,
-              "tipo": "participante"
-            })
-            history.push('/participant');
-          } catch {
-            alert("O CPF digitado é inválido ou já está cadastrado.");
-          }
+            password,
+            "tipo": "participante"
+          })
+          setCpfIsValid(true);
+          history.push('/participant');
         } catch {
-          alert("Confira se as informações estão corretas.");
+          setCpfIsValid(false);
+          //alert("O CPF digitado é inválido ou já está cadastrado.");
         }
+      } catch {
+        alert("Confira se as informações estão corretas.");
       }
     }
+
 
   }
 
@@ -67,7 +64,7 @@ const NewParticipant = ({ history }) => {
             type="text"
             value={nome}
             onChange={event => setNome(event.target.value)}
-
+            eventSubmit={eventSubmit}
           />
 
           <Input
@@ -75,7 +72,7 @@ const NewParticipant = ({ history }) => {
             type="text"
             value={sobrenome}
             onChange={event => setSobrenome(event.target.value)}
-
+            eventSubmit={eventSubmit}
           />
 
           <Input
@@ -83,7 +80,8 @@ const NewParticipant = ({ history }) => {
             type="text"
             value={cpf}
             onChange={event => setCpf(event.target.value)}
-
+            eventSubmit={eventSubmit}
+            message={!cpfIsValid ? "CPF invá" : "preencha isso"}
           />
 
           <Input
@@ -91,7 +89,7 @@ const NewParticipant = ({ history }) => {
             type="text"
             value={campus_instituicao}
             onChange={event => setCampus_instituicao(event.target.value)}
-
+            eventSubmit={eventSubmit}
           />
 
           <Input
@@ -99,7 +97,7 @@ const NewParticipant = ({ history }) => {
             type="password"
             value={password}
             onChange={event => setPassword(event.target.value)}
-
+            eventSubmit={eventSubmit}
           />
 
           <Input
@@ -107,6 +105,7 @@ const NewParticipant = ({ history }) => {
             type="password"
             value={repeatPass}
             onChange={event => setRepeatPass(event.target.value)}
+            eventSubmit={eventSubmit}
           />
 
           <View>

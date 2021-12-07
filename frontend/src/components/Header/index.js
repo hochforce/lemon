@@ -1,14 +1,15 @@
-import { Logo, Container, ItemMenu, View, Menu, IconButton, Button } from './styles';
+import { Logo, Container, ItemMenu, View, Menu, IconButton, Button, BackButton, ViewBack } from './styles';
 import usr from '../../assets/images/user-circle.svg';
 import logout from '../../assets/images/logout.svg';
+import backButton from '../../assets/images/back.svg';
 
-export const Header = ({ user, userLogged, back, active, finish, canceled, onClick, onClickUsr, onClickLogout }) => {
+export const Header = ({ user, userLogged, back, active, finish, canceled, onClick, onClickUsr, onClickLogout, goBack }) => {
 
   return (
     <Container>
       <View>
         <Logo> Lemon </Logo>
-        {userLogged && <p>Página do {userLogged}</p>}
+        {userLogged && <p>Painel do {userLogged}</p>}
       </View>
       {userLogged &&
         <Menu>
@@ -27,7 +28,9 @@ export const Header = ({ user, userLogged, back, active, finish, canceled, onCli
                 <ItemMenu onClick={()=>onClick({active: false, finish: true, canceled: false})} active={finish}>Encerrados</ItemMenu>
               </>
             :
-            <p>Voltar</p>
+            <ViewBack onClick={goBack}>
+              <p><BackButton src={backButton}/>Voltar</p>
+            </ViewBack>
           }
           <Button onClick={onClickUsr}>
             <IconButton src={usr}/>

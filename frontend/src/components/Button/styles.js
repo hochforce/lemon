@@ -7,7 +7,9 @@ border: 2px solid ${({unavailable})=> unavailable ? "rgba(76, 81, 117, 0.5)" : "
 border-radius: 8px;
 color: ${({unavailable})=> unavailable ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
 width: 120px;
-padding: 0;
+padding: 5px 0 5px 0;
+margin-top: 20px;
+cursor: pointer;
 
 &:hover {
   color: #fff;
@@ -24,6 +26,9 @@ border-radius: 4px;
 color: white;
 width: 250px;
 box-shadow: 0 3px 3px 1px rgba(0, 0, 0, 0.2);
+cursor: pointer;
+padding: 10px 0 10px 0;
+margin-top: 20px;
 &:hover {
   background-color: #585D87;
   border: 2px solid #585D87;

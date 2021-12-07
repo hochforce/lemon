@@ -5,7 +5,7 @@ import { Modal } from '../../components/Modal';
 import { Button, Menu, Layout, Row, Col, } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
 import { Breadcrumb } from '../../components/Breadcrumb';
-import './styles.css';
+
 
 const EventInscricao = ({ match }) => {
   const [evento, setEvento] = useState('');
