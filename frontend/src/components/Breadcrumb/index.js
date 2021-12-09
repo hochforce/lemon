@@ -1,8 +1,14 @@
-import styled from "styled-components";
+import { Container, Content, P } from "./styles"
 
-export const Breadcrumb = (props)=>{
-  const { name } = props;
+
+export const Breadcrumb = ({ name }) => {
+
   return (
-    <h1>{name}</h1>
+    <Container>
+      <Content>
+        Home
+        <P> {name}</P>
+      </Content>
+    </Container>
   )
 }

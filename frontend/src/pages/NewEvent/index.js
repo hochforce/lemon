@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Content, View, ViewInputs } from "./styles"
+import { Container, Content, ViewButton, ViewInputs, ViewRadioButtons, ViewOptions, ViewHeader, ViewTime, ViewAddress } from "./styles"
 import { Header } from './../../components/Header/index';
 import Input from './../../components/Input/index';
 import { Button } from "../../components/Button";
+import { Breadcrumb } from './../../components/Breadcrumb/index';
 
 const NewEvent = ({ match, history }) => {
   const [redirect, setRedirect] = useState('');
@@ -35,60 +36,69 @@ const NewEvent = ({ match, history }) => {
         back="true"
         goBack={() => handleGoBack()}
       />
+      <Breadcrumb name=" > Edição de Evento"/>
       <Content>
         <ViewInputs>
-          <Input
-            label="Título"
-            type="text"
+          <ViewHeader>
+            <Input
+              label="Título"
+              type="text"
 
-          />
-          <Input
-            label="Descrição"
-            type="text"
+            />
+            <Input
+              label="Descrição"
+              type="text"
 
-          />
-          <Input
-            label="Tipo"
-            type="dropdown"
+            />
+            <Input
+              label="Tipo"
+              type="dropdown"
 
-          />
-          <Input
-            label="Data início"
-            type="text"
+            />
+          </ViewHeader>
+          <ViewTime>
+            <Input
+              label="Data início"
+              type="text"
 
-          />
-          <Input
-            label="Hora início"
-            type="text"
+            />
+            <Input
+              label="Hora início"
+              type="text"
 
-          />
-          <Input
-            label="Data fim"
-            type="text"
+            />
+            <Input
+              label="Data fim"
+              type="text"
 
-          />
-          <Input
-            label="Hora fim"
-            type="text"
+            />
+            <Input
+              label="Hora fim"
+              type="text"
 
-          />
-          <input
-            type="radio"
-            name="isOnline"
-            value={isOnline}
-            onChange={event => setIsOnline(true)}
-          />
-
-          <label>Online</label>
-          <input
-            type="radio"
-            name="isOnline"
-            value={isOnline}
-            onChange={event => setIsOnline(false)}
-          />
-          <label>Presencial</label>
+            />
+          </ViewTime>
+          <ViewRadioButtons>
+            <label>Local</label>
+            <ViewOptions>
+              <input
+                type="radio"
+                name="isOnline"
+                value={isOnline}
+                onChange={event => setIsOnline(true)}
+              />
+              <label>Online</label>
+              <input
+                type="radio"
+                name="isOnline"
+                value={isOnline}
+                onChange={event => setIsOnline(false)}
+              />
+              <label>Presencial</label>
+            </ViewOptions>
+          </ViewRadioButtons>
           {!isOnline &&
-            <>
+            <ViewAddress>
               <Input
                 label="Estado"
                 type="text"
@@ -119,11 +129,11 @@ const NewEvent = ({ match, history }) => {
                 type="text"
 
               />
-            </>
+            </ViewAddress>
           }
-          <View>
+          <ViewButton>
             <Button name="Cadastrar" onClick={console.log("handleSubmit")} />
-          </View>
+          </ViewButton>
         </ViewInputs>
       </Content>
     </Container>
