@@ -33,6 +33,13 @@ class ParticipanteController {
       .getOne();
     return response.json(participanteSearch);
   }
+  async searchById(request: Request, response: Response) {
+    const participanteSearch = await getRepository(Participante)
+      .createQueryBuilder("participantes")
+      .where("id = :id", {id: request.params.id})
+      .getOne();
+    return response.json(participanteSearch);
+  }
 
 }
 export { ParticipanteController };

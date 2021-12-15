@@ -53,6 +53,7 @@ router.post("/updateBolsa/:id", bolsaController.update);
 
 router.get("/listEventos/:id", eventoController.search);
 router.get("/searchParticipant/:cpf", participanteController.search);
+router.get("/searchParticipantById/:id", participanteController.searchById);
 router.get("/searchOrganizador/:cpf", organizadorController.search);
 router.get("/searchCpf/:id", userAuthController.search);
 router.get("/listEventos/", eventoController.list);
