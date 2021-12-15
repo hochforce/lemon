@@ -36,7 +36,7 @@ const NewEvent = ({ match, history }) => {
         back="true"
         goBack={() => handleGoBack()}
       />
-      <Breadcrumb name=" > Edição de Evento"/>
+      <Breadcrumb name=" > Cadastro de Evento"/>
       <Content>
         <ViewInputs>
           <ViewHeader>
