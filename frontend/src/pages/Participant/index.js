@@ -51,7 +51,7 @@ const Participant = () => {
   }
 
   function handleUserInfo(){
-    console.log("Exibir user info")
+    setRedirect(`/user-info/${userId}`);
   }
   
   return (
