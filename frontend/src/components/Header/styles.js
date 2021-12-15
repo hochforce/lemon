@@ -19,6 +19,15 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
+  p {
+    font: 600 16px 'Montserrat', sans-serif;
+    margin-right: 20px;
+    color: #4C5175;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    cursor: pointer;
+  }
 `
 
 export const ItemMenu = styled.div`
@@ -39,7 +48,6 @@ align-items: baseline;
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
     font: 400 14px 'Montserrat', sans-serif;
     margin-left: 10px;
-
   }
 `
 export const IconButton = styled.img`
@@ -56,7 +64,18 @@ width: 30px;
 margin: 0px 5px 0px 0px !important;
 margin-right: 20px;
 padding: 0;
+border: none;
+cursor: pointer;
 &:hover{
   background-color: transparent;
 }
+`
+
+export const BackButton = styled.img`
+margin-right: 5px;
+`
+
+export const ViewBack = styled.button`
+border: none;
+background-color: transparent;
 `

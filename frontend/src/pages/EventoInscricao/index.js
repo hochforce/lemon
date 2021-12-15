@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { api } from '../../services/api';
-import { Modal } from '../../components/Modal';
-import { Button, Menu, Layout, Row, Col, } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
-import { Breadcrumb } from '../../components/Breadcrumb';
-import './styles.css';
+import { useState, useEffect } from 'react';
+import { api } from '../../services/api.js';
+import { Container, Content, Title, SubTitle, DateTimeAddress } from './styles.js';
+import { Header } from './../../components/Header/index';
+import { Breadcrumb } from '../../components/Breadcrumb/index.js';
+import { Button } from '../../components/Button';
 
-const EventInscricao = ({ match }) => {
+const EventInscricao = ({ match, history }) => {
+  const [redirect, setRedirect] = useState('');
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
   const [endereco, setEndereco] = useState('');
-  const [parceria, setParceria] = useState('');
-  const [recurso, setRecurso] = useState('');
-  const [bolsa, setBolsa] = useState('');
-  const { Header } = Layout;
-  const [redirect, setRedirect] = useState('');
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
   const [participante, setParticipante] = useState('');
@@ -28,6 +22,7 @@ const EventInscricao = ({ match }) => {
     necessary: undefined,
     scholarship: undefined
   });
+
   async function search() {
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     const cpf = buscaCPF.data.cpf;
@@ -58,21 +53,6 @@ const EventInscricao = ({ match }) => {
     setEndereco(buscaEnderecos.data);
   }
 
-  const callParcerias = async () => {
-    const buscaParceria = await api.get(`/listParcerias/${evento.id_parceria}`);
-    setParceria(buscaParceria.data);
-  }
-
-  const callRecursos = async () => {
-    const buscaRecurso = await api.get(`/listRecursos/${evento.id_recurso}`);
-    setRecurso(buscaRecurso.data);
-  }
-
-  const callBolsas = async () => {
-    const buscaBolsa = await api.get(`/listRecursos/${evento.id_recurso}`);
-    setRecurso(buscaBolsa.data);
-  }
-
   useEffect(() => {
     (() => {
       callEventos()
@@ -83,19 +63,8 @@ const EventInscricao = ({ match }) => {
     (() => {
       callPeriodos()
       callEnderecos()
-      callParcerias()
-      callRecursos()
     })()
   }, [evento])
-
-
-
-
-  function handleLogOut() {
-    localStorage.removeItem('TOKEN');
-    localStorage.removeItem('USER-ID');
-    setRedirect('/');
-  }
 
   async function handleSubscribe() {
     setProgressEvent(true);
@@ -111,50 +80,49 @@ const EventInscricao = ({ match }) => {
     setRedirect('/participant');
   }
 
+  function handleLogOut() {
+    localStorage.removeItem('TOKEN');
+    localStorage.removeItem('organizador');
+    localStorage.removeItem('USER-ID');
+    setRedirect('/');
+  }
+
+  function handleUserInfo() {
+    console.log("Exibir user info")
+  }
+
+  function handleGoBack() {
+    history.push('/participant');
+  }
   return (
-    <>
-      <div className="container">
+    <Container>
+      <Header
+        user="participant"
+        userLogged="Participante"
+        nameItem="Eventos"
+        onClickLogout={() => handleLogOut()}
+        onClickUsr={() => handleUserInfo()}
+        back="true"
+        goBack={() => handleGoBack()}
+      />
+      <Breadcrumb name=" > Confirmação de inscrição"/>
+      <Content>
+        <Title>{evento.titulo}</Title>
+        <SubTitle>{evento.descricao}</SubTitle>
+        <DateTimeAddress>
+        <strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas <br/>
+        <strong>Término:</strong> {periodo.data_fim} às {periodo.hora_fim} horas
+        </DateTimeAddress>
+        <DateTimeAddress>
+        {endereco.logradouro}, {endereco.numero} <br/>
+        {endereco.bairro}, {endereco.cidade}, {endereco.estado}
+        </DateTimeAddress>
 
-        <div className="header-inscricao">
-          <div className="logo-inscricao" >
-            <a href="/participant">LEMON</a>
-          </div>
-          <div className="titulo-inscricao">
-            <h1>Inscrição no Evento</h1>
-          </div>
-          <div className="user-info-inscricao">
-            <p style={{ margin: "20px 0px 0px" }}>{participante.nome}</p>
-            <Button
-              className="button-logout-inscricao"
-              type="primary"
-              icon={<PoweroffOutlined />}
-              onClick={handleLogOut}
-            >Sair</Button>
-          </div>
-
-        </div>
-
-        <div className="eventoInfo">
-          <Breadcrumb name="Breader"/>
-          <h2>{evento.titulo}</h2>
-
-          <h3>Duração</h3>
-          <p><strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas</p>
-          <p><strong>Término:</strong> {periodo.data_fim} às {periodo.hora_fim} horas</p>
-
-          <h3>Local</h3>
-          <p><strong>Logradouro:</strong> {endereco.logradouro}, Número: {endereco.numero}</p>
-          <p><strong>Bairro:</strong> {endereco.bairro}, Cidade: {endereco.cidade}, Estado: {endereco.estado}</p>
-          <button onClick={handleSubscribe}>
-            {!progressEvent ? "Confirmar Inscrição" : <div className="loader"></div>}
-          </button>
-         
-        </div>
-
-      </div>
-      {redirect && <Redirect to={{ pathname: redirect }} />}
-    </>
+        <Button name="Confirmar" onClick={handleSubscribe}/>
+      </Content>
+    </Container>
   )
+
 }
 
 export default EventInscricao;

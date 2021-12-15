@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import './styles.css';
+
 import fundo from '../../../src/assets/images/fundo-login.png'
 
 const Login = ({ history }) => {

@@ -4,7 +4,7 @@ import { api } from '../../services/api';
 import { Modal } from '../../components/Modal';
 import { Button, Menu, Layout, Row, Col, Result, } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
-import './styles.css';
+
 import { Headerm } from '../../components/Modal/styles';
 
 
