@@ -62,6 +62,7 @@ export default function Ativos() {
           :
 
           <View>
+            
             <Card
               creation="true"
               onClick={() => {

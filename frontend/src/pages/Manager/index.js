@@ -5,6 +5,7 @@ import Active from '../EventosAtivos';
 import Finish from '../EventosFinalizados';
 import Canceled from '../EventosCancelados';
 import { Container } from "./styles";
+import Search from '../../components/Search';
 
 const Manager = () => {
   const [redirect, setRedirect] = useState('');
@@ -39,6 +40,8 @@ const Manager = () => {
         onClickLogout={()=>handleLogOut()}
         onClickUsr={()=>handleUserInfo()}
       />
+
+      <Search />
 
       {validation.active && <Active /> }
       {validation.finish && <Finish /> }
