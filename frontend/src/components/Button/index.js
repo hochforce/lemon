@@ -1,6 +1,6 @@
 import { CommonButton, LoginButton } from "./styles";
 
-export const Button = ({ name, onClick, loginButton, unavailable }) => {
+export const Button = ({ name, onClick, loginButton, unavailable, type }) => {
   return (
     <>
       {
@@ -10,7 +10,7 @@ export const Button = ({ name, onClick, loginButton, unavailable }) => {
             {name}
           </LoginButton>
           :
-          <CommonButton onClick={onClick} unavailable={unavailable}>
+          <CommonButton onClick={onClick} unavailable={unavailable} type={type}>
             {name}
           </CommonButton>
       }
