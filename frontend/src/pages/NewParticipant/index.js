@@ -20,6 +20,7 @@ const NewParticipant = ({ history }) => {
     mensagem: ''
   });
 
+  
   async function addUser(e) {
     e.preventDefault();
     let saveDataForm = false;
