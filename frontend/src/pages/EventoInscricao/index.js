@@ -68,6 +68,7 @@ const EventInscricao = ({ match, history }) => {
 
   async function handleSubscribe() {
     setProgressEvent(true);
+
     try{
       await api.post('/inscricoes', {
         id_evento: evento.id,
@@ -77,7 +78,7 @@ const EventInscricao = ({ match, history }) => {
 
     }
     setProgressEvent(false);
-    setRedirect('/participant');
+    history.push('/participant');
   }
 
   function handleLogOut() {
@@ -118,7 +119,7 @@ const EventInscricao = ({ match, history }) => {
         {endereco.bairro}, {endereco.cidade}, {endereco.estado}
         </DateTimeAddress>
 
-        <Button name="Confirmar" onClick={handleSubscribe}/>
+        <Button name="Confirmar" onClick={()=>{handleSubscribe()}}/>
       </Content>
     </Container>
   )
