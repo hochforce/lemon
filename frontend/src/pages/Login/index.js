@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { Button } from '../../components/Button';
 import { LoginInput } from '../../components/LoginInput';
-import { Background, Container, Content, Title, View,Svg } from './styles';
+import { Background, Container, Content, Title, View, Svg, ViewError } from './styles';
 import img from "../../assets/images/login.svg";
 import usr from '../../assets/images/user.svg';
 import psw from '../../assets/images/psw.svg';
@@ -13,10 +13,15 @@ import psw from '../../assets/images/psw.svg';
 const Login = ({ history }) => {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
-  const [validaLogin, setValidaLogin] = useState('');
+  const [status, setStatus] = useState({
+    type: '',
+    mensagem: ''
+  });
   let resp;
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
+
     try {
 
       resp = await api.post('/auth', { cpf, password })
@@ -34,9 +39,9 @@ const Login = ({ history }) => {
         history.push('/');
       }
     } catch (err) {
-      setValidaLogin(err);
-      alert("CPF ou Senha inválida.")
-
+      setCpf('')
+      setPassword('');
+      return setStatus({ type: 'error', mensagem: 'Erro: Dados inválidos!' });
     }
   }
 
@@ -45,30 +50,33 @@ const Login = ({ history }) => {
       <Background src={img} />
       <Content >
         <Title>LEMON</Title>
-        <LoginInput
-          name="CPF"
-          value={cpf}
-          onChange={event => setCpf(event.target.value)}
-          type="text"
-          placeholder="CPF"
-          icon={<Svg src={usr}/>}
-        />
-        <LoginInput
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-          type="password"
-          name="password"
-          placeholder="Senha"
-          icon={<Svg src={psw}/>}
-        />
-
-        <Button onClick={()=>handleSubmit()} name="Entrar" loginButton/>
-
-        <View>
-          <Link to="/new-participant" style={{textDecoration: "none"}}>
-            <p>Cadastrar-me</p>
-          </Link>
-        </View>
+        <form onSubmit={handleSubmit}>
+          <LoginInput
+            name="CPF"
+            value={cpf}
+            onChange={event => setCpf(event.target.value)}
+            type="text"
+            placeholder="CPF"
+            icon={<Svg src={usr} />}
+          />
+          <LoginInput
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+            type="password"
+            name="password"
+            placeholder="Senha"
+            icon={<Svg src={psw} />}
+          />
+          <ViewError>
+            {status.type === 'error' ? <p style={{ color: "tomato" }}>{status.mensagem}</p> : ""}
+          </ViewError>
+          <Button name="Entrar" type="submit" loginButton />
+          <View>
+            <Link to="/new-participant" style={{ textDecoration: "none" }}>
+              <p>Cadastrar-me</p>
+            </Link>
+          </View>
+        </form>
 
       </Content>
     </Container>

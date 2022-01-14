@@ -50,4 +50,8 @@ margin-right: 8px;
 height: 30px;
 width: 30px;
 `
-
+export const ViewError = styled.div`
+ p{
+  font: 600 16px 'Montserrat', sans-serif;
+ }
+`
