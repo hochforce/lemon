@@ -28,7 +28,6 @@ const Participant = () => {
 
     const buscaEventos = await api.get('/listEventos');
     setEventos(buscaEventos.data);
-    
   };
   useEffect(() => {
     (async function () {
@@ -51,7 +50,7 @@ const Participant = () => {
   }
 
   function handleUserInfo(){
-    setRedirect(`/user-info/${userId}`);
+    setRedirect(`/user-info/${participante.id}`);
   }
   
   return (
@@ -62,7 +61,7 @@ const Participant = () => {
         nameItem="Eventos"
         active={validation.active}
         finish={validation.finish}
-        
+  
         onClick={(valid)=> {setValidation(valid)}}
         onClickLogout={()=>handleLogOut()}
         onClickUsr={()=>handleUserInfo()}

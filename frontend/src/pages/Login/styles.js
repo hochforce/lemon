@@ -52,6 +52,6 @@ width: 30px;
 `
 export const ViewError = styled.div`
  p{
-  font: 400 16px 'Montserrat', sans-serif;
+  font: 600 16px 'Montserrat', sans-serif;
  }
 `
