@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const CommonButton = styled.button`
 font: 600 20px 'Montserrat', sans-serif;
 background: transparent;
-border: 2px solid ${({unavailable})=> unavailable ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
+border: 2px solid ${({disabled})=> disabled ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
 border-radius: 8px;
-color: ${({unavailable})=> unavailable ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
+color: ${({disabled})=> disabled ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
 width: 120px;
 padding: 5px 0 5px 0;
 margin-top: 20px;

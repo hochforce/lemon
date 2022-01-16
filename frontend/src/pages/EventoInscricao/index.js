@@ -29,7 +29,6 @@ const EventInscricao = ({ match, history }) => {
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
-
   }
 
   useEffect(() => {

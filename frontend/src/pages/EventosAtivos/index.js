@@ -15,6 +15,8 @@ export default function Ativos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(2);
+  const [subscribe, setSubscribe] = useState([]);
+  const [id, setId] = useState('');
 
 
 
@@ -25,6 +27,8 @@ export default function Ativos() {
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
+    setId(buscaParticipante.data.id);
+    
 
     const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
     setOrganizador(buscaOrganizador);
@@ -32,13 +36,26 @@ export default function Ativos() {
     const paginationInfo = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList);
-  }
 
+    
+  }
+  async function search2() {
+    const trem = await api.get(`/searchSubscribe/${id}`)
+    setSubscribe(trem.data)
+  }
+  console.log("Trem:"+ subscribe.map((res)=>{
+    return console.log(res.id_evento)
+  }))
+  
+  // Tá tudo dentro do estado subscribe
+    
   useEffect(() => {
     (async function () {
       search()
+      search2()
     })()
-  }, [])
+  }, [id])
+
 
   return (
     <Container>
@@ -47,7 +64,10 @@ export default function Ativos() {
         participante
           ?
           <View>
-            {Array.isArray(eventos) && eventos.map((evento) =>
+
+            {Array.isArray(eventos) && eventos.map((evento) =><>
+              {subscribe.id_evento === evento.id ? console.log("Dis") : console.log(evento.id)}
+              
               <Card
                 title={evento.titulo}
                 description={evento.descricao}
@@ -55,14 +75,17 @@ export default function Ativos() {
                   setRedirect(`/inscricao/${evento.id}`)
                 }}
                 status={evento.status}
-              />
+                statusSubscribe="true"
+                />
+
+                </>
             )}
           </View>
 
           :
 
           <View>
-            
+
             <Card
               creation="true"
               onClick={() => {

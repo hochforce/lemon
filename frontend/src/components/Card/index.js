@@ -8,7 +8,7 @@ const Card = ({
   description, 
   onClick, 
   cancel,
-  unavailable,
+  disabled,
   status}) => {
   
   return (
@@ -38,7 +38,7 @@ const Card = ({
                   {status === "finalizado" && <Button name="Relatórios" />}
                 </>
                 :
-                <Button name="Inscrição" onClick={onClick} unavailable={unavailable}/>
+                <Button name="Inscrição" onClick={onClick} disabled={disabled}/>
               }
             </View>
         }

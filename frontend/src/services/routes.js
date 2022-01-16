@@ -7,7 +7,7 @@ import Dashboard from '../pages/Dashboard';
 import NewEvent from '../pages/NewEvent';
 import NewParticipant from '../pages/NewParticipant';
 import NewManager from '../pages/NewManager';
-import NewCertificate from '../pages/NewCertificate';
+import NewCertificate from '../components/NewCertificate';
 import Manager from '../pages/Manager';
 import Participant from '../pages/Participant';
 import Ativos from '../pages/EventosAtivos';

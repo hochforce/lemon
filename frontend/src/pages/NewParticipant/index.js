@@ -24,9 +24,6 @@ const NewParticipant = ({ history }) => {
   async function addUser(e) {
     e.preventDefault();
     let saveDataForm = false;
-
-
-
     if (validate()) {
       if (!validaCpf(cpf)) {
         return setStatus({ type: 'error', mensagem: 'Erro: Insira um CPF válido. (Digite somente os números)!' });
