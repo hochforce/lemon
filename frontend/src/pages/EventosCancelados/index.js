@@ -5,7 +5,7 @@ import { Container, View } from './styles';
 import { api } from '../../services/api';
 import { Pagination } from './../../components/Pagination';
 
-export default function Ativos() {
+export default function Cancelados() {
   const [redirect, setRedirect] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");

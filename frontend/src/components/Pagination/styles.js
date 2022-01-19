@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   justify-content: right;
+  margin-right: 30px;
+
 `
 
 export const PaginationButton = styled.div`
@@ -10,7 +12,7 @@ export const PaginationButton = styled.div`
 `
 
 export const PaginationItem = styled.div`
-margin: 0 10px;
+margin: 0 2px;
 cursor: pointer;
 color: #4c5175;
 font: 600 20px 'Montserrat', sans-serif;

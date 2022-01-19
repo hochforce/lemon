@@ -43,13 +43,19 @@ const NewEvent = ({ match, history }) => {
             <Input
               label="Título"
               type="text"
-
             />
             <Input
               label="Descrição"
               type="text"
 
             />
+            <select style={{borderRadius: 5, height: 50, border: "none"}}>
+              <option value="1">Selecione</option>
+              <option value="2">Opção</option>
+              <option value="3">Total</option>
+              <option value="4">Limite</option>
+              <option value="5">Coisa</option>
+            </select>
             <Input
               label="Tipo"
               type="dropdown"

@@ -5,7 +5,7 @@ import { Container, View } from './styles';
 import { api } from '../../services/api';
 import { Pagination } from '../../components/Pagination';
 
-export default function Ativos() {
+export default function Finalizados() {
   const [redirect, setRedirect] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
@@ -49,7 +49,7 @@ export default function Ativos() {
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  setRedirect(`/inscricao/${evento.id}`)
+                  setRedirect(`/new-certificate`)
                 }}
                 status={evento.status}
               />
