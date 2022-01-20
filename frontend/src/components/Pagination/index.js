@@ -19,6 +19,7 @@ export const Pagination = ({total, limit, currentPageFunction}) => {
       }
       setPages(arrayPages);
       currentPageFunction(currentPage);
+      console.log("Pro"+currentPageFunction)
   }, [currentPage, total]);
   
   return (
