@@ -36,15 +36,15 @@ export default function Ativos() {
     const paginationInfo = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList);
-
-
+console.log("Esse: "+paginationInfo.data.eventosList[0].titulo)
+console.log("Esse2: "+currentPage)
   }
   async function search2() {
     const trem = await api.get(`/searchSubscribe/${id}`)
     setSubscribe(trem.data)
   }
   console.log("Trem: " + subscribe.map((res) => {
-    return console.log("O do trem: "+res.id_evento)
+    return console.log("O do trem: " + res.id_evento)
   }))
 
   //Tá tudo dentro do estado subscribe
@@ -66,7 +66,7 @@ export default function Ativos() {
 
             {Array.isArray(eventos) && eventos.map((evento) =>
               <>
-                {subscribe.id_evento === evento.id ? console.log("Dis") : console.log("HTML: "+evento.id)}
+                {subscribe.id_evento === evento.id ? console.log("Dis") : console.log("HTML: " + evento.id)}
 
                 <Card
                   title={evento.titulo}
@@ -76,9 +76,9 @@ export default function Ativos() {
                   }}
                   status={evento.status}
                   statusSubscribe="true"
-                  
+
                 />
-                
+
               </>
             )}
           </View>
@@ -93,36 +93,22 @@ export default function Ativos() {
                 setRedirect(`/new-event`)
               }}
             />
-
-            <Card
-              cardManager="true"
-              title="Título do Evento que será realizado no IFNMG - Arinos"
-              description="Aqui ficará a descrição de cada evento, com informações iniciais sobre o acontecimento do mesmo."
-              onClick={() => {
-                setRedirect(`/evento-info`)
-              }}
-              cancel={() => {
-                setRedirect(`/cancelar-evento`)
-              }}
-              status="ativo"
-            />
-
-            <Card
-              cardManager="true"
-              title="Título do Evento que será realizado no IFNMG - Arinos"
-              description="Aqui ficará a descrição de cada evento, com informações iniciais sobre o acontecimento do mesmo."
-              onClick={() => {
-                setRedirect(`/evento-info`)
-              }}
-              cancel={() => {
-                setRedirect(`/cancelar-evento`)
-              }}
-              status="ativo"
-            />
+            {Array.isArray(eventos) && eventos.map((evento) =>
+              <Card
+                title={evento.titulo}
+                description={evento.descricao}
+                onClick={() => {
+                  setRedirect(`/inscricao/${evento.id}`)
+                }}
+                status={evento.status}
+                statusSubscribe="true"
+              />
+            )}
+            
 
           </View>
       }
-
+      {/* O problema está aqui. O curr.. não está recebendo o valor do clique */}
       <Pagination
         currentPageFunction={(page) => setCurrentPage(page)}
         total={total}
