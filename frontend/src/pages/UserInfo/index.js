@@ -6,9 +6,16 @@ import Input from "../../components/Input";
 import { Header } from './../../components/Header/index';
 import { Container, Content, P, View, ViewInputs } from "./styles.js";
 import { Breadcrumb } from '../../components/Breadcrumb';
+import { ModalConfirm } from '../../components/ModalConfirm';
 
 
 const UserInfo = ({ history, match }) => {
+
+  const [ showModal, setShowModal ] = useState(false);
+  const openModal = ()=>{
+    
+    setShowModal(prev => !prev)
+  }
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -19,8 +26,8 @@ const UserInfo = ({ history, match }) => {
   const [cpfIsValid, setCpfIsValid] = useState(true);
   const [redirect, setRedirect] = useState('');
   const [participant, setParticipant] = useState('');
-  const {id}=useParams()
- 
+  const { id } = useParams()
+
   async function search() {
     const searchUser = await api.get(`/searchParticipantById/${id}`);
     setParticipant(searchUser.data);
@@ -30,11 +37,11 @@ const UserInfo = ({ history, match }) => {
     setCampus_instituicao(searchUser.data.campus_instituicao);
   };
   useEffect(() => {
-    if(id){
-      search() 
+    if (id) {
+      search()
     }
   }, [])
-  
+
   // useEffect(() => {
   //   async function search() {
   //     const searchUser = await api.get(`/searchParticipantById/${match.params.id}`);
@@ -83,7 +90,7 @@ const UserInfo = ({ history, match }) => {
             type="text"
             value={nome}
             onChange={event => setNome(event.target.value)}
-           
+
           />
 
           <Input
@@ -91,7 +98,7 @@ const UserInfo = ({ history, match }) => {
             type="text"
             value={sobrenome}
             onChange={event => setSobrenome(event.target.value)}
-            
+
           />
 
           <Input
@@ -101,13 +108,13 @@ const UserInfo = ({ history, match }) => {
             onChange={event => setCpf(event.target.value)}
             disabled="true"
           />
-          
+
           <Input
             label="Campus/Instituição"
             type="text"
             value={campus_instituicao}
             onChange={event => setCampus_instituicao(event.target.value)}
-            
+
           />
 
           <Input
@@ -115,7 +122,7 @@ const UserInfo = ({ history, match }) => {
             type="password"
             value={password}
             onChange={event => setPassword(event.target.value)}
-            
+
           />
 
           <Input
@@ -123,15 +130,18 @@ const UserInfo = ({ history, match }) => {
             type="password"
             value={repeatPass}
             onChange={event => setRepeatPass(event.target.value)}
-            
+
           />
 
           <View>
-            <Button name="Salvar" onClick={handleSubmit} />
+            <Button name="Salvar" onClick={handleSubmit, openModal} />
           </View>
 
 
         </ViewInputs>
+
+
+      <ModalConfirm showModal={showModal} setShowModal={setShowModal}/>
       </Content>
     </Container>
   )
