@@ -5,8 +5,16 @@ import { Header } from './../../components/Header/index';
 import Input from './../../components/Input/index';
 import { Button } from "../../components/Button";
 import { Breadcrumb } from './../../components/Breadcrumb/index';
+import { ModalConfirm } from './../../components/ModalConfirm/index';
 
 const NewEvent = ({ match, history }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+
+    setShowModal(prev => !prev)
+  }
+
   const [redirect, setRedirect] = useState('');
   const [isOnline, setIsOnline] = useState(true);
   const [titulo, setTitulo] = useState('');
@@ -52,9 +60,9 @@ const NewEvent = ({ match, history }) => {
   async function handleSaveEvent(e) {
     e.preventDefault();
     if (validaForm()) {
-      
+
       setProgressEvent(true);
-      
+
       try {
         //Salvando na tabela parcerias
         const saveParceria = await api.post('/parceiros', {
@@ -115,7 +123,7 @@ const NewEvent = ({ match, history }) => {
           id_endereco,
           status
         });
-
+        openModal();
         setValidate({ ...validate, event: true })
         setValidate({ ...validate, time: true })
         setValidate({ ...validate, address: true })
@@ -125,7 +133,11 @@ const NewEvent = ({ match, history }) => {
       } catch (err) {
         setValidate({ ...validate, together: false })
       }
-      history.push("/manager");
+
+      setTimeout(function () {
+        history.push("/manager");
+      }, 3000)
+
       setProgressEvent(false);
     } else {
       return <h1>ERROR!</h1>;
@@ -172,7 +184,11 @@ const NewEvent = ({ match, history }) => {
 
   return (
     <Container>
-
+      <ModalConfirm
+        showModal={showModal} 
+        setShowModal={setShowModal} 
+        message="Evento cadastrado com sucesso!"
+      />
       <Header
         user="manager"
         userLogged="Organizador"

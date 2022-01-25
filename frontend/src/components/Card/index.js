@@ -40,7 +40,7 @@ const Card = ({
               :
               <>
                 {status === "finalizado" && <Button name="Certificado" />}
-                {status === "cancelado" && <Button name="Errado" onClick={onClick} />}
+                {status === "cancelado" && <Button name="Certificado" onClick={onClick} />}
                 <Button name="Inscrição" onClick={onClick} disabled={disabled} />
               </>
             }

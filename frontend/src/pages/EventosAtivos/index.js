@@ -14,12 +14,9 @@ export default function Ativos() {
   const [organizador, setOrganizador] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(3);
   const [subscribe, setSubscribe] = useState([]);
   const [id, setId] = useState('');
-
-
-
 
   async function search() {
     const buscaCpf = await api.get(`/searchCpf/${userId}`);
@@ -95,6 +92,7 @@ console.log("Esse2: "+currentPage)
             />
             {Array.isArray(eventos) && eventos.map((evento) =>
               <Card
+                cardManager
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {

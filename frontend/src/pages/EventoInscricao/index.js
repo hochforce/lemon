@@ -4,8 +4,15 @@ import { Container, Content, Title, SubTitle, DateTimeAddress } from './styles.j
 import { Header } from './../../components/Header/index';
 import { Breadcrumb } from '../../components/Breadcrumb/index.js';
 import { Button } from '../../components/Button';
+import { ModalConfirm } from './../../components/ModalConfirm/index';
 
 const EventInscricao = ({ match, history }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(prev => !prev)
+  }
+
   const [redirect, setRedirect] = useState('');
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
@@ -73,11 +80,14 @@ const EventInscricao = ({ match, history }) => {
         id_evento: evento.id,
         id_participante: participante.id
       });
+      openModal();
     }catch{
 
     }
     setProgressEvent(false);
-    history.push('/participant');
+    setTimeout(function () {
+      history.push('/participant');
+    }, 2000)
   }
 
   function handleLogOut() {
@@ -96,6 +106,11 @@ const EventInscricao = ({ match, history }) => {
   }
   return (
     <Container>
+      <ModalConfirm 
+        showModal={showModal}
+        setShowModal={setShowModal} 
+        message="Inscrição realizada com sucesso!"
+      />
       <Header
         user="participant"
         userLogged="Participante"

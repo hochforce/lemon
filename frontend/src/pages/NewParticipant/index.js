@@ -6,8 +6,15 @@ import Input from "../../components/Input";
 import { Header } from './../../components/Header/index';
 import { Container, Content, P, View, ViewInputs, ViewError } from "./styles.js";
 import { validaCpf } from '../../components/CPFValidate';
+import { ModalConfirm } from './../../components/ModalConfirm/index';
 
 const NewParticipant = ({ history }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+
+    setShowModal(prev => !prev)
+  }
   
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -42,8 +49,11 @@ const NewParticipant = ({ history }) => {
             password,
             "tipo": "participante"
           })
-
-          history.push('/participant');
+          openModal();
+          setTimeout(function () {
+            history.push('/');
+          }, 3000)
+          
 
         } catch {
           return setStatus({ type: 'error', mensagem: 'Erro: Este CPF já está cadastrado, volte para a tela de login.' });
@@ -59,7 +69,7 @@ const NewParticipant = ({ history }) => {
     if (saveDataForm) {
       setStatus({
         type: 'success',
-        mensagem: "Usuário cadastrado com sucesso!"
+        mensagem: ""
       });
 
     } else {
@@ -84,6 +94,11 @@ const NewParticipant = ({ history }) => {
 
   return (
     <Container>
+      <ModalConfirm 
+        showModal={showModal}
+        setShowModal={setShowModal} 
+        message="Dados salvos com sucesso!"
+      />
       <Header back="true" />
       <Content>
 

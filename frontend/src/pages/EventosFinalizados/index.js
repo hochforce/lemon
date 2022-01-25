@@ -61,7 +61,7 @@ export default function Finalizados() {
           <View>
             {Array.isArray(eventos) && eventos.map((evento) =>
               <Card
-                cardManager="true"
+                cardManager
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {

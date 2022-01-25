@@ -63,7 +63,7 @@ export default function Cancelados() {
           <View>
             {Array.isArray(eventos) && eventos.map((evento) =>
               <Card
-                cardManager="true"
+                cardManager
                 title={evento.titulo}
                 description={evento.descricao}
                 status={evento.status}
