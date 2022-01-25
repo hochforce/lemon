@@ -50,6 +50,8 @@ router.post("/updateEndereco/:id", enderecoController.update);
 router.post("/updateParceria/:id", parceriaController.update);
 router.post("/updateRecurso/:id", recursosController.update);
 router.post("/updateBolsa/:id", bolsaController.update);
+router.post("/updateUser/:id", participanteController.update);
+router.post("/updateUserAuth/:id", userAuthController.update);
 
 router.get("/listEventos/:id", eventoController.search);
 router.get("/searchParticipant/:cpf", participanteController.search);

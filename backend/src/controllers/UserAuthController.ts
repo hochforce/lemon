@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import UserAuth from '../models/UserAuth';
+import bcrypt from 'bcryptjs';
 
 function validaCpfCnpj(val) {
 
@@ -89,6 +90,25 @@ class UserAuthController {
       .where("id = :id", { id: request.params.id })
       .getOne();
     return response.json(cpfSearch);
+  }
+  async update(request: Request, response: Response) {
+    const search = await getRepository(UserAuth)
+      .createQueryBuilder("userAuth")
+      .where("id = :id", { id: request.params.id })
+      .getOne();
+    var {
+      password
+    } = request.body;
+    request.body.password = bcrypt.hashSync(request.body.password, 8);
+    await getConnection()
+      .createQueryBuilder()
+      .update(UserAuth)
+      .set({
+        password: request.body.password ? request.body.password : search.password
+      })
+      .where("id = :id", { id: request.params.id })
+      .execute();
+    return response.json(response.status);
   }
 }
 
