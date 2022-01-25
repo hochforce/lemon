@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Background, ModalContent } from './styles';
 
-export const ModalConfirm = ({showModal, setShowModal}) => {
+export const ModalConfirm = ({showModal, setShowModal, message}) => {
   
   useEffect(() => {
     setTimeout(function(){
@@ -15,7 +15,7 @@ export const ModalConfirm = ({showModal, setShowModal}) => {
   {showModal ? (
     <Background >
           <ModalContent>
-            <h1>Dados salvos com sucesso!</h1>
+            <h1>{message}</h1>
           </ModalContent>
     </Background>
   ) : null}

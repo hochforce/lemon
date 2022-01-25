@@ -11,9 +11,9 @@ import { ModalConfirm } from '../../components/ModalConfirm';
 
 const UserInfo = ({ history, match }) => {
 
-  const [ showModal, setShowModal ] = useState(false);
-  const openModal = ()=>{
-    
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+
     setShowModal(prev => !prev)
   }
 
@@ -73,6 +73,11 @@ const UserInfo = ({ history, match }) => {
 
   return (
     <Container>
+      <ModalConfirm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        message="Dados atualizados com sucesso!"
+      />
       <Header
         user="participant"
         userLogged="Participante"
@@ -141,7 +146,6 @@ const UserInfo = ({ history, match }) => {
         </ViewInputs>
 
 
-      <ModalConfirm showModal={showModal} setShowModal={setShowModal}/>
       </Content>
     </Container>
   )

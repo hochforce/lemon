@@ -184,7 +184,11 @@ const NewEvent = ({ match, history }) => {
 
   return (
     <Container>
-      <ModalConfirm showModal={showModal} setShowModal={setShowModal} />
+      <ModalConfirm
+        showModal={showModal} 
+        setShowModal={setShowModal} 
+        message="Evento cadastrado com sucesso!"
+      />
       <Header
         user="manager"
         userLogged="Organizador"
