@@ -4,12 +4,17 @@ import { api } from '../../services/api';
 import { Button } from "../../components/Button";
 import Input from "../../components/Input";
 import { Header } from './../../components/Header/index';
-import { Container, Content, P, View, ViewInputs } from "./styles.js";
+import { Container, Content, P, View, ViewInputs, ViewError } from "./styles.js";
 import { Breadcrumb } from '../../components/Breadcrumb';
 import { ModalConfirm } from '../../components/ModalConfirm';
 
 
 const UserInfo = ({ history, match }) => {
+
+  const [status, setStatus] = useState({
+    type: '',
+    mensagem: ''
+  });
 
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
@@ -52,8 +57,28 @@ const UserInfo = ({ history, match }) => {
   //   search();
   // }, []);
 
-  async function handleSubmit(event) {
-    console.log("Criar função edição no backend")
+  async function handleSubmit(e) {
+    let idUser = localStorage.getItem('USER-ID')
+    e.preventDefault();
+
+    if (validate()) {
+      await api.post(`/updateUser/${id}`, {
+        nome,
+        sobrenome,
+        campus_instituicao,
+        password
+      })
+      await api.post(`/updateUserAuth/${idUser}`, {
+        password
+      })
+
+      openModal();
+      setTimeout(function () {
+        document.location.reload(true)
+      }, 3000)
+    } else {
+      return;
+    }
   }
 
   function handleGoBack() {
@@ -64,11 +89,16 @@ const UserInfo = ({ history, match }) => {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
     localStorage.removeItem('USER-ID');
-    setRedirect('/');
+    history.push('/');
   }
 
   function handleUserInfo() {
     console.log("Exibir user info")
+  }
+
+  function validate() {
+    if (repeatPass !== password) return setStatus({ type: 'error', mensagem: 'Erro: As senhas precisam ser iguais!' });
+    return true;
   }
 
   return (
@@ -138,8 +168,12 @@ const UserInfo = ({ history, match }) => {
 
           />
 
+          <ViewError>
+            {status.type === 'error' ? <p style={{ color: "tomato" }}>{status.mensagem}</p> : ""}
+          </ViewError>
+
           <View>
-            <Button name="Salvar" onClick={handleSubmit, openModal} />
+            <Button name="Salvar" onClick={handleSubmit} />
           </View>
 
 

@@ -29,3 +29,13 @@ p {
     text-decoration: none;
   }
 `
+export const ViewError = styled.div`
+width: 500px;
+display: flex;
+flex-direction: row;
+align-items: center;
+margin-left: 10px;
+ p{
+  font: 600 16px 'Montserrat', sans-serif;
+ }
+`
