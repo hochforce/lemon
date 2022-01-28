@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import { Container, Content, Title, SubTitle, DateTimeAddress } from './styles.js';
 import { Header } from './../../components/Header/index';
@@ -7,6 +8,9 @@ import { Button } from '../../components/Button';
 import { ModalConfirm } from './../../components/ModalConfirm/index';
 
 const EventInscricao = ({ match, history }) => {
+
+  const params = useParams();
+  console.log("jjj"+JSON.stringify(params))
 
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
@@ -17,6 +21,7 @@ const EventInscricao = ({ match, history }) => {
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
   const [endereco, setEndereco] = useState('');
+  
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
   const [participante, setParticipante] = useState('');
@@ -31,6 +36,10 @@ const EventInscricao = ({ match, history }) => {
   });
 
   async function search() {
+
+    const buscaEventos = await api.get(`/listEventos/${match?.params?.id}`);
+    setEvento(buscaEventos.data);
+
     const buscaCPF = await api.get(`/searchCpf/${userId}`);
     const cpf = buscaCPF.data.cpf;
 
@@ -44,10 +53,7 @@ const EventInscricao = ({ match, history }) => {
     })()
   }, [])
 
-  const callEventos = async () => {
-    const buscaEventos = await api.get(`/listEventos/${match.params.id}`);
-    setEvento(buscaEventos.data);
-  };
+  
 
   const callPeriodos = async () => {
     const buscaPeriodos = await api.get(`/listPeriodos/${evento.id_periodo_duracao}`);
@@ -57,13 +63,8 @@ const EventInscricao = ({ match, history }) => {
   const callEnderecos = async () => {
     const buscaEnderecos = await api.get(`/listEnderecos/${evento.id_endereco}`);
     setEndereco(buscaEnderecos.data);
-  }
 
-  useEffect(() => {
-    (() => {
-      callEventos()
-    })()
-  }, [])
+  }
 
   useEffect(() => {
     (() => {
@@ -71,23 +72,30 @@ const EventInscricao = ({ match, history }) => {
       callEnderecos()
     })()
   }, [evento])
-
+  
   async function handleSubscribe() {
     setProgressEvent(true);
-
-    try{
+   
+   
+    
+   
+   
+    try {
       await api.post('/inscricoes', {
         id_evento: evento.id,
         id_participante: participante.id
       });
       openModal();
-    }catch{
+      setTimeout(function () {
+        history.push('/participant');
+      }, 3000)
+    } catch {
 
     }
     setProgressEvent(false);
-    setTimeout(function () {
-      history.push('/participant');
-    }, 2000)
+    // setTimeout(function () {
+    //   history.push('/participant');
+    // }, 2000)
   }
 
   function handleLogOut() {
@@ -104,11 +112,12 @@ const EventInscricao = ({ match, history }) => {
   function handleGoBack() {
     history.push('/participant');
   }
+  
   return (
     <Container>
-      <ModalConfirm 
+      <ModalConfirm
         showModal={showModal}
-        setShowModal={setShowModal} 
+        setShowModal={setShowModal}
         message="Inscrição realizada com sucesso!"
       />
       <Header
@@ -120,20 +129,20 @@ const EventInscricao = ({ match, history }) => {
         back="true"
         goBack={() => handleGoBack()}
       />
-      <Breadcrumb name=" > Confirmação de inscrição"/>
+      <Breadcrumb name=" > Confirmação de inscrição" />
       <Content>
         <Title>{evento.titulo}</Title>
         <SubTitle>{evento.descricao}</SubTitle>
         <DateTimeAddress>
-        <strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas <br/>
-        <strong>Término:</strong> {periodo.data_fim} às {periodo.hora_fim} horas
+          <strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas <br />
+          <strong>Término:</strong> {periodo.data_fim} às {periodo.hora_fim} horas
         </DateTimeAddress>
         <DateTimeAddress>
-        {endereco.logradouro}, {endereco.numero} <br/>
-        {endereco.bairro}, {endereco.cidade}, {endereco.estado}
+          {endereco.logradouro}, {endereco.numero} <br />
+          {endereco.bairro}, {endereco.cidade}, {endereco.estado}
         </DateTimeAddress>
 
-        <Button name="Confirmar" onClick={()=>{handleSubscribe()}}/>
+        <Button name={match.params.haveSub === true ? "Inscrito" : "Confirmar"} onClick={() =>  match.params.haveSub === true ? {} : handleSubscribe()  } haveSub={match.params.haveSub}/>
       </Content>
     </Container>
   )

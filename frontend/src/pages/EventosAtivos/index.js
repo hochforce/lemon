@@ -17,6 +17,8 @@ export default function Ativos() {
   const [limit, setLimit] = useState(3);
   const [subscribe, setSubscribe] = useState([]);
   const [id, setId] = useState('');
+  const [sub, setSub] = useState('');
+
 
   async function search() {
     const buscaCpf = await api.get(`/searchCpf/${userId}`);
@@ -32,26 +34,58 @@ export default function Ativos() {
 
     const paginationInfo = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
-    setEventos(paginationInfo.data.eventosList);
-console.log("Esse: "+paginationInfo.data.eventosList[0].titulo)
-console.log("Esse2: "+currentPage)
-  }
-  async function search2() {
-    const trem = await api.get(`/searchSubscribe/${id}`)
-    setSubscribe(trem.data)
-  }
-  console.log("Trem: " + subscribe.map((res) => {
-    return console.log("O do trem: " + res.id_evento)
-  }))
+    //setEventos(paginationInfo.data.eventosList)
 
-  //Tá tudo dentro do estado subscribe
+
+    const subscription = await api.get(`/searchSubscribe/${buscaParticipante.data.id}`)
+    setSub(subscription)
+
+
+
+
+    var list = []
+    paginationInfo.data.eventosList.map((eventos) => {
+      subscription.data.map((even) => {
+        if(eventos.id === even.id_evento){
+            list.push({
+              ...eventos,
+              haveSub: true
+            })
+        }else{
+          list.push({
+            ...eventos,
+            haveSub: false
+          })
+        }
+      })
+    })
+
+   // const removeArray = list.filter(function(a) {
+     // return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true)
+    //}, Object.create(null))
+
+    var newList = []
+    list.forEach(item => {
+      var duplicated = newList.findIndex(renderItem => {
+        return item.id == renderItem.id
+      }) > -1
+
+      if(!duplicated){
+        newList.push(item)
+      }
+    })
+    setEventos(newList)
+  }
+
 
   useEffect(() => {
     (async function () {
       search()
-      search2()
+
     })()
   }, [id])
+
+  console.log(eventos)
 
   return (
     <Container>
@@ -63,17 +97,15 @@ console.log("Esse2: "+currentPage)
 
             {Array.isArray(eventos) && eventos.map((evento) =>
               <>
-                {subscribe.id_evento === evento.id ? console.log("Dis") : console.log("HTML: " + evento.id)}
 
                 <Card
                   title={evento.titulo}
                   description={evento.descricao}
                   onClick={() => {
-                    setRedirect(`/inscricao/${evento.id}`)
+                    setRedirect(`/inscricao/${evento.id}/${evento.haveSub}`)
                   }}
                   status={evento.status}
-                  statusSubscribe="true"
-
+                  haveSub={evento.haveSub}
                 />
 
               </>
@@ -102,7 +134,7 @@ console.log("Esse2: "+currentPage)
                 statusSubscribe="true"
               />
             )}
-            
+
 
           </View>
       }

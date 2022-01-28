@@ -9,7 +9,8 @@ const Card = ({
   onClick,
   cancel,
   disabled,
-  status }) => {
+  status,
+  haveSub}) => {
 
   return (
     <Container creation={creation}>
@@ -41,7 +42,7 @@ const Card = ({
               <>
                 {status === "finalizado" && <Button name="Certificado" />}
                 {status === "cancelado" && <Button name="Certificado" onClick={onClick} />}
-                <Button name="Inscrição" onClick={onClick} disabled={disabled} />
+                <Button name={haveSub ? "Inscrito" : "Inscrever"} onClick={onClick} disabled={disabled} haveSub={haveSub}/>
               </>
             }
           </View>

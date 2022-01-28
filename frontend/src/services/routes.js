@@ -42,7 +42,7 @@ export default function Routes(){
         <PrivateRoute path="/eventos-finalizados" component={Finalizados} />
         <PrivateRoute path="/user-info/:id" component={UserInfo} />
         <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
-        <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
+        <PrivateRoute path="/inscricao/:id/:haveSub" component={EventoInscricao} />
       </Switch>
     </BrowserRouter>
   )
