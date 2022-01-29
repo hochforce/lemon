@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
-import { Container, Content, Title, SubTitle, DateTimeAddress } from './styles.js';
+import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage } from './styles.js';
 import { Header } from './../../components/Header/index';
 import { Breadcrumb } from '../../components/Breadcrumb/index.js';
 import { Button } from '../../components/Button';
@@ -9,8 +9,8 @@ import { ModalConfirm } from './../../components/ModalConfirm/index';
 
 const EventInscricao = ({ match, history }) => {
 
-  const params = useParams();
-  console.log("jjj"+JSON.stringify(params))
+
+
 
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
@@ -21,7 +21,7 @@ const EventInscricao = ({ match, history }) => {
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
   const [endereco, setEndereco] = useState('');
-  
+  const [sub, setSub] = useState(false);
   const userId = localStorage.getItem("USER-ID");
   const token = localStorage.getItem("TOKEN");
   const [participante, setParticipante] = useState('');
@@ -45,6 +45,8 @@ const EventInscricao = ({ match, history }) => {
 
     const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
     setParticipante(buscaParticipante.data);
+
+
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const EventInscricao = ({ match, history }) => {
     })()
   }, [])
 
-  
+
 
   const callPeriodos = async () => {
     const buscaPeriodos = await api.get(`/listPeriodos/${evento.id_periodo_duracao}`);
@@ -63,7 +65,8 @@ const EventInscricao = ({ match, history }) => {
   const callEnderecos = async () => {
     const buscaEnderecos = await api.get(`/listEnderecos/${evento.id_endereco}`);
     setEndereco(buscaEnderecos.data);
-
+    const subscription = await api.get(`/subscribe/${participante.id}/${evento.id}`)
+    setSub(subscription.data)
   }
 
   useEffect(() => {
@@ -71,31 +74,29 @@ const EventInscricao = ({ match, history }) => {
       callPeriodos()
       callEnderecos()
     })()
-  }, [evento])
-  
+  }, [evento, participante])
+
   async function handleSubscribe() {
     setProgressEvent(true);
-   
-   
-    
-   
-   
+
+
+
+
+
     try {
       await api.post('/inscricoes', {
         id_evento: evento.id,
         id_participante: participante.id
       });
       openModal();
-      setTimeout(function () {
-        history.push('/participant');
-      }, 3000)
+
     } catch {
 
     }
     setProgressEvent(false);
-    // setTimeout(function () {
-    //   history.push('/participant');
-    // }, 2000)
+    setTimeout(function () {
+      history.push('/participant');
+    }, 2000)
   }
 
   function handleLogOut() {
@@ -112,7 +113,7 @@ const EventInscricao = ({ match, history }) => {
   function handleGoBack() {
     history.push('/participant');
   }
-  
+
   return (
     <Container>
       <ModalConfirm
@@ -142,7 +143,8 @@ const EventInscricao = ({ match, history }) => {
           {endereco.bairro}, {endereco.cidade}, {endereco.estado}
         </DateTimeAddress>
 
-        <Button name={match.params.haveSub === true ? "Inscrito" : "Confirmar"} onClick={() =>  match.params.haveSub === true ? {} : handleSubscribe()  } haveSub={match.params.haveSub}/>
+        <SubMessage>{sub === true ? "Você já se inscreveu nesse evento." : null}</SubMessage>
+        <Button name={sub === true ? "Inscrito" : "Confirmar"} onClick={() => sub === true ? {} : handleSubscribe()} haveSub={sub} />
       </Content>
     </Container>
   )

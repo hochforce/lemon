@@ -42,7 +42,7 @@ const Card = ({
               <>
                 {status === "finalizado" && <Button name="Certificado" />}
                 {status === "cancelado" && <Button name="Certificado" onClick={onClick} />}
-                <Button name={haveSub ? "Inscrito" : "Inscrever"} onClick={onClick} disabled={disabled} haveSub={haveSub}/>
+                <Button name={haveSub ? "Inscrito" : "Inscrição"} onClick={onClick} disabled={disabled} haveSub={haveSub}/>
               </>
             }
           </View>

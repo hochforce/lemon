@@ -22,3 +22,7 @@ export const DateTimeAddress = styled.p`
 font: 500 14px 'Montserrat', sans-serif;
 color: #000;
 `
+export const SubMessage = styled.p`
+font: 600 18px 'Montserrat', sans-serif;
+color: #52ADA2;
+`

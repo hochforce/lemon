@@ -34,7 +34,7 @@ export default function Ativos() {
 
     const paginationInfo = await api.get(`/searchWithLimitAtivo/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
-    //setEventos(paginationInfo.data.eventosList)
+    setEventos(paginationInfo.data.eventosList)
 
 
     const subscription = await api.get(`/searchSubscribe/${buscaParticipante.data.id}`)
@@ -43,41 +43,42 @@ export default function Ativos() {
 
 
 
-    var list = []
-    paginationInfo.data.eventosList.map((eventos) => {
-      subscription.data.map((even) => {
-        if(eventos.id === even.id_evento){
-            list.push({
-              ...eventos,
-              haveSub: true
-            })
-        }else{
-          list.push({
-            ...eventos,
-            haveSub: false
-          })
-        }
-      })
-    })
+    
+      // var list = []
+      // paginationInfo.data.eventosList.map((eventos) => {
+      //   subscription.data.map((even) => {
+      //     if (eventos.id === even.id_evento) {
+      //       list.push({
+      //         ...eventos,
+      //         haveSub: true
+      //       })
+      //     } else {
+      //       list.push({
+      //         ...eventos,
+      //         haveSub: false
+      //       })
+      //     }
+      //   })
+      // })
 
-   // const removeArray = list.filter(function(a) {
-     // return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true)
-    //}, Object.create(null))
+      // const removeArray = list.filter(function (a) {
+      //   return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true)
+      // }, Object.create(null))
 
-    var newList = []
-    list.forEach(item => {
-      var duplicated = newList.findIndex(renderItem => {
-        return item.id == renderItem.id
-      }) > -1
+      // var newList = []
+      // list.forEach(item => {
+      //   var duplicated = newList.findIndex(renderItem => {
+      //     return item.id == renderItem.id
+      //   }) > -1
 
-      if(!duplicated){
-        newList.push(item)
-      }
-    })
-    setEventos(newList)
+      //   if (!duplicated) {
+      //     newList.push(item)
+      //   }
+      // })
+      // setEventos(newList)
+    
+
   }
-
-
   useEffect(() => {
     (async function () {
       search()
@@ -102,7 +103,7 @@ export default function Ativos() {
                   title={evento.titulo}
                   description={evento.descricao}
                   onClick={() => {
-                    setRedirect(`/inscricao/${evento.id}/${evento.haveSub}`)
+                    setRedirect(`/inscricao/${evento.id}`)
                   }}
                   status={evento.status}
                   haveSub={evento.haveSub}
