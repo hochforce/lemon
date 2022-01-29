@@ -3,18 +3,18 @@ import styled from "styled-components";
 export const CommonButton = styled.button`
 font: 600 20px 'Montserrat', sans-serif;
 background: transparent;
-border: 2px solid ${({disabled})=> disabled ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
+border: 2px solid ${({disabled, haveSub})=> disabled || haveSub === true ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
 border-radius: 8px;
-color: ${({disabled})=> disabled ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
+color: ${({disabled, haveSub})=> disabled || haveSub === true ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
 width: 120px;
 padding: 5px 0 5px 0;
 margin-top: 20px;
 cursor: pointer;
 
 &:hover {
-  color: #fff;
-  background-color: #4c5175;
-  border: 2px solid #4c5175;
+  color: ${({disabled, haveSub})=> disabled || haveSub === true ? "rgba(76, 81, 117, 0.5)" : "#fff"};
+  background-color: ${({disabled, haveSub})=> disabled || haveSub === true ? "transparent" : "#4c5175"};
+  border: 2px solid ${({disabled, haveSub})=> disabled || haveSub === true ? "rgba(76, 81, 117, 0.5)" : "#4c5175"};
   transition: 0.5s;
 }
 `
