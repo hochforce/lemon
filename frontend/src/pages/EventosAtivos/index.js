@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../../components/Card';
 import { Redirect } from 'react-router-dom';
 import { Container, View } from './styles';
@@ -15,7 +15,6 @@ export default function Ativos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(3);
-  const [subscribe, setSubscribe] = useState([]);
   const [id, setId] = useState('');
   const [sub, setSub] = useState('');
 

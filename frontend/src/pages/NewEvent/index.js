@@ -40,9 +40,6 @@ const NewEvent = ({ match, history }) => {
   const [financiamento, setFinanciamento] = useState('');
   const [tipo_bolsa, setTipoBolsa] = useState('');
   const [status, setStatus] = useState('');
-  const userId = localStorage.getItem("organizador");
-  const token = localStorage.getItem("TOKEN");
-  const [manager, setManager] = useState('');
   const [progressEvent, setProgressEvent] = useState(false);
   const [validateForm, setValidateForm] = useState({
     type: '',
@@ -80,7 +77,7 @@ const NewEvent = ({ match, history }) => {
         const { id_bolsa } = saveBolsa.data.id;
         //console.log(saveBolsa.data);
         //Salvando na tabela recursos
-        const saveRecurso = await api.post('/recursos', {
+        await api.post('/recursos', {
           id_bolsa,
           materiais,
           recursos_humanos,
@@ -113,7 +110,7 @@ const NewEvent = ({ match, history }) => {
 
         //Salvando na tabela eventos
 
-        const saveEvento = await api.post('/eventos', {
+        await api.post('/eventos', {
           titulo,
           descricao,
           tipo,

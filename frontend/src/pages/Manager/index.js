@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Header } from "../../components/Header";
 import Active from '../EventosAtivos';
@@ -9,13 +9,12 @@ import Search from '../../components/Search';
 
 const Manager = () => {
   const [redirect, setRedirect] = useState('');
-  const [menuItem, setMenuItem] = useState('');
   const [validation, setValidation] = useState({
     active: true,
     finish: false,
     canceled: false
   });
-
+ 
   function handleLogOut() {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
@@ -24,7 +23,7 @@ const Manager = () => {
   }
 
   function handleUserInfo(){
-    console.log("Exibir user info")
+    setRedirect(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
 
   return (

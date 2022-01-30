@@ -13,6 +13,7 @@ import Participant from '../pages/Participant';
 import Ativos from '../pages/EventosAtivos';
 import Finalizados from '../pages/EventosFinalizados';
 import UserInfo from '../pages/UserInfo';
+import ManagerInfo from '../pages/ManagerInfo';
 import EventoInscricao from '../pages/EventoInscricao';
 import ListaParticipantes from '../pages/ListaParticipantes';
 
@@ -41,6 +42,7 @@ export default function Routes(){
         <PrivateRoute path="/eventos-ativos" component={Ativos} />
         <PrivateRoute path="/eventos-finalizados" component={Finalizados} />
         <PrivateRoute path="/user-info/:id" component={UserInfo} />
+        <PrivateRoute path="/manager-info/:id" component={ManagerInfo} />
         <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
         <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
       </Switch>

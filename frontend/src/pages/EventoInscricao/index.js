@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage } from './styles.js';
 import { Header } from './../../components/Header/index';
@@ -23,17 +22,8 @@ const EventInscricao = ({ match, history }) => {
   const [endereco, setEndereco] = useState('');
   const [sub, setSub] = useState(false);
   const userId = localStorage.getItem("USER-ID");
-  const token = localStorage.getItem("TOKEN");
   const [participante, setParticipante] = useState('');
   const [progressEvent, setProgressEvent] = useState(false);
-  const [validate, setValidate] = useState({
-    event: undefined,
-    time: undefined,
-    address: undefined,
-    together: undefined,
-    necessary: undefined,
-    scholarship: undefined
-  });
 
   async function search() {
 
