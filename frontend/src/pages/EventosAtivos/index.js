@@ -4,9 +4,10 @@ import { Redirect } from 'react-router-dom';
 import { Container, View } from './styles';
 import { api } from '../../services/api';
 import { Pagination } from '../../components/Pagination';
+import Search from '../../components/Search';
 
 
-export default function Ativos() {
+export default function Ativos(props) {
   const [redirect, setRedirect] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
@@ -17,6 +18,8 @@ export default function Ativos() {
   const [limit, setLimit] = useState(3);
   const [id, setId] = useState('');
   const [sub, setSub] = useState('');
+  const [events, setEvents] = useState([]);
+  const [eventsDefault, setEventsDefault] = useState([]);
 
 
   async function search() {
@@ -35,57 +38,39 @@ export default function Ativos() {
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList)
 
-
     const subscription = await api.get(`/searchSubscribe/${buscaParticipante.data.id}`)
     setSub(subscription)
 
-
-
-
-    
-      // var list = []
-      // paginationInfo.data.eventosList.map((eventos) => {
-      //   subscription.data.map((even) => {
-      //     if (eventos.id === even.id_evento) {
-      //       list.push({
-      //         ...eventos,
-      //         haveSub: true
-      //       })
-      //     } else {
-      //       list.push({
-      //         ...eventos,
-      //         haveSub: false
-      //       })
-      //     }
-      //   })
-      // })
-
-      // const removeArray = list.filter(function (a) {
-      //   return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true)
-      // }, Object.create(null))
-
-      // var newList = []
-      // list.forEach(item => {
-      //   var duplicated = newList.findIndex(renderItem => {
-      //     return item.id == renderItem.id
-      //   }) > -1
-
-      //   if (!duplicated) {
-      //     newList.push(item)
-      //   }
-      // })
-      // setEventos(newList)
-    
-
+    const search = await api.get(`/listEventosAtivos/`);
+    setEvents(search.data);
+    setEventsDefault(search.data)
   }
+
   useEffect(() => {
     (async function () {
       search()
-
     })()
-  }, [id])
+  }, [currentPage])
 
-  console.log(eventos)
+  useEffect(() => {
+    filterArray(props.events)
+  }, [props.events])
+
+
+  const filterArray = (event) => {
+    var value = event?.toString().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    if ((value || "").length == 0) {
+      return setEventos(eventsDefault);
+    }
+
+    var result = eventsDefault.filter(function (item) {
+      return (item || []).length > 0 || item.titulo?.toString().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(value) > -1
+    });
+    console.log("result: "+result)
+    console.log("eveDeff: "+eventsDefault)
+    console.log("eventos: "+eventos)
+    setEventos(result)
+  }
 
   return (
     <Container>
@@ -138,7 +123,7 @@ export default function Ativos() {
 
           </View>
       }
-      {/* O problema está aqui. O curr.. não está recebendo o valor do clique */}
+
       <Pagination
         currentPageFunction={(page) => setCurrentPage(page)}
         total={total}

@@ -4,11 +4,12 @@ export const Container = styled.div`
   display: flex;
   justify-content: right;
   margin-right: 30px;
-
+ 
 `
 
 export const PaginationButton = styled.div`
   display: flex;
+  
 `
 
 export const PaginationItem = styled.div`
