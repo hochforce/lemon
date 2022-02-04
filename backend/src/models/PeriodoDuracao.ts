@@ -7,10 +7,16 @@ class PeriodoDuracao{
   readonly id: string;
 
   @Column()
-  inicio: Date;
+  data_inicio: string;
 
   @Column()
-  fim: Date;
+  data_fim: string;
+
+  @Column()
+  hora_inicio: string;
+
+  @Column()
+  hora_fim: string;
 
   constructor(){
     if(!this.id){
