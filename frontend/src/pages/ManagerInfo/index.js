@@ -9,7 +9,7 @@ import { Breadcrumb } from '../../components/Breadcrumb';
 import { ModalConfirm } from '../../components/ModalConfirm';
 
 
-const UserInfo = ({ history }) => {
+const ManagerInfo = ({ history }) => {
 
   const [status, setStatus] = useState({
     type: '',
@@ -24,20 +24,34 @@ const UserInfo = ({ history }) => {
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
-  const [campus_instituicao, setCampus_instituicao] = useState('');
   const [cpf, setCpf] = useState('');
+  const [campus_instituicao, setCampus_instituicao] = useState('');
+  const [titulacao, setTitulacao] = useState('');
+  const [cargo, setCargo] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [email, setEmail] = useState('');
+  const [manager, setManager] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState(null);
-  const [participant, setParticipant] = useState('');
+  const [idContact, setIdContact] = useState('');
   const { id } = useParams()
+  
 
   async function search() {
-    const searchUser = await api.get(`/searchParticipantById/${id}`);
-    setParticipant(searchUser.data);
-    setNome(searchUser.data.nome);
-    setSobrenome(searchUser.data.sobrenome);
-    setCpf(searchUser.data.cpf);
-    setCampus_instituicao(searchUser.data.campus_instituicao);
+    const searchCPF = await api.get(`/searchCpf/${id}`);
+    const searchManager = await api.get(`/searchOrganizador/${searchCPF.data.cpf}`);
+    setManager(searchManager.data);
+    setNome(searchManager.data.nome);
+    setSobrenome(searchManager.data.sobrenome);
+    setCpf(searchManager.data.cpf);
+    setCampus_instituicao(searchManager.data.campus_instituicao);
+    setTitulacao(searchManager.data.titulacao);
+    setCargo(searchManager.data.cargo);
+    setIdContact(searchManager.data.id_contato);
+
+    const searchContact = await api.get(`/searchContactById/${searchManager.data.id_contato}`)
+    setTelefone(searchContact.data.telefone);
+    setEmail(searchContact.data.email);
   };
   useEffect(() => {
     if (id) {
@@ -46,14 +60,21 @@ const UserInfo = ({ history }) => {
   }, [])
 
   async function handleSubmit(e) {
+    
     let idUser = localStorage.getItem('USER-ID')
     e.preventDefault();
 
     if (validate()) {
-      await api.post(`/updateUser/${id}`, {
+      await api.post(`/updateContact/${idContact}`, {
+        telefone,
+        email
+      })
+      await api.post(`/updateManager/${manager.id}`, {
         nome,
         sobrenome,
         campus_instituicao,
+        titulacao,
+        cargo,
         password
       })
       await api.post(`/updateUserAuth/${idUser}`, {
@@ -70,7 +91,7 @@ const UserInfo = ({ history }) => {
   }
 
   function handleGoBack() {
-    history.push('/participant');
+    history.push('/manager');
   }
 
   function handleLogOut() {
@@ -81,7 +102,7 @@ const UserInfo = ({ history }) => {
   }
 
   function handleUserInfo() {
-    console.log("Exibir user info")
+    history.push('/managerInfo');
   }
 
   function validate() {
@@ -97,15 +118,15 @@ const UserInfo = ({ history }) => {
         message="Dados atualizados com sucesso!"
       />
       <Header
-        user="participant"
-        userLogged="Participante"
+        user="manager"
+        userLogged="Organizador"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
         back="true"
         goBack={() => handleGoBack()}
       />
-      <Breadcrumb name=" > Edição de participante" />
+      <Breadcrumb name=" > Edição de organizador" />
       <Content>
         <ViewInputs>
           <Input
@@ -137,6 +158,38 @@ const UserInfo = ({ history }) => {
             type="text"
             value={campus_instituicao}
             onChange={event => setCampus_instituicao(event.target.value)}
+
+          />
+
+          <Input
+            label="Titulação"
+            type="text"
+            value={titulacao}
+            onChange={event => setTitulacao(event.target.value)}
+
+          />
+
+          <Input
+            label="Cargo"
+            type="text"
+            value={cargo}
+            onChange={event => setCargo(event.target.value)}
+
+          />
+
+          <Input
+            label="Telefone"
+            type="text"
+            value={telefone}
+            onChange={event => setTelefone(event.target.value)}
+
+          />
+
+          <Input
+            label="E-mail"
+            type="text"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
 
           />
 
@@ -173,4 +226,4 @@ const UserInfo = ({ history }) => {
   )
 }
 
-export default UserInfo;
+export default ManagerInfo;

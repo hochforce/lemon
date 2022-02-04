@@ -23,7 +23,7 @@ font: 300 20px 'Roboto', sans-serif;
 height: 40px;
 width: 200px;
 border: none;
-color: #4C5175;
+color: ${({disabled})=> disabled ? "rgba(76, 81, 117, 0.5)" : "#4C5175"};
 background-color: white;
 &:focus {
   border: none;

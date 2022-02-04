@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import { Organizador } from '../models/Organizador';
+import bcrypt from 'bcryptjs';
 
 class OrganizadorController {
   async create(request: Request, response: Response) {
@@ -53,6 +54,43 @@ class OrganizadorController {
       .where("cpf = :cpf", {cpf: request.params.cpf})
       .getOne();
     return response.json(organizadorSearch);
+  }
+  async searchById(request: Request, response: Response) {
+    const managerSearch = await getRepository(Organizador)
+      .createQueryBuilder("organizadores")
+      .where("id = :id", { id: request.params.id })
+      .getOne();
+    return response.json(managerSearch);
+  }
+  async update(request: Request, response: Response) {
+    const search = await getRepository(Organizador)
+      .createQueryBuilder("organizadores")
+      .where("id = :id", { id: request.params.id })
+      .getOne();
+    
+    var {
+      nome,
+      sobrenome,
+      campus_instituicao,
+      titulacao,
+      cargo,
+      password
+    } = request.body;
+    request.body.password = bcrypt.hashSync(request.body.password, 8);
+    await getConnection()
+      .createQueryBuilder()
+      .update(Organizador)
+      .set({
+        nome: request.body.nome ? request.body.nome : search.nome,
+        sobrenome: request.body.sobrenome ? request.body.sobrenome : search.sobrenome,
+        campus_instituicao: request.body.campus_instituicao ? request.body.campus_instituicao : search.campus_instituicao,
+        titulacao: request.body.titulacao ? request.body.titulacao : search.titulacao,
+        cargo: request.body.cargo ? request.body.cargo : search.cargo,
+        password: request.body.password ? request.body.password : search.password
+      })
+      .where("id = :id", { id: request.params.id })
+      .execute();
+    return response.json(response.status);
   }
 }
 
