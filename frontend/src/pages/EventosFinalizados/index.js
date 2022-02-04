@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Container, View } from './styles';
 import { api } from '../../services/api';
 import { Pagination } from '../../components/Pagination';
+import NewCertificate from '../../components/NewCertificate';
 
 export default function Finalizados() {
   const [redirect, setRedirect] = useState('');
@@ -14,6 +15,7 @@ export default function Finalizados() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(2);
+  const cargaHoraria = 22;
 
 
   async function search() {
@@ -29,6 +31,8 @@ export default function Finalizados() {
     const paginationInfo = await api.get(`/searchWithLimitFinalizado/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList);
+    console.log(paginationInfo.data.eventosList)
+    
   }
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function Finalizados() {
       search()
     })()
   }, [])
-
+  console.log("BBBBB:"+JSON.stringify(eventos))
   return (
     <Container>
 
@@ -49,10 +53,17 @@ export default function Finalizados() {
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  setRedirect(`/new-certificate`)
+                  NewCertificate(
+                    `${participante.nome} ${participante.sobrenome}`,
+                    `${evento.titulo}`,
+                    `${cargaHoraria}`,
+                    `${evento.id_endereco}`,
+                    `${evento.id_periodo_duracao}`
+                  )
                 }}
                 status={evento.status}
               />
+            
             )}
           </View>
 

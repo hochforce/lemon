@@ -103,7 +103,11 @@ const EventInscricao = ({ match, history }) => {
   function handleGoBack() {
     history.push('/participant');
   }
-
+  
+  function date(){
+  const today = new Date();
+   return new Intl.Locale('pt-BR', {day: 'numeric', month: 'long', year: 'numeric'}).format(periodo.data_fim)
+  }
   return (
     <Container>
       <ModalConfirm
@@ -123,6 +127,7 @@ const EventInscricao = ({ match, history }) => {
       <Breadcrumb name=" > Confirmação de inscrição" />
       <Content>
         <Title>{evento.titulo}</Title>
+        
         <SubTitle>{evento.descricao}</SubTitle>
         <DateTimeAddress>
           <strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas <br />

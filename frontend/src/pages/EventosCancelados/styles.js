@@ -4,6 +4,8 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: flex-end;
+  flex-direction: column;
 `
 export const View = styled.div`
   width: 90%;
