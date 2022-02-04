@@ -11,6 +11,9 @@ export const Container = styled.div`
   border-color: ${({creation})=>creation ? "#4C5175" : "transparent"};
   margin: 20px;
   background-color: ${({creation})=>!creation ? "#fff" : "transparent"};
+  box-shadow: 3px 5px 10px gray;
+ 
+  
 `
 export const Content = styled.div`
   width: 100%;

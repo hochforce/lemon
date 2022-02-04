@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  
+  align-items: flex-end;
+  flex-direction: column;
 `
 export const View = styled.div`
   width: 90%;

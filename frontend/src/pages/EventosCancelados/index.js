@@ -32,15 +32,15 @@ export default function Cancelados() {
     const paginationInfo = await api.get(`/searchWithLimitCancelado/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList);
-
   }
-
+  
   useEffect(() => {
     (async function () {
       search()
     })()
   }, [])
-
+  
+  console.log("AAAAA:"+JSON.stringify(eventos))
   return (
     <Container>
 

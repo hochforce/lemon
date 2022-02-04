@@ -46,6 +46,6 @@
     ]
   },
   "devDependencies": {
-    "html2canvas": "^1.0.0-rc.7"
+    "html2canvas": "^1.4.1"
   }
 }
