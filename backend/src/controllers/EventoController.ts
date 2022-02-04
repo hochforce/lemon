@@ -52,6 +52,7 @@ class EventoController {
     return response.json(eventosList);
   }
 
+  
   async search(request: Request, response: Response) {
     const eventosList = await getRepository(Evento)
       .createQueryBuilder("eventos")
