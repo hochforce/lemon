@@ -48,6 +48,7 @@ const Manager = () => {
     setRedirect('/');
   }
 
+  
   function handleUserInfo() {
     setRedirect(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
