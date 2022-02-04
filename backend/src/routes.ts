@@ -80,7 +80,7 @@ router.get("/subscribe/:idUser/:idEvent", inscricoesEventoController.searchSubsc
 router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
 router.get("/searchWithLimitAtivo/:page/:limit", eventoController.searchWithLimitAtivo);
 router.get("/searchWithLimitCancelado/:page/:limit", eventoController.searchByStatusCancelado);
-router.get("/searchWithLimitFinalizado/:page/:limit", eventoController.searchByStatusCancelado);
+router.get("/searchWithLimitFinalizado/:page/:limit", eventoController.searchByStatusFinalizado);
 
 export { router }
 
