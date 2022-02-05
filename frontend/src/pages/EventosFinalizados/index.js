@@ -15,7 +15,10 @@ export default function Finalizados() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(2);
+  const [cidade, setCidade] = useState('')
+  const [estado, setEstado] = useState('')
   const cargaHoraria = 22;
+  
 
 
   async function search() {
@@ -30,9 +33,7 @@ export default function Finalizados() {
 
     const paginationInfo = await api.get(`/searchWithLimitFinalizado/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
-    setEventos(paginationInfo.data.eventosList);
-    console.log(paginationInfo.data.eventosList)
-    
+    setEventos(paginationInfo.data.eventosList); 
   }
 
   useEffect(() => {
@@ -40,7 +41,19 @@ export default function Finalizados() {
       search()
     })()
   }, [])
-  console.log("BBBBB:"+JSON.stringify(eventos))
+  
+  async function searchAddress(id){
+    const searchAddress = await api.get(`/listEnderecos/${id}`);
+ 
+    if(!searchAddress.data.logradouro){
+      setCidade("Arinos")
+      setEstado("MG")
+    }else{
+      setCidade(searchAddress.data.cidade)
+      setEstado(searchAddress.data.estado)
+    }
+  }
+  console.log("Fin: ", cidade, estado)
   return (
     <Container>
 
@@ -57,8 +70,10 @@ export default function Finalizados() {
                     `${participante.nome} ${participante.sobrenome}`,
                     `${evento.titulo}`,
                     `${cargaHoraria}`,
-                    `${evento.id_endereco}`,
-                    `${evento.id_periodo_duracao}`
+                    `${searchAddress(evento.id_endereco)}`,
+                    `${evento.id_periodo_duracao}`,
+                    `${cidade}`,
+                    `${estado}`
                   )
                 }}
                 status={evento.status}
