@@ -85,7 +85,8 @@ const NewParticipant = ({ history }) => {
     if (!sobrenome) return setStatus({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Sobrenome!' });
     if (!cpf) return setStatus({ type: 'error', mensagem: 'Erro: Necessário preencher o campo CPF!' });
     if (!campus_instituicao) return setStatus({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Campus/Instituição!' });
-    if (!password) return setStatus({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Senha!' }); if (!repeatPass) return setStatus({ type: 'error', mensagem: 'Erro: As senhas precisam ser iguais!' });
+    if (!password) return setStatus({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Senha!' }); 
+    if (!repeatPass) return setStatus({ type: 'error', mensagem: 'Erro: As senhas precisam ser iguais!' });
     if (!repeatPass) return setStatus({ type: 'error', mensagem: 'Erro: Necessário repetir a senha!' });
     if (repeatPass !== password) return setStatus({ type: 'error', mensagem: 'Erro: As senhas precisam ser iguais!' });
     return true;
@@ -120,7 +121,7 @@ const NewParticipant = ({ history }) => {
 
             <Input
               label="CPF * (apenas números)"
-              type="text"
+              type="number"
               value={cpf}
               onChange={event => setCpf(event.target.value)}
             />

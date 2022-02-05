@@ -19,7 +19,17 @@ export class CreateCertificado1615333654380 implements MigrationInterface {
                     {
                         name: "id_evento",
                         type: "uuid"
+                    },
+                    {
+                        name: "key",
+                        type: "varchar"
+                    },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "now()"
                     }
+
                 ]
             })
         )

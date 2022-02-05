@@ -230,38 +230,20 @@ const EventInfo = ({ match, history }) => {
             <Modal title="Data e Horário" background={validate.time}>
               <div className="content-modal">
                 <div className="content-column">
-                  <label>Data Início</label>
+                  <label>Início</label>
                   <input
-                    type="date"
-                    value={periodo.data_inicio}
-                    onChange={event => setPeriodo({ ...periodo, data_inicio: event.target.value })}
+                    type="datetime-local"
+                    value={periodo.inicio}
+                    onChange={event => setPeriodo({ ...periodo, inicio: event.target.value })}
                   />
                 </div>
 
                 <div className="content-column">
-                  <label>Hora Início</label>
+                  <label>Fim</label>
                   <input
-                    type="time"
-                    value={periodo.hora_inicio}
-                    onChange={event => setPeriodo({ ...periodo, hora_inicio: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Data Fim</label>
-                  <input
-                    type="date"
-                    value={periodo.data_fim}
-                    onChange={event => setPeriodo({ ...periodo, data_fim: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Hora Fim</label>
-                  <input
-                    type="time"
-                    value={periodo.hora_fim}
-                    onChange={event => setPeriodo({ ...periodo, hora_fim: event.target.value })}
+                    type="datetime-local"
+                    value={periodo.fim}
+                    onChange={event => setPeriodo({ ...periodo, fim: event.target.value })}
                   />
                 </div>
               </div>

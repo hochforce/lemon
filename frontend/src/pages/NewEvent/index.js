@@ -20,10 +20,8 @@ const NewEvent = ({ match, history }) => {
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [tipo, setTipo] = useState('');
-  const [data_inicio, setDataInicio] = useState('');
-  const [hora_inicio, setHoraInicio] = useState('');
-  const [data_fim, setDataFim] = useState('');
-  const [hora_fim, setHoraFim] = useState('');
+  const [inicio, setInicio] = useState('');
+  const [fim, setFim] = useState('');
   const [logradouro, setLogradouro] = useState('');
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
@@ -39,7 +37,7 @@ const NewEvent = ({ match, history }) => {
   const [instalacoes, setInstalacoes] = useState('');
   const [financiamento, setFinanciamento] = useState('');
   const [tipo_bolsa, setTipoBolsa] = useState('');
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('ativo');
   const [progressEvent, setProgressEvent] = useState(false);
   const [validateForm, setValidateForm] = useState({
     type: '',
@@ -59,6 +57,7 @@ const NewEvent = ({ match, history }) => {
     if (validaForm()) {
 
       setProgressEvent(true);
+
 
       try {
         //Salvando na tabela parcerias
@@ -99,12 +98,11 @@ const NewEvent = ({ match, history }) => {
         //console.log(saveEndereco.data);
         //Salvando na tabela periododuracao
         const savePeriodo = await api.post('/periododuracao', {
-          data_inicio,
-          hora_inicio,
-          data_fim,
-          hora_fim
+          inicio,
+          fim
         });
         const id_periodo_duracao = savePeriodo.data.id;
+        console.log("periodo", inicio + "fim", fim)
 
         var id_organizador = localStorage.getItem("organizador");
 
@@ -142,20 +140,18 @@ const NewEvent = ({ match, history }) => {
   }
 
   function validaForm() {
-    if (!titulo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Titulo!' });
-    if (!descricao) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Descrição!' });
-    if (!tipo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Tipo!' });
-    if (!data_inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Data Início!' });
-    if (!hora_inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo Hora início!' });
-    if (!data_fim) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a data fim!' });
-    if (!hora_fim) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a hora fim!' });
+    if (!titulo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo título!' });
+    if (!descricao) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo descrição!' });
+    if (!tipo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo!' });
+    if (!inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo início!' });
+    if (!fim) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo fim!' });
     if (!isOnline) {
-      if (!estado) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a estado!' });
-      if (!cidade) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a cidade!' });
-      if (!cep) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a cep!' });
-      if (!logradouro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a rua!' });
-      if (!numero) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a número!' });
-      if (!bairro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário repetir a bairro!' });
+      if (!estado) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo estado!' });
+      if (!cidade) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo cidade!' });
+      if (!cep) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo cep!' });
+      if (!logradouro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo rua!' });
+      if (!numero) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo número!' });
+      if (!bairro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo bairro!' });
     } else {
       return true
     }
@@ -225,28 +221,16 @@ const NewEvent = ({ match, history }) => {
             </ViewHeader>
             <ViewTime>
               <Input
-                label="Data início *"
-                type="date"
-                value={data_inicio}
-                onChange={event => setDataInicio(event.target.value)}
+                label="Início *"
+                type="datetime-local"
+                value={inicio}
+                onChange={event => setInicio(event.target.value)}
               />
               <Input
-                label="Hora início *"
-                type="time"
-                value={hora_inicio}
-                onChange={event => setHoraInicio(event.target.value)}
-              />
-              <Input
-                label="Data fim *"
-                type="date"
-                value={data_fim}
-                onChange={event => setDataFim(event.target.value)}
-              />
-              <Input
-                label="Hora fim *"
-                type="time"
-                value={hora_fim}
-                onChange={event => setHoraFim(event.target.value)}
+                label="Fim *"
+                type="datetime-local"
+                value={fim}
+                onChange={event => setFim(event.target.value)}
               />
             </ViewTime>
             <ViewRadioButtons>

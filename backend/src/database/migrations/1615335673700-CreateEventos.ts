@@ -39,7 +39,8 @@ export class CreateEventos1615335673700 implements MigrationInterface {
                     },
                     {
                         name: "id_endereco",
-                        type: "uuid"
+                        type: "uuid",
+                        isNullable: true
                     },
                     
                     {

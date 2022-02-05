@@ -4,10 +4,10 @@ import { Certificado } from '../models/Certificado';
 
 class CertificadoController {
   async create (request: Request, response: Response){
-    const { id_evento, id_participante } = request.body;
+    const { id_evento, id_participante, key } = request.body;
     const certificadoRepositorio = getRepository(Certificado);
     const certificado = certificadoRepositorio.create({
-      id_evento, id_participante
+      id_evento, id_participante, key
     })
     certificadoRepositorio.save(certificado);
     return response.json(certificado);
