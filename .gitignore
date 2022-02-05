@@ -2,7 +2,7 @@
 
 # dependencies
 backend/node_modules
-backend/src/database/database.sqlite
+git config --global core.excludesfile backend/src/database/database.sqlite
 frontend/node_modules
 /node_modules
 /.pnp

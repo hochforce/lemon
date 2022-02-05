@@ -1,16 +1,19 @@
 import { jsPDF } from 'jspdf';
 import { RandomKey } from '../RandomKey';
 import { api } from '../../services/api';
+import { Span } from './styles.js'
 
 
-export default async function NewCertificate(aluno, evento, cargaHoraria, idEndereco, idPeriodo, cidade, estado) {
+export default async function NewCertificate(aluno, evento, cargaHoraria, idEndereco, idPeriodo, id_participante, id_evento) {
 
-  console.log("Cert: ", cidade, estado)
+  const searchAddress = await api.get(`/listEnderecos/${idEndereco}`);
+  const cidade = searchAddress.data.cidade;
+  const estado = searchAddress.data.estado;
+
   const searchDate = await api.get(`/listPeriodos/${idPeriodo}`);
-  
   function inicialDate() {
     const date = new Date(searchDate.data.inicio);
-    return date
+    return date;
   }
 
   function month(date) {
@@ -46,16 +49,25 @@ export default async function NewCertificate(aluno, evento, cargaHoraria, idEnde
 
   certificado.setFontSize(20);
   certificado.setFont("times", "normal")
-  certificado.text(5, 10, `Certificamos que o aluno ${nomeAluno} compareceu ao\nevento ${evento} como $Participante$,\nperfazendo a carga horária de ${cargaHoraria} horas.`);
+
+  
+  certificado.text(4, 10, `Certificamos que o aluno ${nomeAluno} compareceu ao evento ${evento} como participante, perfazendo a carga horária de ${cargaHoraria} horas.`, {align: 'justify', maxWidth: 22})
+
  
   certificado.setFontSize(18);
-  certificado.text(25, 13.5, `${cidade}-${estado}, ${inicialDate().getDate()} de ${month(inicialDate())} de ${inicialDate().getFullYear()}.`, "right");
+  certificado.text(25, 13.5, `${cidade}-${estado}, ${inicialDate().getDate()} de ${month(inicialDate())} de ${inicialDate().getFullYear()}.`, {align: 'right', maxWidth: 10});
 
   certificado.setFontSize(10);
   certificado.setTextColor("#ffffff")
   certificado.text(4, 19.5, 'Este documento foi emitido pelo LEMON.\nPara comprovar sua autenticidade, acesse https://lemon.com.br/autenticar_documento/  \n' +
-    `Código de autenticação: ${key}`);
+    `Código de autenticação: ${key}`, {align: 'left'});
 
   certificado.save(`lemonCertificate - ${evento}.pdf`);
+  
+  api.post(`/certificados`,{
+    id_participante,
+    id_evento,
+    key
+  })
 }
 

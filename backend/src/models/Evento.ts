@@ -20,6 +20,9 @@ class Evento{
   tipo: string;
 
   @Column()
+  carga_horaria: string;
+
+  @Column()
   id_organizador: string;
 
   @Column()
@@ -36,6 +39,9 @@ class Evento{
 
   @Column()
   status: string;
+
+  @Column()
+  is_online: boolean;
 
   @ManyToOne(()=>Organizador)
   @JoinColumn({name: "id_organizador"})

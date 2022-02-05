@@ -1,26 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { api } from '../../services/api';
-import { Modal } from '../../components/Modal';
-import { Button, Menu, Layout, Row, Col, Result, } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
+import { Container, Content, ViewButton, ViewInputs, ViewRadioButtons, ViewOptions, ViewHeader, ViewTime, ViewAddress, Select, LabelSelect, ViewSelect, ViewError } from "./styles"
+import { Header } from './../../components/Header/index';
+import Input from './../../components/Input/index';
+import { Button } from "../../components/Button";
+import { Breadcrumb } from './../../components/Breadcrumb/index';
+import { ModalConfirm } from './../../components/ModalConfirm/index';
 
-import { Headerm } from '../../components/Modal/styles';
+const EventoInfo = ({ history }) => {
 
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
 
-const EventInfo = ({ match, history }) => {
-  const [evento, setEvento] = useState('');
-  const [periodo, setPeriodo] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [parceria, setParceria] = useState('');
-  const [recurso, setRecurso] = useState('');
-  const [bolsa, setBolsa] = useState('');
-  const { Header } = Layout;
+    setShowModal(prev => !prev)
+  }
   const [redirect, setRedirect] = useState('');
-  const userId = localStorage.getItem("organizador");
-  const token = localStorage.getItem("TOKEN");
-  const [manager, setManager] = useState('');
+  const [isOnline, setIsOnline] = useState(true);
+  const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [carga_horaria, setCargaHoraria] = useState('');
+  const [inicio, setInicio] = useState('');
+  const [fim, setFim] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numero, setNumero] = useState('');
+  const [complemento, setComplemento] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [estado, setEstado] = useState('');
+  const [cep, setCep] = useState('');
+  const [status, setStatus] = useState('ativo');
+  const [is_online, setOnline] = useState(true);
   const [progressEvent, setProgressEvent] = useState(false);
+  const { id } = useParams()
+  const [validateForm, setValidateForm] = useState({
+    type: '',
+    mensagem: ''
+  });
   const [validate, setValidate] = useState({
     event: undefined,
     time: undefined,
@@ -30,400 +47,288 @@ const EventInfo = ({ match, history }) => {
     scholarship: undefined
   });
 
-  const callEventos = async () => {
-    const buscaEventos = await api.get(`/listEventos/${match.params.id}`);
-    setEvento(buscaEventos.data);
-  };
-
-  const callPeriodos = async () => {
-    const buscaPeriodos = await api.get(`/listPeriodos/${evento.id_periodo_duracao}`);
-    setPeriodo(buscaPeriodos.data);
-  }
-
-  const callEnderecos = async () => {
-    const buscaEnderecos = await api.get(`/listEnderecos/${evento.id_endereco}`);
-    setEndereco(buscaEnderecos.data);
-  }
-
-  const callParcerias = async () => {
-    const buscaParceria = await api.get(`/listParcerias/${evento.id_parceria}`);
-    setParceria(buscaParceria.data);
-  }
-
-  const callRecursos = async () => {
-    const buscaRecurso = await api.get(`/listRecursos/${evento.id_recurso}`);
-    setRecurso(buscaRecurso.data);
-  }
-
-  const callBolsas = async () => {
-    const buscaBolsa = await api.get(`/listRecursos/${evento.id_recurso}`);
-    setRecurso(buscaBolsa.data);
-  }
-
-  useEffect(() => {
-    (() => {
-      callEventos()
-    })()
-  }, [])
-
-  useEffect(() => {
-    (() => {
-      callPeriodos()
-      callEnderecos()
-      callParcerias()
-      callRecursos()
-    })()
-  }, [evento])
-
-  async function handleChangeDescricao() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updates/${evento.id}`, evento);
-      setValidate({ ...validate, event: true })
-    } catch (err) {
-      setValidate({ ...validate, event: false })
-    }
-    setProgressEvent(false);
-  }
-
-  async function handleChangeDataEHorario() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updatePeriodo/${periodo.id}`, periodo);
-      setValidate({ ...validate, time: true })
-    } catch (err) {
-      setValidate({ ...validate, time: false })
-    }
-    setProgressEvent(false);
-  }
-
-  async function handleChangeLocal() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updateEndereco/${endereco.id}`, endereco);
-      setValidate({ ...validate, address: true })
-    } catch (err) {
-      setValidate({ ...validate, address: false })
-    }
-    setProgressEvent(false);
-  }
-
-  async function handleChangeParceria() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updateParceria/${parceria.id}`, parceria);
-      setValidate({ ...validate, together: true })
-    } catch (err) {
-      setValidate({ ...validate, together: false })
-    }
-    setProgressEvent(false);
-  }
-
-  async function handleChangeRecurso() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updateRecurso/${recurso.id}`, recurso);
-      setValidate({ ...validate, necessary: true })
-    } catch (err) {
-      setValidate({ ...validate, necessary: false })
-    }
-    setProgressEvent(false);
-  }
-
-  async function handleChangeBolsa() {
-    setProgressEvent(true);
-    try {
-      const res = await api.post(`/updateBolsa/${bolsa.id}`, bolsa);
-      setValidate({ ...validate, scholarship: true })
-    } catch (err) {
-      setValidate({ ...validate, scholarship: false })
-    }
-    setProgressEvent(false);
-  }
-
   async function search() {
-    const buscaCPF = await api.get(`/searchCpf/${userId}`);
-    const cpf = buscaCPF.data.cpf;
+    const searchEvent = await api.get(`/listEventos/${id}`);
+    setTitulo(searchEvent.data.titulo);
+    setDescricao(searchEvent.data.descricao);
+    setTipo(searchEvent.data.tipo);
+    setCargaHoraria(searchEvent.data.carga_horaria);
 
-    const buscaOrganizador = await api.get(`/searchOrganizador/${cpf}`);
-    setManager(buscaOrganizador.data);
-  }
+    const dateTime = await api.get(`/listPeriodos/${searchEvent.data.id_periodo_duracao}`)
+    setInicio(dateTime.data.inicio);
+    setFim(dateTime.data.fim);
+
+    const address = await api.get(`/listEnderecos/${searchEvent.data.id_endereco}`)
+    setLogradouro(address.data.logradouro);
+    setNumero(address.data.numero);
+    setComplemento(address.data.complemento);
+    setBairro(address.data.bairro);
+    setCidade(address.data.cidade);
+    setEstado(address.data.estado);
+    setCep(address.data.cep);
+    
+  };
   useEffect(() => {
-    (async function () {
+    if (id) {
       search()
-    })()
+    }
   }, [])
+
+  async function handleSaveEvent(e) {
+    e.preventDefault();
+    console.log("LOGr: "+logradouro)
+    if (isOnline === undefined || isOnline === true) {
+      setLogradouro("Rodovia MG 202")
+      setNumero(407)
+      setComplemento("Km 407")
+      setBairro("Zona Rural")
+      setCidade("Arinos")
+      setEstado("MG")
+      setCep("38680000")
+    }
+    setOnline(isOnline);
+    if (validaForm()) {
+
+      setProgressEvent(true);
+      
+
+      try {
+
+        //Salvando na tabela enderecos
+        const saveEndereco = await api.post('/enderecos', {
+          logradouro,
+          numero,
+          complemento,
+          bairro,
+          cidade,
+          estado,
+          cep
+        });
+        const id_endereco = saveEndereco.data.id;
+        //console.log(saveEndereco.data);
+        //Salvando na tabela periododuracao
+        const savePeriodo = await api.post('/periododuracao', {
+          inicio,
+          fim
+        });
+        const id_periodo_duracao = savePeriodo.data.id;
+
+        var id_organizador = localStorage.getItem("organizador");
+
+        //Salvando na tabela eventos
+        await api.post('/eventos', {
+          titulo,
+          descricao,
+          tipo,
+          carga_horaria,
+          id_organizador,
+          id_periodo_duracao,
+          id_endereco,
+          status,
+          is_online
+        });
+        openModal();
+        setValidate({ ...validate, event: true })
+        setValidate({ ...validate, time: true })
+        setValidate({ ...validate, address: true })
+        setValidate({ ...validate, together: true })
+        setValidate({ ...validate, necessary: true })
+        setValidate({ ...validate, scholarship: true })
+      } catch (err) {
+        setValidate({ ...validate, together: false })
+      }
+
+      setTimeout(function () {
+        history.push("/manager");
+      }, 3000)
+
+      setProgressEvent(false);
+    } else {
+      return <h1>ERROR!</h1>;
+    }
+  }
+
+  function validaForm() {
+    if (!titulo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo título!' });
+    if (!descricao) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo descrição!' });
+    if (!tipo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo!' });
+    if (!inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo início!' });
+    if (!fim) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo fim!' });
+    if (!isOnline) {
+      if (!estado) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo estado!' });
+      if (!cidade) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo cidade!' });
+      if (!cep) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo cep!' });
+      if (!logradouro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo rua!' });
+      if (!numero) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo número!' });
+      if (!bairro) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo bairro!' });
+    } else {
+      return true
+    }
+
+    return true;
+  }
 
   function handleLogOut() {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
+    localStorage.removeItem('USER-ID');
     setRedirect('/');
   }
 
+  function handleUserInfo() {
+    console.log("Exibir user info")
+  }
+
+  function handleGoBack() {
+    history.push('/manager');
+  }
+
+
   return (
-    <>
-      {!userId ?
-        <Result
-          status="403"
-          title="403"
-          subTitle="Desculpe, você não pode acessar essa página."
-          extra={<Button type="primary" onClick={()=> history.push("/participant")}>Voltar</Button>}
-        />
-        
-        :
+    <Container>
+      <ModalConfirm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        message="Evento cadastrado com sucesso!"
+      />
+      <Header
+        user="manager"
+        userLogged="Organizador"
+        nameItem="Eventos"
+        onClickLogout={() => handleLogOut()}
+        onClickUsr={() => handleUserInfo()}
+        back="true"
+        goBack={() => handleGoBack()}
+      />
+      <Breadcrumb name=" > Edição de Evento" />
+      <Content>
+        <ViewInputs>
+          <form onSubmit={handleSaveEvent}>
+            <ViewHeader>
+              <Input
+                label="Título *"
+                type="text"
+                value={titulo}
+                onChange={event => setTitulo(event.target.value)}
+              />
+              <Input
+                label="Descrição *"
+                type="text"
+                value={descricao}
+                onChange={event => setDescricao(event.target.value)}
+              />
+              <ViewSelect>
+                <LabelSelect>Tipo *</LabelSelect>
+                <Select onChange={event => setTipo(event.target.value)}>
+                  <option value="">Selecione</option>
+                  <option value="Ensino">Ensino</option>
+                  <option value="Pesquisa">Pesquisa</option>
+                  <option value="Extensão">Extensão</option>
+                </Select>
+              </ViewSelect>
 
-        <div className="container">
+            </ViewHeader>
+            <ViewTime>
+              <Input
+                label="Início *"
+                type="datetime-local"
+                value={inicio}
+                onChange={event => setInicio(event.target.value)}
+              />
+              <Input
+                label="Fim *"
+                type="datetime-local"
+                value={fim}
+                onChange={event => setFim(event.target.value)}
+              />
+              <Input
+                label="Carga horária (em horas) *"
+                type="number"
+                value={carga_horaria}
+                onChange={event => setCargaHoraria(event.target.value)}
+              />
+            </ViewTime>
+            <ViewRadioButtons>
+              <label>Local *</label>
+              <ViewOptions>
+                <input
+                  type="radio"
+                  name="isOnline"
+                  value={isOnline}
+                  
+                  onChange={() => {
+                    !isOnline ? setIsOnline(true) : setIsOnline(true)
+                    console.log("Onli: "+isOnline)
+                  }}
+                  
+                />
+                <label>Online</label>
+                <input
+                  type="radio"
+                  name="isOnline"
+                  value={isOnline}
+                  
+                  onChange={()=> {
+                    isOnline ? setIsOnline(false) : setIsOnline(false)
+                    
+                    console.log("Pres: "+isOnline)
+                  }}
+                />
+                <label>Presencial</label>
+              </ViewOptions>
+            </ViewRadioButtons>
+            {!isOnline &&
+              <ViewAddress>
+                <Input
+                  label="Estado *"
+                  type="text"
+                  value={estado}
+                  onChange={event => setEstado(event.target.value)}
+                />
+                <Input
+                  label="Cidade *"
+                  type="text"
+                  value={cidade}
+                  onChange={event => setCidade(event.target.value)}
+                />
+                <Input
+                  label="CEP *"
+                  type="text"
+                  value={cep}
+                  onChange={event => setCep(event.target.value)}
+                />
+                <Input
+                  label="Rua *"
+                  type="text"
+                  value={logradouro}
+                  onChange={event => setLogradouro(event.target.value)}
+                />
+                <Input
+                  label="Número *"
+                  type="text"
+                  value={numero}
+                  onChange={event => setNumero(event.target.value)}
+                />
+                <Input
+                  label="Bairro *"
+                  type="text"
+                  value={bairro}
+                  onChange={event => setBairro(event.target.value)}
+                />
+              </ViewAddress>
+            }
+            <ViewError>
+              {validateForm.type === 'error' ? <p style={{ color: "tomato" }}>{validateForm.mensagem}</p> : ""}
+            </ViewError>
+            <ViewButton>
+              <Button name="Cadastrar" type="submit" />
+            </ViewButton>
+          </form>
 
-          <div className="header-edicao">
-            <div className="logo-edicao" >
-              <a href="/manager">LEMON</a>
-            </div>
-            <div className="titulo-edicao">
-              <h1>Edição de Evento</h1>
-            </div>
-            <div className="user-info-edicao">
-              <p style={{ margin: "20px 0px 0px" }}>{manager.nome}</p>
-              <Button
-                className="button-logout-edicao"
-                type="primary"
-                icon={<PoweroffOutlined />}
-                onClick={handleLogOut}
-              >Sair</Button>
-            </div>
-
-          </div>
-
-          <div className="eventoInfo">
-            <Modal title="Descrição" background={validate.event}>
-              <div className="content-modal">
-                <div className="content-column">
-                  <label>Título</label>
-                  <input
-                    type="text"
-                    value={evento.titulo}
-                    onChange={event => setEvento({ ...evento, titulo: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Descrição</label>
-                  <input
-                    type="text"
-                    value={evento.descricao}
-                    onChange={event => setEvento({ ...evento, descricao: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Tipo</label>
-                  <input
-                    type="text"
-                    value={evento.tipo}
-                    onChange={event => setEvento({ ...evento, tipo: event.target.value })}
-                  />
-                </div>
-              </div>
-              <button onClick={handleChangeDescricao} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-            <Modal title="Data e Horário" background={validate.time}>
-              <div className="content-modal">
-                <div className="content-column">
-                  <label>Início</label>
-                  <input
-                    type="datetime-local"
-                    value={periodo.inicio}
-                    onChange={event => setPeriodo({ ...periodo, inicio: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Fim</label>
-                  <input
-                    type="datetime-local"
-                    value={periodo.fim}
-                    onChange={event => setPeriodo({ ...periodo, fim: event.target.value })}
-                  />
-                </div>
-              </div>
-              <button onClick={handleChangeDataEHorario} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-            <Modal title="Local" background={validate.address}>
-              <div className="content-column">
-                <div className="content-column">
-                  <label>Logradouro</label>
-                  <input
-                    type="text"
-                    className="street"
-                    value={endereco.logradouro}
-                    onChange={event => setEndereco({ ...endereco, logradouro: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-modal">
-                  <div className="content-column">
-                    <label>Número</label>
-                    <input
-                      type="number"
-                      value={endereco.numero}
-                      onChange={event => setEndereco({ ...endereco, numero: event.target.value })}
-                    />
-                  </div>
-
-                  <div className="content-column">
-                    <label>Complemento</label>
-                    <input
-                      type="text"
-                      value={endereco.complemento}
-                      onChange={event => setEndereco({ ...endereco, complemento: event.target.value })}
-                    />
-                  </div>
-
-                  <div className="content-column">
-                    <label>Bairro</label>
-                    <input
-                      type="text"
-                      value={endereco.bairro}
-                      onChange={event => setEndereco({ ...endereco, bairro: event.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="content-modal">
-
-                  <div className="content-column">
-                    <label>Cidade</label>
-                    <input
-                      type="text"
-                      value={endereco.cidade}
-                      onChange={event => setEndereco({ ...endereco, cidade: event.target.value })}
-                    />
-                  </div>
-
-                  <div className="content-column">
-                    <label>Estado</label>
-                    <input
-                      type="text"
-                      value={endereco.estado}
-                      onChange={event => setEndereco({ ...endereco, estado: event.target.value })}
-                    />
-                  </div>
-
-                  <div className="content-column">
-                    <label>CEP</label>
-                    <input
-                      type="text"
-                      value={endereco.cep}
-                      onChange={event => setEndereco({ ...endereco, cep: event.target.value })}
-                    />
-                  </div>
-                </div>
-              </div>
-              <button onClick={handleChangeLocal} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-            <Modal title="Parceria" background={validate.together}>
-              <div className="content-modal">
-                <div className="content-column">
-                  <label>Parceiro</label>
-                  <input
-                    type="text"
-                    value={parceria.parceiro}
-                    onChange={event => setParceria({ ...parceria, parceiro: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Tipo de Parceria</label>
-                  <input
-                    type="text"
-                    value={parceria.tipo_parceria}
-                    onChange={event => setParceria({ ...parceria, tipo_parceria: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Valor</label>
-                  <input
-                    type="text"
-                    value={parceria.valor}
-                    onChange={event => setParceria({ ...parceria, valor: event.target.value })}
-                  />
-                </div>
-              </div>
-              <button onClick={handleChangeParceria} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-            <Modal title="Recursos" background={validate.necessary}>
-              <div className="content-modal">
-                <div className="content-column">
-                  <label>Materiais</label>
-                  <input
-                    type="text"
-                    value={recurso.materiais}
-                    onChange={event => setRecurso({ ...recurso, materiais: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Recursos humanos</label>
-                  <input
-                    type="text"
-                    value={recurso.recursos_humanos}
-                    onChange={event => setRecurso({ ...recurso, recursos_humanos: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Instalações</label>
-                  <input
-                    type="text"
-                    value={recurso.instalacoes}
-                    onChange={event => setRecurso({ ...recurso, instalacoes: event.target.value })}
-                  />
-                </div>
-              </div>
-              <button onClick={handleChangeRecurso} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-            <Modal title="Bolsas" background={validate.scholarship}>
-              <div className="content-modal">
-
-                <div className="content-column">
-                  <label>Financiamento</label>
-                  <input
-                    type="text"
-                    value={bolsa.financiamento}
-                    onChange={event => setBolsa({ ...bolsa, financiamento: event.target.value })}
-                  />
-                </div>
-
-                <div className="content-column">
-                  <label>Tipo de bolsa</label>
-                  <input
-                    type="text"
-                    value={bolsa.tipo_bolsa}
-                    onChange={event => setBolsa({ ...bolsa, tipo_bolsa: event.target.value })}
-                  />
-                </div>
-              </div>
-              <button onClick={handleChangeBolsa} >
-                {!progressEvent ? "Salvar" : <div className="loader"></div>}
-              </button>
-            </Modal>
-          </div>
-
-        </div>
-      }
-      {redirect && <Redirect to={{ pathname: redirect }} />}
-    </>
+        </ViewInputs>
+      </Content>
+    </Container>
   )
 }
 
-export default EventInfo;
+export default EventoInfo;

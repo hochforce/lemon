@@ -8,22 +8,26 @@ class EventoController {
       titulo,
       descricao,
       tipo,
+      carga_horaria,
       id_organizador,
       id_periodo_duracao,
       id_parceria,
       id_endereco,
-      status
+      status,
+      is_online
     } = request.body;
     const eventoRepositorio = getRepository(Evento);
     const evento = eventoRepositorio.create({
       titulo,
       descricao,
       tipo,
+      carga_horaria,
       id_organizador,
       id_periodo_duracao,
       id_parceria,
       id_endereco,
-      status
+      status,
+      is_online
     });
     eventoRepositorio.save(evento);
     return response.json(evento);
@@ -33,14 +37,18 @@ class EventoController {
     const {
       titulo,
       descricao,
-      tipo
+      tipo,
+      carga_horaria,
+      is_online
     } = request.body;
     const eventoRepositorio = getRepository(Evento);
     const evento = eventoRepositorio.save({
       id: request.params.id,
       titulo: request.body.titulo,
       descricao: request.body.descricao,
-      tipo: request.body.tipo
+      tipo: request.body.tipo,
+      carga_horaria: request.body.carga_horaria,
+      is_online: request.body.is_online
     });
     return response.json(response.status);
   }

@@ -6,6 +6,7 @@ import Input from './../../components/Input/index';
 import { Button } from "../../components/Button";
 import { Breadcrumb } from './../../components/Breadcrumb/index';
 import { ModalConfirm } from './../../components/ModalConfirm/index';
+import { useEffect } from 'react';
 
 const NewEvent = ({ match, history }) => {
 
@@ -14,12 +15,12 @@ const NewEvent = ({ match, history }) => {
 
     setShowModal(prev => !prev)
   }
-
   const [redirect, setRedirect] = useState('');
   const [isOnline, setIsOnline] = useState(true);
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [tipo, setTipo] = useState('');
+  const [carga_horaria, setCargaHoraria] = useState('');
   const [inicio, setInicio] = useState('');
   const [fim, setFim] = useState('');
   const [logradouro, setLogradouro] = useState('');
@@ -29,15 +30,8 @@ const NewEvent = ({ match, history }) => {
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
   const [cep, setCep] = useState('');
-  const [parceiro, setParceiro] = useState('');
-  const [tipo_parceria, setTipoParceria] = useState('');
-  const [valor, setValor] = useState('');
-  const [materiais, setMateriais] = useState('');
-  const [recursos_humanos, setRecursosHumanos] = useState('');
-  const [instalacoes, setInstalacoes] = useState('');
-  const [financiamento, setFinanciamento] = useState('');
-  const [tipo_bolsa, setTipoBolsa] = useState('');
   const [status, setStatus] = useState('ativo');
+  const [is_online, setOnline] = useState(true);
   const [progressEvent, setProgressEvent] = useState(false);
   const [validateForm, setValidateForm] = useState({
     type: '',
@@ -54,36 +48,14 @@ const NewEvent = ({ match, history }) => {
 
   async function handleSaveEvent(e) {
     e.preventDefault();
+    
+    
     if (validaForm()) {
 
       setProgressEvent(true);
-
-
+      
       try {
-        //Salvando na tabela parcerias
-        const saveParceria = await api.post('/parceiros', {
-          parceiro,
-          tipo_parceria,
-          valor
-        });
-        const id_parceria = saveParceria.data.id;
-        //console.log(saveParceria.data);
-        //Salvando na tabela bolsas
-        const saveBolsa = await api.post('/bolsas', {
-          financiamento,
-          tipo_bolsa
-        });
-        const { id_bolsa } = saveBolsa.data.id;
-        //console.log(saveBolsa.data);
-        //Salvando na tabela recursos
-        await api.post('/recursos', {
-          id_bolsa,
-          materiais,
-          recursos_humanos,
-          instalacoes
-        });
 
-        //console.log(saveRecurso.data);
         //Salvando na tabela enderecos
         const saveEndereco = await api.post('/enderecos', {
           logradouro,
@@ -95,28 +67,27 @@ const NewEvent = ({ match, history }) => {
           cep
         });
         const id_endereco = saveEndereco.data.id;
-        //console.log(saveEndereco.data);
+        
         //Salvando na tabela periododuracao
         const savePeriodo = await api.post('/periododuracao', {
           inicio,
           fim
         });
         const id_periodo_duracao = savePeriodo.data.id;
-        console.log("periodo", inicio + "fim", fim)
 
         var id_organizador = localStorage.getItem("organizador");
 
         //Salvando na tabela eventos
-
         await api.post('/eventos', {
           titulo,
           descricao,
           tipo,
+          carga_horaria,
           id_organizador,
           id_periodo_duracao,
-          id_parceria,
           id_endereco,
-          status
+          status,
+          is_online
         });
         openModal();
         setValidate({ ...validate, event: true })
@@ -138,7 +109,7 @@ const NewEvent = ({ match, history }) => {
       return <h1>ERROR!</h1>;
     }
   }
-
+  
   function validaForm() {
     if (!titulo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo título!' });
     if (!descricao) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo descrição!' });
@@ -173,13 +144,38 @@ const NewEvent = ({ match, history }) => {
   function handleGoBack() {
     history.push('/manager');
   }
-
+  function selectedRadioOnline(e){
+      setIsOnline(e);
+  }
+  function selectedRadioPresencial(e){
+      setIsOnline(e);  
+  }
+  useEffect(()=>{
+    setOnline(isOnline)
+    if (isOnline === true) {
+      setLogradouro("Rodovia MG 202")
+      setNumero(407)
+      setComplemento("Km 407")
+      setBairro("Zona Rural")
+      setCidade("Arinos")
+      setEstado("MG")
+      setCep("38680000")
+    } else {
+      setLogradouro("")
+      setNumero("")
+      setComplemento("")
+      setBairro("")
+      setCidade("")
+      setEstado("")
+      setCep("")
+    }
+  },[isOnline])
 
   return (
     <Container>
       <ModalConfirm
-        showModal={showModal} 
-        setShowModal={setShowModal} 
+        showModal={showModal}
+        setShowModal={setShowModal}
         message="Evento cadastrado com sucesso!"
       />
       <Header
@@ -232,6 +228,12 @@ const NewEvent = ({ match, history }) => {
                 value={fim}
                 onChange={event => setFim(event.target.value)}
               />
+              <Input
+                label="Carga horária (em horas) *"
+                type="number"
+                value={carga_horaria}
+                onChange={event => setCargaHoraria(event.target.value)}
+              />
             </ViewTime>
             <ViewRadioButtons>
               <label>Local *</label>
@@ -239,15 +241,16 @@ const NewEvent = ({ match, history }) => {
                 <input
                   type="radio"
                   name="isOnline"
-                  value={isOnline}
-                  onChange={event => setIsOnline(true)}
+                  
+                  onChange={() => selectedRadioOnline(true)}
+                  
                 />
                 <label>Online</label>
                 <input
                   type="radio"
                   name="isOnline"
-                  value={isOnline}
-                  onChange={event => setIsOnline(false)}
+                  
+                  onChange={() => selectedRadioPresencial(false)}
                 />
                 <label>Presencial</label>
               </ViewOptions>

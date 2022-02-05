@@ -25,6 +25,10 @@ export class CreateEventos1615335673700 implements MigrationInterface {
                         type: "varchar"
                     },
                     {
+                        name: "carga_horaria",
+                        type: "varchar"
+                    },
+                    {
                         name: "id_organizador",
                         type: "uuid"
                     },
@@ -51,6 +55,10 @@ export class CreateEventos1615335673700 implements MigrationInterface {
                     {
                         name: "status",
                         type: "varchar"
+                    },
+                    {
+                        name: "is_online",
+                        type: "boolean"
                     }
                 ]
             })

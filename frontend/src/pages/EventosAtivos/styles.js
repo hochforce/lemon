@@ -11,6 +11,7 @@ export const View = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  
 `
 
 export const Pagination = styled.div`

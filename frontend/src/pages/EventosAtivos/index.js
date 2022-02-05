@@ -113,7 +113,7 @@ export default function Ativos(props) {
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  setRedirect(`/inscricao/${evento.id}`)
+                  setRedirect(`/evento-info/${evento.id}`)
                 }}
                 status={evento.status}
                 statusSubscribe="true"
