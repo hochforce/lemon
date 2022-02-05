@@ -9,6 +9,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+
 `
 export const Title = styled.h1`
 font: 700 30px 'Montserrat', sans-serif;
@@ -21,8 +22,13 @@ color: #737373;
 export const DateTimeAddress = styled.p`
 font: 500 14px 'Montserrat', sans-serif;
 color: #000;
+
 `
 export const SubMessage = styled.p`
+font: 600 18px 'Montserrat', sans-serif;
+color: #52ADA2;
+`
+export const Online = styled.p`
 font: 600 18px 'Montserrat', sans-serif;
 color: #52ADA2;
 `

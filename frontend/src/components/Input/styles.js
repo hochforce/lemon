@@ -29,6 +29,11 @@ background-color: white;
   border: none;
   outline: none;
 }
+&::-webkit-inner-spin-button, 
+&::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 `
 export const Label = styled.label`
 font: 600 16px 'Montserrat', sans-serif;

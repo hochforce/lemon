@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../services/api.js';
-import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage } from './styles.js';
+import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage, Online } from './styles.js';
 import { Header } from './../../components/Header/index';
 import { Breadcrumb } from '../../components/Breadcrumb/index.js';
 import { Button } from '../../components/Button';
@@ -93,21 +93,44 @@ const EventInscricao = ({ match, history }) => {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
     localStorage.removeItem('USER-ID');
-    setRedirect('/');
+    history.push('/');
   }
 
   function handleUserInfo() {
-    console.log("Exibir user info")
+    history.push(`/user-info/${participante.id}`);
   }
 
   function handleGoBack() {
     history.push('/participant');
   }
-  
-  function date(){
-  const today = new Date();
-   return new Intl.Locale('pt-BR', {day: 'numeric', month: 'long', year: 'numeric'}).format(periodo.data_fim)
+
+  function finalDate() {
+    const today = new Date(periodo.fim);
+    return today
   }
+  function inicialDate() {
+    const today = new Date(periodo.inicio);
+    return today
+  }
+
+  function month(date) {
+    const data = new Date(date);
+    const month = data.getMonth();
+
+    if (month === 0) return 'janeiro'
+    if (month === 1) return 'fevereiro'
+    if (month === 2) return 'março'
+    if (month === 3) return 'abril'
+    if (month === 4) return 'maio'
+    if (month === 5) return 'junho'
+    if (month === 6) return 'julho'
+    if (month === 7) return 'agosto'
+    if (month === 8) return 'setembro'
+    if (month === 9) return 'outubro'
+    if (month === 10) return 'novembro'
+    if (month === 11) return 'dezembro'
+  }
+
   return (
     <Container>
       <ModalConfirm
@@ -127,16 +150,22 @@ const EventInscricao = ({ match, history }) => {
       <Breadcrumb name=" > Confirmação de inscrição" />
       <Content>
         <Title>{evento.titulo}</Title>
-        
+
         <SubTitle>{evento.descricao}</SubTitle>
         <DateTimeAddress>
-          <strong>Início:</strong> {periodo.data_inicio} às {periodo.hora_inicio} horas <br />
-          <strong>Término:</strong> {periodo.data_fim} às {periodo.hora_fim} horas
+          <strong>Início:</strong> {inicialDate().getDate()} de {month(inicialDate())} de {inicialDate().getFullYear()} às {inicialDate().getHours()}h{inicialDate().getMinutes()}min <br />
+          <strong>Término:</strong> {finalDate().getDate()} de {month(finalDate())} de {finalDate().getFullYear()} às {finalDate().getHours()}h{finalDate().getMinutes()}min
         </DateTimeAddress>
-        <DateTimeAddress>
-          {endereco.logradouro}, {endereco.numero} <br />
-          {endereco.bairro}, {endereco.cidade}, {endereco.estado}
-        </DateTimeAddress>
+        {
+          endereco.logradouro ?
+
+            <DateTimeAddress>
+              {endereco.logradouro}, {endereco.numero} <br />
+              {endereco.bairro}, {endereco.cidade}, {endereco.estado}
+            </DateTimeAddress>
+            :
+            <Online>Este é um evento online</Online>
+        }
 
         <SubMessage>{sub === true ? "Você já se inscreveu nesse evento." : null}</SubMessage>
         <Button name={sub === true ? "Inscrito" : "Confirmar"} onClick={() => sub === true ? {} : handleSubscribe()} haveSub={sub} />

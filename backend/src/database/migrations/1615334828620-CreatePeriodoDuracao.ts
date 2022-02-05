@@ -13,20 +13,12 @@ export class CreatePeriodoDuracao1615334828620 implements MigrationInterface {
                         isPrimary: true
                     },
                     {
-                        name: "data_inicio",
-                        type: "varchar"
+                        name: "inicio",
+                        type: "timestamp"
                     },
                     {
-                        name: "hora_inicio",
-                        type: "varchar"
-                    },
-                    {
-                        name: "data_fim",
-                        type: "varchar"
-                    },
-                    {
-                        name: "hora_fim",
-                        type: "varchar"
+                        name: "fim",
+                        type: "timestamp"
                     }
                 ]
             })

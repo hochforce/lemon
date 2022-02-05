@@ -14,6 +14,9 @@ class Certificado{
   @Column()
   id_evento: string;
 
+  @Column()
+  key: string;
+
   @ManyToOne(()=>Evento)
   @JoinColumn({name: "id_evento"})
   evento: Evento;
