@@ -2,6 +2,7 @@
 
 # dependencies
 backend/node_modules
+backend/src/database/database.sqlite
 frontend/node_modules
 /node_modules
 /.pnp
