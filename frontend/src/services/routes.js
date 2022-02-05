@@ -16,6 +16,7 @@ import UserInfo from '../pages/UserInfo';
 import ManagerInfo from '../pages/ManagerInfo';
 import EventoInscricao from '../pages/EventoInscricao';
 import ListaParticipantes from '../pages/ListaParticipantes';
+import EventoInfo from '../pages/EventInfo';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props =>(
@@ -45,6 +46,7 @@ export default function Routes(){
         <PrivateRoute path="/manager-info/:id" component={ManagerInfo} />
         <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
         <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
+        <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
       </Switch>
     </BrowserRouter>
   )

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Participante } from './Participante';
 import { Evento } from './Evento';
@@ -13,6 +13,9 @@ class Certificado{
 
   @Column()
   id_evento: string;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   @Column()
   key: string;
