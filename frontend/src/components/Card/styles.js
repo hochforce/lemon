@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import img from '../../assets/images/more.svg';
 
 export const Container = styled.div`
-  width: 290px;
-  height: 250px;
+  width: 270px;
+  height: 230px;
   padding: 30px;
   border-radius: 5px;
   border-width: 2px;

@@ -12,7 +12,6 @@ const EventoInfo = ({ history }) => {
 
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
-
     setShowModal(prev => !prev)
   }
   const [redirect, setRedirect] = useState('');
@@ -38,14 +37,8 @@ const EventoInfo = ({ history }) => {
     type: '',
     mensagem: ''
   });
-  const [validate, setValidate] = useState({
-    event: undefined,
-    time: undefined,
-    address: undefined,
-    together: undefined,
-    necessary: undefined,
-    scholarship: undefined
-  });
+  let idPeriodo, idEndereco
+  
 
   async function search() {
     const searchEvent = await api.get(`/listEventos/${id}`);
@@ -57,6 +50,7 @@ const EventoInfo = ({ history }) => {
     const dateTime = await api.get(`/listPeriodos/${searchEvent.data.id_periodo_duracao}`)
     setInicio(dateTime.data.inicio);
     setFim(dateTime.data.fim);
+    idPeriodo = dateTime.data.id
 
     const address = await api.get(`/listEnderecos/${searchEvent.data.id_endereco}`)
     setLogradouro(address.data.logradouro);
@@ -66,7 +60,7 @@ const EventoInfo = ({ history }) => {
     setCidade(address.data.cidade);
     setEstado(address.data.estado);
     setCep(address.data.cep);
-    
+    idEndereco = address.data.id
   };
   useEffect(() => {
     if (id) {
@@ -76,26 +70,12 @@ const EventoInfo = ({ history }) => {
 
   async function handleSaveEvent(e) {
     e.preventDefault();
-    console.log("LOGr: "+logradouro)
-    if (isOnline === undefined || isOnline === true) {
-      setLogradouro("Rodovia MG 202")
-      setNumero(407)
-      setComplemento("Km 407")
-      setBairro("Zona Rural")
-      setCidade("Arinos")
-      setEstado("MG")
-      setCep("38680000")
-    }
-    setOnline(isOnline);
+    
     if (validaForm()) {
-
       setProgressEvent(true);
-      
-
       try {
-
         //Salvando na tabela enderecos
-        const saveEndereco = await api.post('/enderecos', {
+        const saveEndereco = await api.post(`/updateEndereco/${idEndereco}`, {
           logradouro,
           numero,
           complemento,
@@ -107,35 +87,26 @@ const EventoInfo = ({ history }) => {
         const id_endereco = saveEndereco.data.id;
         //console.log(saveEndereco.data);
         //Salvando na tabela periododuracao
-        const savePeriodo = await api.post('/periododuracao', {
+        const savePeriodo = await api.post(`/updatePeriodo/${idPeriodo}`, {
           inicio,
           fim
         });
         const id_periodo_duracao = savePeriodo.data.id;
 
-        var id_organizador = localStorage.getItem("organizador");
+        
 
         //Salvando na tabela eventos
-        await api.post('/eventos', {
+        await api.post(`/updates/${id}`, {
           titulo,
           descricao,
           tipo,
           carga_horaria,
-          id_organizador,
-          id_periodo_duracao,
-          id_endereco,
-          status,
           is_online
         });
         openModal();
-        setValidate({ ...validate, event: true })
-        setValidate({ ...validate, time: true })
-        setValidate({ ...validate, address: true })
-        setValidate({ ...validate, together: true })
-        setValidate({ ...validate, necessary: true })
-        setValidate({ ...validate, scholarship: true })
+        
       } catch (err) {
-        setValidate({ ...validate, together: false })
+        
       }
 
       setTimeout(function () {
@@ -176,20 +147,28 @@ const EventoInfo = ({ history }) => {
   }
 
   function handleUserInfo() {
-    console.log("Exibir user info")
+    history.push(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
 
   function handleGoBack() {
     history.push('/manager');
   }
-
-
+  function inicialDate() {
+    const today = new Date(inicio);
+    return today
+  }
+  function finalDate() {
+    const today = new Date(fim);
+    return today
+  }
+  console.log(inicialDate())
+  console.log(inicio)
   return (
     <Container>
       <ModalConfirm
         showModal={showModal}
         setShowModal={setShowModal}
-        message="Evento cadastrado com sucesso!"
+        message="Evento atualizado com sucesso!"
       />
       <Header
         user="manager"
@@ -220,7 +199,7 @@ const EventoInfo = ({ history }) => {
               <ViewSelect>
                 <LabelSelect>Tipo *</LabelSelect>
                 <Select onChange={event => setTipo(event.target.value)}>
-                  <option value="">Selecione</option>
+                  <option value="">{tipo ? tipo : "Selecione"}</option>
                   <option value="Ensino">Ensino</option>
                   <option value="Pesquisa">Pesquisa</option>
                   <option value="Extensão">Extensão</option>
@@ -255,23 +234,23 @@ const EventoInfo = ({ history }) => {
                   type="radio"
                   name="isOnline"
                   value={isOnline}
-                  
+
                   onChange={() => {
                     !isOnline ? setIsOnline(true) : setIsOnline(true)
-                    console.log("Onli: "+isOnline)
+                    console.log("Onli: " + isOnline)
                   }}
-                  
+
                 />
                 <label>Online</label>
                 <input
                   type="radio"
                   name="isOnline"
                   value={isOnline}
-                  
-                  onChange={()=> {
+
+                  onChange={() => {
                     isOnline ? setIsOnline(false) : setIsOnline(false)
-                    
-                    console.log("Pres: "+isOnline)
+
+                    console.log("Pres: " + isOnline)
                   }}
                 />
                 <label>Presencial</label>

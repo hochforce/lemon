@@ -34,21 +34,40 @@ class EventoController {
   }
 
   async update(request: Request, response: Response) {
-    const {
+    
+    const search = await getRepository(Evento)
+      .createQueryBuilder("eventos")
+      .where("id = :id", { id: request.params.id })
+      .getOne();
+    var {
       titulo,
       descricao,
       tipo,
       carga_horaria,
       is_online
     } = request.body;
+    
+    await getConnection()
+      .createQueryBuilder()
+      .update(Evento)
+      .set({
+        titulo: request.body.titulo ? request.body.titulo : search.titulo,
+        descricao: request.body.descricao ? request.body.descricao : search.descricao,
+        tipo: request.body.tipo ? request.body.tipo : search.tipo,
+        carga_horaria: request.body.carga_horaria ? request.body.carga_horaria : search.carga_horaria,
+        is_online: request.body.is_online ? request.body.is_online : search.is_online
+      })
+      .where("id = :id", { id: request.params.id })
+      .execute();
+    return response.json(response.status);
+  }
+
+  async updateStatus(request: Request, response: Response) {
+    const { status } = request.body;
     const eventoRepositorio = getRepository(Evento);
     const evento = eventoRepositorio.save({
       id: request.params.id,
-      titulo: request.body.titulo,
-      descricao: request.body.descricao,
-      tipo: request.body.tipo,
-      carga_horaria: request.body.carga_horaria,
-      is_online: request.body.is_online
+      status: request.body.status  
     });
     return response.json(response.status);
   }

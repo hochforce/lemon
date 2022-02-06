@@ -9,7 +9,7 @@ import { Breadcrumb } from '../../components/Breadcrumb';
 import { ModalConfirm } from '../../components/ModalConfirm';
 
 const UserInfo = ({ history }) => {
-
+ 
   const [status, setStatus] = useState({
     type: '',
     mensagem: ''

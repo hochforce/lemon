@@ -5,9 +5,13 @@ import { Container, View } from './styles';
 import { api } from '../../services/api';
 import { Pagination } from '../../components/Pagination';
 import Search from '../../components/Search';
+import { ModalConfirm } from '../../components/ModalConfirm';
 
 
 export default function Ativos(props) {
+
+  
+
   const [redirect, setRedirect] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
@@ -20,7 +24,7 @@ export default function Ativos(props) {
   const [sub, setSub] = useState('');
   const [events, setEvents] = useState([]);
   const [eventsDefault, setEventsDefault] = useState([]);
-
+  
 
   async function search() {
     const buscaCpf = await api.get(`/searchCpf/${userId}`);
@@ -71,10 +75,16 @@ export default function Ativos(props) {
     console.log("eventos: "+eventos)
     setEventos(result)
   }
+  async function handleCancelEvent(e){
+    await api.post(`/updateStatus/${e}`,{
+      status: 'cancelado'
+    })
+      search();
+  }
 
   return (
     <Container>
-
+    
       {
         participante
           ?
@@ -115,6 +125,7 @@ export default function Ativos(props) {
                 onClick={() => {
                   setRedirect(`/evento-info/${evento.id}`)
                 }}
+                cancel={()=>{handleCancelEvent(evento.id)}}
                 status={evento.status}
                 statusSubscribe="true"
               />

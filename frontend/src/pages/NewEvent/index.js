@@ -116,6 +116,8 @@ const NewEvent = ({ match, history }) => {
     if (!tipo) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo!' });
     if (!inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo início!' });
     if (!fim) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo fim!' });
+    if (!carga_horaria) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo carga horária!' });
+    if (fim <= inicio) return setValidateForm({ type: 'error', mensagem: 'Erro: A data final precisa ser maior que a inicial!' });
     if (!isOnline) {
       if (!estado) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo estado!' });
       if (!cidade) return setValidateForm({ type: 'error', mensagem: 'Erro: Necessário preencher o campo cidade!' });
