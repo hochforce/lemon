@@ -33,14 +33,20 @@ export default function Cancelados() {
     setTotal(paginationInfo.data.length);
     setEventos(paginationInfo.data.eventosList);
   }
-  
+
   useEffect(() => {
     (async function () {
       search()
     })()
   }, [])
-  
-  console.log("AAAAA:"+JSON.stringify(eventos))
+
+  async function handleReativeEvent(e) {
+    await api.post(`/updateStatus/${e}`, {
+      status: 'ativo'
+    })
+    search();
+  }
+
   return (
     <Container>
 
@@ -67,6 +73,7 @@ export default function Cancelados() {
                 title={evento.titulo}
                 description={evento.descricao}
                 status={evento.status}
+                onClick={()=>{handleReativeEvent(evento.id)}}
               />
             )}
           </View>

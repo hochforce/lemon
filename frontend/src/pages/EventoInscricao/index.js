@@ -157,7 +157,7 @@ const EventInscricao = ({ match, history }) => {
           <strong>Término:</strong> {finalDate().getDate()} de {month(finalDate())} de {finalDate().getFullYear()} às {finalDate().getHours()}h{finalDate().getMinutes()}min
         </DateTimeAddress>
         {
-          endereco.logradouro ?
+          !evento.is_online ?
 
             <DateTimeAddress>
               {endereco.logradouro}, {endereco.numero} <br />

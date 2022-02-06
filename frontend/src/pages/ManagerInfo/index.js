@@ -102,7 +102,7 @@ const ManagerInfo = ({ history }) => {
   }
 
   function handleUserInfo() {
-    history.push('/managerInfo');
+    history.push(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
 
   function validate() {
