@@ -3,7 +3,7 @@ import usr from '../../assets/images/user-circle.svg';
 import logout from '../../assets/images/logout.svg';
 import backButton from '../../assets/images/back.svg';
 
-export const Header = ({ user, userLogged, back, active, finish, canceled, onClick, onClickUsr, onClickLogout, goBack }) => {
+export const Header = ({ user, userLogged, back, active, finish, canceled, onClick, onClickUsr, onClickLogout, goBack, basic }) => {
 
   return (
     <Container>
@@ -13,7 +13,7 @@ export const Header = ({ user, userLogged, back, active, finish, canceled, onCli
       </View>
       {userLogged &&
         <Menu>
-          {!back
+          {!back || !basic
             ?
             user && user === "manager"
               ?
