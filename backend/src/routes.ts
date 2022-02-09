@@ -83,6 +83,7 @@ router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
 router.get("/searchWithLimitAtivo/:page/:limit", eventoController.searchWithLimitAtivo);
 router.get("/searchWithLimitCancelado/:page/:limit", eventoController.searchByStatusCancelado);
 router.get("/searchWithLimitFinalizado/:page/:limit", eventoController.searchByStatusFinalizado);
+router.get("/validation/:code", certificadoController.checkValidation);
 
 export { router }
 

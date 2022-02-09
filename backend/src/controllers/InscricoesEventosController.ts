@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { createQueryBuilder, getRepository } from 'typeorm';
 import { InscricoesEventos } from '../models/InscricoesEventos';
+import { Participante } from '../models/Participante';
 
 class InscricoesEventoController {
   async create(request: Request, response: Response) {
@@ -23,7 +24,6 @@ class InscricoesEventoController {
     return response.json(search);
   }
   async searchByEvent(request: Request, response: Response) {
-
     const search = await getRepository(InscricoesEventos)
       .createQueryBuilder("inscricoesEventos")
       .where("id_evento = :id", { id: request.params.id })
@@ -44,12 +44,7 @@ class InscricoesEventoController {
     
     return response.json(subscribe);
   }
-  // async list(request: Request, response: Response){
-  //   const eventosList = await getRepository(Evento)
-  //                       .createQueryBuilder("eventos")
-  //                       .getMany();
-  //   return response.json(eventosList);
-  // }
+  
 
 }
 

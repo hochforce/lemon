@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { api } from '../../services/api';
 import { Container, Content, ViewButton, ViewInputs, ViewRadioButtons, ViewOptions, ViewHeader, ViewTime, ViewAddress, Select, LabelSelect, ViewSelect, ViewError } from "./styles"
 import { Header } from './../../components/Header/index';
@@ -140,7 +141,7 @@ const NewEvent = ({ match, history }) => {
   }
 
   function handleUserInfo() {
-    console.log("Exibir user info")
+    setRedirect(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
 
   function handleGoBack() {
@@ -181,12 +182,13 @@ const NewEvent = ({ match, history }) => {
         message="Evento cadastrado com sucesso!"
       />
       <Header
+        basic="true"
+        back="true"
         user="manager"
         userLogged="Organizador"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
-        back="true"
         goBack={() => handleGoBack()}
       />
       <Breadcrumb name=" > Cadastro de Evento" />
@@ -307,6 +309,7 @@ const NewEvent = ({ match, history }) => {
 
         </ViewInputs>
       </Content>
+      {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
 }

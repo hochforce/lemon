@@ -75,6 +75,7 @@ const Login = ({ history }) => {
             <Link to="/new-participant" style={{ textDecoration: "none" }}>
               <p>Cadastrar-me</p>
             </Link>
+           
           </View>
         </form>
 

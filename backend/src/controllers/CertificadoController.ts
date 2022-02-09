@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { Certificado } from '../models/Certificado';
 
 class CertificadoController {
-  async create (request: Request, response: Response){
+  async create(request: Request, response: Response) {
     const { id_evento, id_participante, key } = request.body;
     const certificadoRepositorio = getRepository(Certificado);
     const certificado = certificadoRepositorio.create({
@@ -12,11 +12,18 @@ class CertificadoController {
     certificadoRepositorio.save(certificado);
     return response.json(certificado);
   }
-  async list (request: Request, response: Response){
+  async list(request: Request, response: Response) {
     const certificadosList = await getRepository(Certificado)
-                            .createQueryBuilder("certificados")
-                            .getMany();
+      .createQueryBuilder("certificados")
+      .getMany();
     return response.json(certificadosList);
+  }
+  async checkValidation(request: Request, response: Response) {
+    const search = await getRepository(Certificado)
+      .createQueryBuilder("certificados")
+      .where("key = :id", { id: request.params.code })
+      .getOne();
+    return response.json(search);
   }
 
 }

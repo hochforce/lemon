@@ -65,7 +65,7 @@ const Manager = () => {
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
       />
-
+  
       <Search onClick={(value)=>setEvents(value)} />
 
       {validation.active && <Active events={events}/>}

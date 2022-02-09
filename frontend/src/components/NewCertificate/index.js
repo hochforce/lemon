@@ -4,7 +4,7 @@ import { api } from '../../services/api';
 import { Span } from './styles.js'
 
 
-export default async function NewCertificate(aluno, evento, cargaHoraria, idEndereco, idPeriodo, id_participante, id_evento) {
+export default async function NewCertificate(aluno, evento, cargaHoraria, idEndereco, idPeriodo, id_participante, id_evento, code) {
 
   const searchAddress = await api.get(`/listEnderecos/${idEndereco}`);
   const cidade = searchAddress.data.cidade;
@@ -43,7 +43,12 @@ export default async function NewCertificate(aluno, evento, cargaHoraria, idEnde
     unit: 'cm',
     format: 'a4'
   });
-  const key = RandomKey(8);
+  var key = RandomKey(8);
+  if(code){
+    key = code;
+  } else {
+    key = RandomKey(8);
+  }
 
   certificado.addImage(image, 'JPEG', 0, 0, 29.7, 21);
 

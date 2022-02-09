@@ -118,12 +118,13 @@ const ManagerInfo = ({ history }) => {
         message="Dados atualizados com sucesso!"
       />
       <Header
+        basic="true"
+        back="true"
         user="manager"
         userLogged="Organizador"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
-        back="true"
         goBack={() => handleGoBack()}
       />
       <Breadcrumb name=" > Edição de organizador" />

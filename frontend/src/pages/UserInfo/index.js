@@ -7,6 +7,7 @@ import { Header } from './../../components/Header/index';
 import { Container, Content, View, ViewInputs, ViewError } from "./styles.js";
 import { Breadcrumb } from '../../components/Breadcrumb';
 import { ModalConfirm } from '../../components/ModalConfirm';
+import Relatorio from './../../components/Relatorio/index';
 
 const UserInfo = ({ history }) => {
  
@@ -160,7 +161,7 @@ const UserInfo = ({ history }) => {
           </ViewError>
 
           <View>
-            <Button name="Salvar" onClick={handleSubmit} />
+            <Button name="Salvar" onClick={()=>Relatorio()} />
           </View>
 
 

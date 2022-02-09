@@ -7,10 +7,6 @@ import { useEffect } from 'react';
 import { Breadcrumb } from '../../components/Breadcrumb';
 import { Checkbox, Divider, Switch } from 'antd';
 
-const CheckboxGroup = Checkbox.Group;
-
-
-
 const Enrolled = ({ match, history }) => {
 
   const [redirect, setRedirect] = useState('');
@@ -18,41 +14,39 @@ const Enrolled = ({ match, history }) => {
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [participant, setParticipant] = useState([]);
+  const [subscribe, setSubscribe] = useState('');
+  const [isPresent, setIsPresent] = useState([]);
   let idEvent = match.params.id;
-  const plainOptions = ['João Pedro','Maria José','Gabriel Henrique','Pedro Jonas'];
-  
 
   async function search() {
-
-    api.get(`/searchSubscribeByEvent/${idEvent}`).then((u) => {
-      u.data.map((t) => {
-        api.get(`/searchParticipantById/${t.id_participante}`).then((e) => {
-            setParticipant(e.data)
-          })
-        })
-        
-    })
+    const subscribes = await api.get(`/searchSubscribeByEvent/${idEvent}`)
+    setSubscribe(subscribes.data)
+    const participants = await api.get('/listParticipantes')
+    setParticipant(participants.data)
   }
-  console.log(participant)
+
+
+  function searchParticipants() {
+    let namesIdParticipant = []
+    participant.map((e) => {
+      if (subscribe.find((f) => f.id_participante === e.id)) {
+        namesIdParticipant.push({
+          name: e.nome + " " + e.sobrenome,
+          id: e.id,
+          present: false
+        })
+      }
+    })
+    setIsPresent(namesIdParticipant);
+  }
 
   useEffect(() => {
     search()
   }, [])
-
-  // var arr = participant.map(function (obj) {
-  //   return Object.keys(obj).map(function (key) {
-  //     return obj[key];
-  //   });
-  // });
-  // console.log(arr);
-
-  // for(const key in participant){
-  //   qualquer.push(participant[key])
-  // }
-
-
-
-
+  useEffect(() => {
+    searchParticipants()
+  }, [participant])
+ 
   function handleLogOut() {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
@@ -66,17 +60,33 @@ const Enrolled = ({ match, history }) => {
   function handleGoBack() {
     history.push(`/event-options/${match.params.id}`);
   }
-
-  const onChange = list => {
-    setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
-  };
-
+  console.log(isPresent)
+  const onChange = id => {
+    
+    setIsPresent(
+      isPresent.map(item => {
+        return item.id === id 
+        ? {...item, present : !item.present}
+        : {...item}
+      })
+    )
+    };
+ 
   const onCheckAllChange = e => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
+    if(!checkAll){
+      setIsPresent(
+        isPresent.map(item => {
+          return {...item, present : true}
+        })
+      )
+    } else {
+      setIsPresent(
+        isPresent.map(item => {
+          return {...item, present : false}
+        })
+      )
+    }
+    setCheckAll( !checkAll )
   };
 
   return (
@@ -95,11 +105,32 @@ const Enrolled = ({ match, history }) => {
       <Content>
 
         <List>
-          <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
             Selecionar todos
           </Checkbox>
           <Divider />
-          <CheckboxGroup className='checkBoxGroup' options={plainOptions} value={checkedList} onChange={onChange} />
+          {/* <CheckboxGroup
+            className='checkBoxGroup'
+            options={isPresent}
+            value={checkedList}
+            onChange={onChange}
+            
+          /> */}
+          {isPresent.map((item, index) => (
+            <>
+              <Checkbox
+                checked={item.present}
+                onChange={() => onChange(item.id)}
+              >
+                {item.name}
+              </Checkbox>
+              
+            </>
+          ))}
 
         </List>
       </Content>

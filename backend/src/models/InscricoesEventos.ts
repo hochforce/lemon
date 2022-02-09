@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn, ManyToMany } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Participante } from './Participante';
 import { Evento } from './Evento';
@@ -17,7 +17,7 @@ class InscricoesEventos{
   @CreateDateColumn()
   created_at: Date;
 
-  @ManyToOne(()=>Participante)
+  @ManyToMany(type => Participante, participante => participante.inscricoesEventos)
   @JoinColumn({name: "id_participante"})
   participante: Participante;
 
