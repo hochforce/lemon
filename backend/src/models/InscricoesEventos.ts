@@ -14,6 +14,9 @@ class InscricoesEventos{
   @Column()
   id_evento: string;
 
+  @Column()
+  is_present: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-import { createQueryBuilder, getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import { InscricoesEventos } from '../models/InscricoesEventos';
 import { Participante } from '../models/Participante';
 
 class InscricoesEventoController {
   async create(request: Request, response: Response) {
-    const { id_participante, id_evento } = request.body;
+    const { id_participante, id_evento, is_present } = request.body;
     const inscricoeseventosRepositorio = getRepository(InscricoesEventos);
     const inscricoeseventos = inscricoeseventosRepositorio.create({
       id_participante,
-      id_evento
+      id_evento,
+      is_present
     });
     inscricoeseventosRepositorio.save(inscricoeseventos);
     return response.json(inscricoeseventos);
@@ -43,6 +44,25 @@ class InscricoesEventoController {
     if (search.length > 0) { subscribe = true }
     
     return response.json(subscribe);
+  }
+  async update(request: Request, response: Response) {
+    var {
+      id_participante,
+      is_present
+    } = request.body;
+    var present = false
+    if(is_present === 'false' || is_present === false){
+      present = false
+    }else{
+      present = true
+    }
+    await getConnection()
+      .createQueryBuilder()
+      .update(InscricoesEventos)
+      .set({ is_present: present })
+      .where("id_participante = :id", { id: id_participante })
+      .execute();
+    return response.json(response.status);
   }
   
 

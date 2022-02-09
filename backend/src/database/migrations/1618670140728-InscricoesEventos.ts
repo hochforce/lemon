@@ -21,6 +21,10 @@ export class InscricoesEventos1618670140728 implements MigrationInterface {
                         type: "uuid"
                     },
                     {
+                        name: "is_present",
+                        type: "boolean"
+                    },
+                    {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()"

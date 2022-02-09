@@ -9,6 +9,7 @@ export const Content = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
+flex-direction: column;
 font: 600 20px 'Montserrat', sans-serif;
   color: #4f5180;
   padding: 20px;

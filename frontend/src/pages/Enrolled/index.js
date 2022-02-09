@@ -5,12 +5,20 @@ import { Container, Content, List } from "./styles";
 import { api } from '../../services/api';
 import { useEffect } from 'react';
 import { Breadcrumb } from '../../components/Breadcrumb';
-import { Checkbox, Divider, Switch } from 'antd';
+import { Checkbox, Divider } from 'antd';
+import { Button } from '../../components/Button';
+import { ModalConfirm } from '../../components/ModalConfirm';
+
 
 const Enrolled = ({ match, history }) => {
 
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+
+    setShowModal(prev => !prev)
+  }
+
   const [redirect, setRedirect] = useState('');
-  const [checkedList, setCheckedList] = useState();
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [participant, setParticipant] = useState([]);
@@ -46,7 +54,7 @@ const Enrolled = ({ match, history }) => {
   useEffect(() => {
     searchParticipants()
   }, [participant])
- 
+
   function handleLogOut() {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
@@ -60,37 +68,55 @@ const Enrolled = ({ match, history }) => {
   function handleGoBack() {
     history.push(`/event-options/${match.params.id}`);
   }
-  console.log(isPresent)
+
   const onChange = id => {
-    
+
     setIsPresent(
       isPresent.map(item => {
-        return item.id === id 
-        ? {...item, present : !item.present}
-        : {...item}
+        return item.id === id
+          ? { ...item, present: !item.present }
+          : { ...item }
       })
     )
-    };
- 
+  };
+
   const onCheckAllChange = e => {
-    if(!checkAll){
+    if (!checkAll) {
       setIsPresent(
         isPresent.map(item => {
-          return {...item, present : true}
+          return { ...item, present: true }
         })
       )
     } else {
       setIsPresent(
         isPresent.map(item => {
-          return {...item, present : false}
+          return { ...item, present: false }
         })
       )
     }
-    setCheckAll( !checkAll )
+    setCheckAll(!checkAll)
   };
+
+  async function handleSend() {
+    isPresent.map((e) => {
+      api.post(`/updateIscricoes`, {
+        id_participante: e.id,
+        is_present: e.present
+      })
+    })
+    openModal();
+    setTimeout(function () {
+      return
+    }, 3000)
+  }
 
   return (
     <Container>
+      <ModalConfirm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        message="Dados salvos com sucesso!"
+      />
       <Header
         basic="true"
         back="true"
@@ -109,30 +135,27 @@ const Enrolled = ({ match, history }) => {
             indeterminate={indeterminate}
             onChange={onCheckAllChange}
             checked={checkAll}
+            style={{ borderBottom: "solid" }}
           >
             Selecionar todos
           </Checkbox>
           <Divider />
-          {/* <CheckboxGroup
-            className='checkBoxGroup'
-            options={isPresent}
-            value={checkedList}
-            onChange={onChange}
-            
-          /> */}
+
           {isPresent.map((item, index) => (
             <>
               <Checkbox
                 checked={item.present}
                 onChange={() => onChange(item.id)}
+                style={{ marginTop: "10px" }}
               >
                 {item.name}
               </Checkbox>
-              
+
             </>
           ))}
 
         </List>
+        <Button name="Confirmar" onClick={() => handleSend()} />
       </Content>
       {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>

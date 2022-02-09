@@ -24,7 +24,7 @@ const EventInscricao = ({ match, history }) => {
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
   const [progressEvent, setProgressEvent] = useState(false);
-
+  let presence = false;
   async function search() {
 
     const buscaEventos = await api.get(`/listEventos/${match?.params?.id}`);
@@ -76,7 +76,8 @@ const EventInscricao = ({ match, history }) => {
     try {
       await api.post('/inscricoes', {
         id_evento: evento.id,
-        id_participante: participante.id
+        id_participante: participante.id,
+        is_present: presence
       });
       openModal();
 

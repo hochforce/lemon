@@ -55,6 +55,7 @@ router.post("/updateUser/:id", participanteController.update);
 router.post("/updateManager/:id", organizadorController.update);
 router.post("/updateUserAuth/:id", userAuthController.update);
 router.post("/updateStatus/:id", eventoController.updateStatus);
+router.post("/updateIscricoes", inscricoesEventoController.update);
 
 router.get("/listEventos/:id", eventoController.search);
 router.get("/searchParticipant/:cpf", participanteController.search);
