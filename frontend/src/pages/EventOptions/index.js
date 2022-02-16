@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../services/api.js';
-import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage, Online } from './styles.js';
+import { Container, Content, Title, SubTitle, DateTimeAddress, SubMessage, Online, AlignButtons } from './styles.js';
 import { Header } from './../../components/Header/index';
 import { Breadcrumb } from '../../components/Breadcrumb/index.js';
 import { Button } from '../../components/Button';
 import { ModalConfirm } from './../../components/ModalConfirm/index';
+import { Redirect } from 'react-router-dom';
 
-const EventInscricao = ({ match, history }) => {
-
-
-
-
+const EventOptions = ({ match, history }) => {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
     setShowModal(prev => !prev)
   }
-
+  const [messageModal, setMessageModal] = useState('');
   const [redirect, setRedirect] = useState('');
   const [evento, setEvento] = useState('');
   const [periodo, setPeriodo] = useState('');
@@ -24,7 +21,7 @@ const EventInscricao = ({ match, history }) => {
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
   const [progressEvent, setProgressEvent] = useState(false);
-  let presence = false;
+
   async function search() {
 
     const buscaEventos = await api.get(`/listEventos/${match?.params?.id}`);
@@ -76,8 +73,7 @@ const EventInscricao = ({ match, history }) => {
     try {
       await api.post('/inscricoes', {
         id_evento: evento.id,
-        id_participante: participante.id,
-        is_present: presence
+        id_participante: participante.id
       });
       openModal();
 
@@ -102,7 +98,7 @@ const EventInscricao = ({ match, history }) => {
   }
 
   function handleGoBack() {
-    history.push('/participant');
+    history.push('/manager');
   }
 
   function finalDate() {
@@ -131,25 +127,45 @@ const EventInscricao = ({ match, history }) => {
     if (month === 10) return 'novembro'
     if (month === 11) return 'dezembro'
   }
+  async function handleCancelEvent(e) {
+    setMessageModal("Evento cancelado com sucesso!")
+    await api.post(`/updateStatus/${e}`, {
+      status: 'cancelado'
+    })
+    openModal();
+    setTimeout(function () {
+      history.push('/manager');
+    }, 2000)
+  }
+  async function handleCloseEvent(e) {
+    setMessageModal("Evento encerrado com sucesso!")
+    await api.post(`/updateStatus/${e}`, {
+      status: 'finalizado'
+    })
+    openModal();
+    setTimeout(function () {
+      history.push('/manager');
+    }, 2000)
+  }
 
   return (
     <Container>
       <ModalConfirm
         showModal={showModal}
         setShowModal={setShowModal}
-        message="Inscrição realizada com sucesso!"
+        message={messageModal}
       />
       <Header
         basic="true"
-        back="true"
-        user="participant"
-        userLogged="Participante"
+        user="manager"
+        userLogged="Organizador"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
+        back="true"
         goBack={() => handleGoBack()}
       />
-      <Breadcrumb name=" > Confirmação de inscrição" />
+      <Breadcrumb name=" > Informações do evento" />
       <Content>
         <Title>{evento.titulo}</Title>
 
@@ -168,13 +184,17 @@ const EventInscricao = ({ match, history }) => {
             :
             <Online>Este é um evento online</Online>
         }
-
-        <SubMessage>{sub === true ? "Você já se inscreveu nesse evento." : null}</SubMessage>
-        <Button name={sub === true ? "Inscrito" : "Confirmar"} onClick={() => sub === true ? {} : handleSubscribe()} haveSub={sub} />
+        <AlignButtons>
+          <Button name="Editar" onClick={() => { setRedirect(`/evento-info/${evento.id}`) }} />
+          <Button name="Encerrar" onClick={() => handleCloseEvent(evento.id)} />
+          <Button name="Cancelar" onClick={() => handleCancelEvent(evento.id)} />
+          <Button name="Inscritos" onClick={() => {setRedirect(`/enrolled/${evento.id}`)}} />
+        </AlignButtons>
       </Content>
+      {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
 
 }
 
-export default EventInscricao;
+export default EventOptions;

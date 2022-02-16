@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { api } from '../../services/api';
 import { Button } from "../../components/Button";
 import Input from "../../components/Input";
@@ -7,9 +7,10 @@ import { Header } from './../../components/Header/index';
 import { Container, Content, View, ViewInputs, ViewError } from "./styles.js";
 import { Breadcrumb } from '../../components/Breadcrumb';
 import { ModalConfirm } from '../../components/ModalConfirm';
+import Relatorio from './../../components/Relatorio/index';
 
 const UserInfo = ({ history }) => {
- 
+
   const [status, setStatus] = useState({
     type: '',
     mensagem: ''
@@ -28,7 +29,9 @@ const UserInfo = ({ history }) => {
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState(null);
   const [participant, setParticipant] = useState('');
+  const [redirect, setRedirect] = useState('');
   const { id } = useParams()
+  let idUser = localStorage.getItem('USER-ID')
 
   async function search() {
     const searchUser = await api.get(`/searchParticipantById/${id}`);
@@ -45,8 +48,7 @@ const UserInfo = ({ history }) => {
   }, [])
 
   async function handleSubmit(e) {
-    let idUser = localStorage.getItem('USER-ID')
-    e.preventDefault();
+    // e.preventDefault();
 
     if (validate()) {
       await api.post(`/updateUser/${id}`, {
@@ -80,7 +82,7 @@ const UserInfo = ({ history }) => {
   }
 
   function handleUserInfo() {
-    console.log("Exibir user info")
+    setRedirect(`/user-info/${participant.id}`);
   }
 
   function validate() {
@@ -96,12 +98,13 @@ const UserInfo = ({ history }) => {
         message="Dados atualizados com sucesso!"
       />
       <Header
+        basic="true"
+        back="true"
         user="participant"
         userLogged="Participante"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
-        back="true"
         goBack={() => handleGoBack()}
       />
       <Breadcrumb name=" > Edição de participante" />
@@ -160,7 +163,7 @@ const UserInfo = ({ history }) => {
           </ViewError>
 
           <View>
-            <Button name="Salvar" onClick={handleSubmit} />
+            <Button name="Salvar" onClick={() => handleSubmit()} />
           </View>
 
 
@@ -168,6 +171,7 @@ const UserInfo = ({ history }) => {
 
 
       </Content>
+      {redirect && <Redirect to={{ pathname: redirect }} />}
     </Container>
   )
 }

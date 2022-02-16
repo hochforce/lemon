@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 height: 100vh;
-background-color: #f8f8f8;
 `
 export const Content = styled.div`
 display: flex;

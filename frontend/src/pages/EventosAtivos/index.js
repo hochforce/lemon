@@ -6,6 +6,7 @@ import { api } from '../../services/api';
 import { Pagination } from '../../components/Pagination';
 import Search from '../../components/Search';
 import { ModalConfirm } from '../../components/ModalConfirm';
+import CardNewEvent from '../../components/CardNewEvent';
 
 
 export default function Ativos(props) {
@@ -19,7 +20,7 @@ export default function Ativos(props) {
   const [organizador, setOrganizador] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(5);
   const [id, setId] = useState('');
   const [sub, setSub] = useState('');
   const [events, setEvents] = useState([]);
@@ -75,12 +76,7 @@ export default function Ativos(props) {
     console.log("eventos: "+eventos)
     setEventos(result)
   }
-  async function handleCancelEvent(e){
-    await api.post(`/updateStatus/${e}`,{
-      status: 'cancelado'
-    })
-      search();
-  }
+  
 
   return (
     <Container>
@@ -111,8 +107,7 @@ export default function Ativos(props) {
 
           <View>
 
-            <Card
-              creation="true"
+            <CardNewEvent
               onClick={() => {
                 setRedirect(`/new-event`)
               }}
@@ -123,14 +118,13 @@ export default function Ativos(props) {
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  setRedirect(`/evento-info/${evento.id}`)
+                  setRedirect(`/event-options/${evento.id}`)
                 }}
-                cancel={()=>{handleCancelEvent(evento.id)}}
                 status={evento.status}
                 statusSubscribe="true"
               />
+              
             )}
-
 
           </View>
       }

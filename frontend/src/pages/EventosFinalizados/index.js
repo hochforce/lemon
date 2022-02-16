@@ -7,6 +7,8 @@ import { Pagination } from '../../components/Pagination';
 import NewCertificate from '../../components/NewCertificate';
 
 export default function Finalizados() {
+  const [status, setStatus] = useState('');
+
   const [redirect, setRedirect] = useState('');
   const [eventos, setEventos] = useState([]);
   const userId = localStorage.getItem("USER-ID");
@@ -15,8 +17,10 @@ export default function Finalizados() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(2);
-  
-  
+  const [presence, setPresence] = useState(false);
+  const [subscribe, setSubscribe] = useState(false);
+
+
 
 
   async function search() {
@@ -31,7 +35,9 @@ export default function Finalizados() {
 
     const paginationInfo = await api.get(`/searchWithLimitFinalizado/${currentPage}/${limit}`);
     setTotal(paginationInfo.data.length);
-    setEventos(paginationInfo.data.eventosList); 
+    setEventos(paginationInfo.data.eventosList);
+
+
   }
 
   useEffect(() => {
@@ -40,8 +46,41 @@ export default function Finalizados() {
     })()
   }, [])
 
-  
- 
+  async function checkSubscribe(idParticipant, idEvento) {
+
+    const check = await api.get(`/subscribe/${idParticipant}/${idEvento}`)
+    setSubscribe(check.data)
+
+    if (check.PromiseResult) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  async function checkPresence(nome, titulo, cargaHoraria, idEndereco, idPeriodo, idParticipant, idEvento) {
+
+    const check = await api.get(`/isPresent/${idParticipant}/${idEvento}`)
+    setPresence(check.data)
+    
+    if (check.data) {
+      NewCertificate(
+        `${nome}`,
+        `${titulo}`,
+        `${cargaHoraria}`,
+        `${idEndereco}`,
+        `${idPeriodo}`,
+        `${idParticipant}`,
+        `${idEvento}`
+      )
+    } else {
+      setStatus('Presença não confirmada!')
+      
+    }
+  }
+
+
   return (
     <Container>
 
@@ -50,23 +89,26 @@ export default function Finalizados() {
           ?
           <View>
             {Array.isArray(eventos) && eventos.map((evento) =>
+
               <Card
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  NewCertificate(
+                  
+                  checkPresence(
                     `${participante.nome} ${participante.sobrenome}`,
                     `${evento.titulo}`,
                     `${evento.carga_horaria}`,
                     `${evento.id_endereco}`,
                     `${evento.id_periodo_duracao}`,
                     `${participante.id}`,
-                    `${evento.id}`
+                    `${evento.id}`,
+                    `${participante.id}`
                   )
                 }}
                 status={evento.status}
+                message={status}
               />
-            
             )}
           </View>
 

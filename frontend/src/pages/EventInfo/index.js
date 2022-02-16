@@ -38,7 +38,7 @@ const EventoInfo = ({ history }) => {
     mensagem: ''
   });
   let idPeriodo, idEndereco
-  
+
 
   async function search() {
     const searchEvent = await api.get(`/listEventos/${id}`);
@@ -70,7 +70,7 @@ const EventoInfo = ({ history }) => {
 
   async function handleSaveEvent(e) {
     e.preventDefault();
-    
+
     if (validaForm()) {
       setProgressEvent(true);
       try {
@@ -93,7 +93,7 @@ const EventoInfo = ({ history }) => {
         });
         const id_periodo_duracao = savePeriodo.data.id;
 
-        
+
 
         //Salvando na tabela eventos
         await api.post(`/updates/${id}`, {
@@ -104,9 +104,9 @@ const EventoInfo = ({ history }) => {
           is_online
         });
         openModal();
-        
+
       } catch (err) {
-        
+
       }
 
       setTimeout(function () {
@@ -151,7 +151,7 @@ const EventoInfo = ({ history }) => {
   }
 
   function handleGoBack() {
-    history.push('/manager');
+    history.push(`/event-options/${id}`);
   }
   function inicialDate() {
     const today = new Date(inicio);
@@ -171,6 +171,7 @@ const EventoInfo = ({ history }) => {
         message="Evento atualizado com sucesso!"
       />
       <Header
+        basic="true"
         user="manager"
         userLogged="Organizador"
         nameItem="Eventos"
@@ -179,7 +180,7 @@ const EventoInfo = ({ history }) => {
         back="true"
         goBack={() => handleGoBack()}
       />
-      <Breadcrumb name=" > Edição de Evento" />
+      <Breadcrumb name=" > Informações do evento > Edição" />
       <Content>
         <ViewInputs>
           <form onSubmit={handleSaveEvent}>

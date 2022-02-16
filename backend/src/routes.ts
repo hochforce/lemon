@@ -55,6 +55,7 @@ router.post("/updateUser/:id", participanteController.update);
 router.post("/updateManager/:id", organizadorController.update);
 router.post("/updateUserAuth/:id", userAuthController.update);
 router.post("/updateStatus/:id", eventoController.updateStatus);
+router.post("/updateIscricoes", inscricoesEventoController.update);
 
 router.get("/listEventos/:id", eventoController.search);
 router.get("/searchParticipant/:cpf", participanteController.search);
@@ -76,12 +77,15 @@ router.get("/listEnderecos/:id", enderecoController.search);
 router.get("/listParcerias/:id", parceriaController.search);
 router.get("/listRecursos/:id", recursosController.search);
 router.get("/listBolsa/:id", bolsaController.search);
-router.get("/searchSubscribe/:id", inscricoesEventoController.search);
+router.get("/searchSubscribe/:id", inscricoesEventoController.searchByParticipant);
+router.get("/searchSubscribeByEvent/:id", inscricoesEventoController.searchByEvent);
 router.get("/subscribe/:idUser/:idEvent", inscricoesEventoController.searchSubscribe);
+router.get("/isPresent/:idUser/:idEvent", inscricoesEventoController.searchPresence);
 router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
 router.get("/searchWithLimitAtivo/:page/:limit", eventoController.searchWithLimitAtivo);
 router.get("/searchWithLimitCancelado/:page/:limit", eventoController.searchByStatusCancelado);
 router.get("/searchWithLimitFinalizado/:page/:limit", eventoController.searchByStatusFinalizado);
+router.get("/validation/:code", certificadoController.checkValidation);
 
 export { router }
 

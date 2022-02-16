@@ -17,6 +17,10 @@ import ManagerInfo from '../pages/ManagerInfo';
 import EventoInscricao from '../pages/EventoInscricao';
 import ListaParticipantes from '../pages/ListaParticipantes';
 import EventoInfo from '../pages/EventInfo';
+import EventOptions from '../pages/EventOptions';
+import Enrolled from '../pages/Enrolled';
+import CertificateValidate from '../pages/CertificateValidate';
+import ResultCertificateValidate from '../pages/ResultCertificateValidate';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props =>(
@@ -47,6 +51,10 @@ export default function Routes(){
         <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
         <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
         <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
+        <PrivateRoute path="/event-options/:id" component={EventOptions}/>
+        <PrivateRoute path="/enrolled/:id" component={Enrolled}/>
+        <Route path="/autenticar_documento" component={CertificateValidate} />
+        <Route path="/resultado/:idEvento/:idParticipante/:code" component={ResultCertificateValidate} />
       </Switch>
     </BrowserRouter>
   )
