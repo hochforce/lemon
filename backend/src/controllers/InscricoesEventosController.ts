@@ -45,6 +45,20 @@ class InscricoesEventoController {
     
     return response.json(subscribe);
   }
+  async searchPresence(request: Request, response: Response) {
+    let idUser = request.params.idUser;
+    let idEvent = request.params.idEvent;
+    let subscribe = false;
+    let presence = true;
+    const search = await getRepository(InscricoesEventos)
+      .createQueryBuilder("inscricoesEventos")
+      .where("id_participante = :id AND id_evento = :name AND is_present = :nam", { id: idUser, name: idEvent, nam: presence})
+      .getMany();
+
+    if (search.length > 0) { subscribe = true }
+    
+    return response.json(subscribe);
+  }
   async update(request: Request, response: Response) {
     var {
       id_participante,

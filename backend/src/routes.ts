@@ -80,6 +80,7 @@ router.get("/listBolsa/:id", bolsaController.search);
 router.get("/searchSubscribe/:id", inscricoesEventoController.searchByParticipant);
 router.get("/searchSubscribeByEvent/:id", inscricoesEventoController.searchByEvent);
 router.get("/subscribe/:idUser/:idEvent", inscricoesEventoController.searchSubscribe);
+router.get("/isPresent/:idUser/:idEvent", inscricoesEventoController.searchPresence);
 router.get("/eventos/:page/:limit", eventoController.searchWithLimit);
 router.get("/searchWithLimitAtivo/:page/:limit", eventoController.searchWithLimitAtivo);
 router.get("/searchWithLimitCancelado/:page/:limit", eventoController.searchByStatusCancelado);

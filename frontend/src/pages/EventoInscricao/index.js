@@ -140,12 +140,13 @@ const EventInscricao = ({ match, history }) => {
         message="Inscrição realizada com sucesso!"
       />
       <Header
+        basic="true"
+        back="true"
         user="participant"
         userLogged="Participante"
         nameItem="Eventos"
         onClickLogout={() => handleLogOut()}
         onClickUsr={() => handleUserInfo()}
-        back="true"
         goBack={() => handleGoBack()}
       />
       <Breadcrumb name=" > Confirmação de inscrição" />

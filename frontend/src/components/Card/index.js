@@ -1,5 +1,5 @@
 import { Button } from "../Button";
-import { Container, Content, View, Title, Align, Description } from "./styles";
+import { Container, Content, View, Title, Align, Description, Error } from "./styles";
 
 const Card = ({
   cardManager,
@@ -8,7 +8,8 @@ const Card = ({
   onClick,
   disabled,
   status,
-  haveSub }) => {
+  haveSub,
+  message }) => {
 
   return (
     <Container onClick={onClick}>
@@ -34,6 +35,7 @@ const Card = ({
               }
             </>
           }
+          <Error><p>{message}</p></Error>
         </View>
 
       </Content>

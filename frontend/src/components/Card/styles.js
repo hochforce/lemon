@@ -45,3 +45,9 @@ export const Align = styled.div`
   justify-content: space-between;
   
 `
+export const Error = styled.div`
+ p{
+  font: 600 16px 'Montserrat', sans-serif;
+  color: tomato;
+ }
+`

@@ -20,7 +20,7 @@ export default function Ativos(props) {
   const [organizador, setOrganizador] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(5);
   const [id, setId] = useState('');
   const [sub, setSub] = useState('');
   const [events, setEvents] = useState([]);
