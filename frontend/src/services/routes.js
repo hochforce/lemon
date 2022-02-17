@@ -21,6 +21,7 @@ import EventOptions from '../pages/EventOptions';
 import Enrolled from '../pages/Enrolled';
 import CertificateValidate from '../pages/CertificateValidate';
 import ResultCertificateValidate from '../pages/ResultCertificateValidate';
+import Reports from '../pages/Reports';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props =>(
@@ -51,6 +52,7 @@ export default function Routes(){
         <PrivateRoute path="/lista-participantes/:id" component={ListaParticipantes} />
         <PrivateRoute path="/inscricao/:id" component={EventoInscricao} />
         <PrivateRoute path="/evento-info/:id" component={EventoInfo} />
+        <PrivateRoute path="/reports/:id" component={Reports} />
         <PrivateRoute path="/event-options/:id" component={EventOptions}/>
         <PrivateRoute path="/enrolled/:id" component={Enrolled}/>
         <Route path="/autenticar_documento" component={CertificateValidate} />

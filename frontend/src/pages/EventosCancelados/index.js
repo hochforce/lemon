@@ -13,7 +13,7 @@ export default function Cancelados() {
   const [organizador, setOrganizador] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
 
 
   async function search() {
@@ -38,7 +38,7 @@ export default function Cancelados() {
     (async function () {
       search()
     })()
-  }, [])
+  }, [currentPage])
 
   async function handleReativeEvent(e) {
     await api.post(`/updateStatus/${e}`, {
