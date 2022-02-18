@@ -20,20 +20,11 @@ const EventOptions = ({ match, history }) => {
   const [sub, setSub] = useState(false);
   const userId = localStorage.getItem("USER-ID");
   const [participante, setParticipante] = useState('');
-  const [progressEvent, setProgressEvent] = useState(false);
 
   async function search() {
 
     const buscaEventos = await api.get(`/listEventos/${match?.params?.id}`);
     setEvento(buscaEventos.data);
-
-    const buscaCPF = await api.get(`/searchCpf/${userId}`);
-    const cpf = buscaCPF.data.cpf;
-
-    const buscaParticipante = await api.get(`/searchParticipant/${cpf}`);
-    setParticipante(buscaParticipante.data);
-
-
   }
 
   useEffect(() => {
@@ -61,31 +52,9 @@ const EventOptions = ({ match, history }) => {
       callPeriodos()
       callEnderecos()
     })()
-  }, [evento, participante])
+  }, [evento])
 
-  async function handleSubscribe() {
-    setProgressEvent(true);
-
-
-
-
-
-    try {
-      await api.post('/inscricoes', {
-        id_evento: evento.id,
-        id_participante: participante.id
-      });
-      openModal();
-
-    } catch {
-
-    }
-    setProgressEvent(false);
-    setTimeout(function () {
-      history.push('/participant');
-    }, 2000)
-  }
-
+  
   function handleLogOut() {
     localStorage.removeItem('TOKEN');
     localStorage.removeItem('organizador');
@@ -94,7 +63,7 @@ const EventOptions = ({ match, history }) => {
   }
 
   function handleUserInfo() {
-    history.push(`/user-info/${participante.id}`);
+    setRedirect(`/manager-info/${localStorage.getItem('USER-ID')}`);
   }
 
   function handleGoBack() {

@@ -16,7 +16,7 @@ export default function Finalizados() {
   const [organizador, setOrganizador] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
   const [presence, setPresence] = useState(false);
   const [subscribe, setSubscribe] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Finalizados() {
     (async function () {
       search()
     })()
-  }, [])
+  }, [currentPage])
 
   async function checkSubscribe(idParticipant, idEvento) {
 
@@ -121,7 +121,7 @@ export default function Finalizados() {
                 title={evento.titulo}
                 description={evento.descricao}
                 onClick={() => {
-                  setRedirect(`/evento-info`)
+                  setRedirect(`/reports/${evento.id}`)
                 }}
                 status={evento.status}
               />
