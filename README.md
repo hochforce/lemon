@@ -1,30 +1,70 @@
-# Trabalho de Conclusão de Curso
- Bacharelado em Sistemas de Informação<br/>
- Instituto Federal do Norte de Minas Gerais - Campus Arinos
+# LEMON
+### Sistema para automatizar o processo de registro, emissão e validação dos certificados de eventos do Instituto Federal de Educação, Ciência e Tecnologia do Norte de Minas Gerais - campus Arinos
+ Curso: Bacharelado em Sistemas de Informação<br/>
+ Instituição: Instituto Federal do Norte de Minas Gerais - Campus Arinos
 
-### Lemon: Sistema para gerenciamento dos eventos administrados pelo IFNMG - Campus Arinos
 
-## Como será esse projeto:<br/>
-* Para o Backend Javascript com Typescript<br/>
-* Para o Frontend React
-* Para o Database SQLite
+## Principais linguagens e ferramentas:<br/>
+* Backend: Typescript<br/>
+* Frontend: ReactJS
+* Database: SQLite
 
-## Progresso:<br/>
-* Criei o Modelo ER (Google Docs Compartilhado)
-* Iniciei o Backend
-* Iniciei a implementação do Banco de Dados
-* Migrations de todas as tabelas criadas
-* Começando a criar os Models e Controllers (duas tabelas prontas!)
-* Todas as tabelas finalizadas com Model e Controllers fazendo Create
-* Iniciei a criação do Frontend - Já está salvando os dados do form no Banco
-* O Frontend já tem as telas de login, criação de participantes, organizadores e evento
-* A lógica de autenticação do usuário está quase pronta
-* Hoje comecei a estilizar as páginas de formulários
-* Criei um menu de navegação entre as páginas pra facilitar o trabalho
-* Criei no backend as requisições de GET para listar os objetos do banco
-* Comecei a criar a página Dashboard do manager(responsável pela criação dos eventos)
-* Já está listando os eventos do banco e fazendo a contagem
-* Criei a autenticação com JWT e criptografando as senhas
-* Hoje eu linkei a API de autenticação que criei com o front, restringindo acesso às rotas autorizadas
-* Já está gerando certificado, só falta buscar os dados automático
-* 
+## Principais telas:<br/>
+
+### Login
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608934-5c2ff685-231a-4ee6-bdc0-1b11004f9036.png" width="800px" />
+</div>
+
+
+### Cadastro de novo usuário
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608981-fb333fa4-92fd-40bd-8312-14f4c498134b.png" width="800px" />
+</div>
+
+
+### Inscrição em evento
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608982-44096854-aab9-4225-8336-faf88025924c.png" width="800px" />
+</div>
+
+
+### Painel do organizador
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608980-c044277a-dded-41ec-85ec-7b232db73739.png" width="800px" />
+</div>
+
+
+### Certificado
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608973-1fc8212e-c937-4a13-8204-12fca5241e4d.png" width="800px" />
+</div>
+
+
+### Validação de certificado
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608984-18530f87-8ebb-4103-9924-a6c286d7e17c.png" width="800px" />
+</div>
+
+
+### Certificado verdadeiro validado
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608983-6eba1a1a-e1df-42aa-8ebd-a6de6c7cf991.png" width="800px" />
+</div>
+
+
+### Certificado não encontrado
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/48101983/154608975-7224dbbb-66ae-49f1-97ec-34bcd15336c8.png" width="800px" />
+</div>
+
+
+
